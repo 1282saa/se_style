@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<versionInfo>
+  <version>1.1</version>
+  <lastUpdated>2025-04-27</lastUpdated>
+  <lastEditor>교열팀</lastEditor>
+</versionInfo>
+
+<SeoulEconomicKnowledgeBase>
+  <KnowledgeCategory id="KB5" name="교열 사례 및 패턴 데이터베이스">
+    <Description>
+      서울경제신문 교열 시스템에 사용된 실제 교열 사례와 오류 패턴 분류입니다.
+      각 항목은 오류 유형, 우선순위, 원문, 수정문, 수정 사유 및 참고 규칙으로 구성됩니다.
+      이 패턴 데이터베이스는 자주 발생하는 오류를 식별하고 일관된 교정을 제공하는 데 활용됩니다.
+    </Description>
+    
+    <MetaInformation>
+<principleReference>
+  핵심 원칙 및 우선순위 분류는 디스_교열.txt의 다음 섹션을 참조합니다:
+  • <corePrinciples id="master">
+  • <decisionTree id="priorityClassification">
+</principleReference>
+
+      <Version>1.1</Version>
+      <LastUpdated>2024-04-27</LastUpdated>
+      <Source>05_교열사례_패턴_데이터베이스.txt</Source>
+      <MaintenanceOwner>서울경제신문 교열팀</MaintenanceOwner>
+    </MetaInformation>
+    
+    <SearchAlgorithm>
+      <Method>패턴 매칭 기반 오류 감지</Method>
+      <Method>유사 사례 기반 교정 추천</Method>
+      <Method>맥락 고려한 오류 판별</Method>
+      <Method>유형별 교정 적용</Method>
+    </SearchAlgorithm>
+    
+    <GeneralPrinciples>
+      <Principle id="EP-001">
+        <n>실증 기반 교정 원칙</n>
+        <Description>실제 발생한 오류 패턴을 분석하고 표준화하여 교정합니다.</Description>
+        <Application>사례 기반 접근법으로 일관된 교정 결과를 제공합니다.</Application>
+        <Priority>2</Priority>
+      </Principle>
+      
+      <Principle id="EP-002">
+        <n>맥락 고려 원칙</n>
+        <Description>오류 패턴의 발생 맥락을 고려하여 교정합니다.</Description>
+        <Application>같은 형태의 오류라도 맥락에 따라 다른 교정을 적용할 수 있습니다.</Application>
+        <Priority>2</Priority>
+      </Principle>
+      
+      <Principle id="EP-003">
+        <n>최소 개입 원칙</n>
+        <Description>필요한 부분만 최소한으로 교정합니다.</Description>
+        <Application>기자의 스타일을 존중하고 불필요한 교정을 피합니다.</Application>
+        <Priority>3</Priority>
+      </Principle>
+    </GeneralPrinciples>
+
+    <EditingCasesCollection>
+      <EditingCase id="EX-001" priority="5" confidenceThreshold="99.9">
+        <Title>주어-서술어 불일치</Title>
+        <Category>문법 호응 오류</Category>
+        <Original>우리 정부는 지난달 '경제 활성화 방안'을 내놓으며 기업의 투자 확대를 기대하고 있다.</Original>
+        <Corrected>우리 정부는 지난달 '경제 활성화 방안'을 내놓으며 기업이 투자를 확대하길 기대하고 있다.</Corrected>
+        <Explanation>주어(정부)와 서술어(기대하고 있다)의 대상이 혼동됨. 의미상의 주어 명확화 필요.</Explanation>
+        <ReferenceRule>02-GRAM-001 (주어-서술어 호응 규칙)</ReferenceRule>
+        <Pattern>
+          <ErrorType>주어-서술어 불일치</ErrorType>
+          <Structure>
+            <Subject>명사/대명사</Subject>
+            <Object>명사의 + 목적어</Object>
+            <Verb>서술어</Verb>
+          </Structure>
+          <DetectionPattern>주체 + '~의 ~을/를' + 행위 동사</DetectionPattern>
+          <CorrectionPattern>주체 + '~이/가 ~을/를' + 행위 동사</CorrectionPattern>
+        </Pattern>
+        <Context>
+          <Application>경제 주체의 행위나 기대에 관한 서술</Application>
+          <TypicalSection>정책 발표, 전망 관련 내용</TypicalSection>
+        </Context>
+      </EditingCase>
+
+      <EditingCase id="EX-002" priority="4" confidenceThreshold="98.5">
+        <Title>어색한 조사 사용</Title>
+        <Category>문법 오류</Category>
+        <Original>그는 일에 있어서 성실한 자세를 갖고 있었다.</Original>
+        <Corrected>그는 일에 성실한 자세를 갖고 있었다.</Corrected>
+        <Explanation>'~에 있어서'는 불필요하게 장황함. 간결성 유지 필요.</Explanation>
+        <ReferenceRule>02-GRAM-004 (간결한 조사 사용 규칙)</ReferenceRule>
+        <Pattern>
+          <ErrorType>군더더기 표현</ErrorType>
+          <Structure>
+            <RedundantPhrase>'~에 있어서'</RedundantPhrase>
+          </Structure>
+          <DetectionPattern>'~에 있어서'</DetectionPattern>
+          <CorrectionPattern>'~에'</CorrectionPattern>
+        </Pattern>
+        <SimilarPatterns>
+          <Pattern>~에 관해서</Pattern>
+          <Pattern>~에 대해서는</Pattern>
+          <Pattern>~의 경우에 있어서</Pattern>
+        </SimilarPatterns>
+      </EditingCase>
+
+      <EditingCase id="EX-003" priority="5" confidenceThreshold="99.5">
+        <Title>통계 해석 오류</Title>
+        <Category>경제 용어 오류</Category>
+        <Original>실업률은 지난달보다 0.2%포인트 증가해 4.5%를 기록했다.</Original>
+        <Corrected>실업률은 지난달보다 0.2%포인트 상승해 4.5%를 기록했다.</Corrected>
+        <Explanation>실업률은 '감소/증가'보다는 '하락/상승' 사용이 관례적.</Explanation>
+        <ReferenceRule>04-EC-FIELD-003 (경제 지표 표현 규칙)</ReferenceRule>
+        <Pattern>
+          <ErrorType>경제 지표 표현 부적절</ErrorType>
+          <Structure>
+            <Indicator>실업률</Indicator>
+            <ChangeVerb>증가/감소</ChangeVerb>
+          </Structure>
+          <DetectionPattern>'실업률' + '증가/감소'</DetectionPattern>
+          <CorrectionPattern>'실업률' + '상승/하락'</CorrectionPattern>
+        </Pattern>
+        <IndicatorVerbMapping>
+          <Indicator name="실업률">
+            <Increase>상승</Increase>
+            <Decrease>하락</Decrease>
+          </Indicator>
+          <Indicator name="주가">
+            <Increase>상승, 올랐다</Increase>
+            <Decrease>하락, 내렸다</Decrease>
+          </Indicator>
+          <Indicator name="금리">
+            <Increase>인상, 올랐다</Increase>
+            <Decrease>인하, 내렸다</Decrease>
+          </Indicator>
+        </IndicatorVerbMapping>
+      </EditingCase>
+
+      <EditingCase id="EX-004" priority="3" confidenceThreshold="95">
+        <Title>동어 반복</Title>
+        <Category>문체 오류</Category>
+        <Original>정부는 경제를 활성화하기 위한 경기 부양책을 추진한다.</Original>
+        <Corrected>정부는 경기 부양책을 추진한다.</Corrected>
+        <Explanation>'경제 활성화'와 '경기 부양'이 유사 의미. 반복 표현 제거.</Explanation>
+        <ReferenceRule>04-EC-STYLE-002 (동어 반복 지양 규칙)</ReferenceRule>
+        <Pattern>
+          <ErrorType>의미 중복</ErrorType>
+          <Structure>
+            <Redundancy>유사 의미 표현 중복</Redundancy>
+          </Structure>
+          <DetectionPattern>유사 의미를 가진 두 표현이 인접</DetectionPattern>
+          <CorrectionPattern>한 가지 표현만 선택</CorrectionPattern>
+        </Pattern>
+        <RedundancyPatterns>
+          <Pair>
+            <Term1>경제 활성화</Term1>
+            <Term2>경기 부양</Term2>
+          </Pair>
+          <Pair>
+            <Term1>미래 전망</Term1>
+            <Term2>향후 예측</Term2>
+          </Pair>
+        </RedundancyPatterns>
+      </EditingCase>
+
+      <EditingCase id="EX-005" priority="5" confidenceThreshold="99.5">
+        <Title>시간 표현 오류</Title>
+        <Category>논리적 일관성 오류</Category>
+        <Original>내년 완공될 예정인 빌딩은 작년부터 공사가 시작됐다.</Original>
+        <Corrected>작년부터 공사가 시작된 빌딩은 내년 완공될 예정이다.</Corrected>
+        <Explanation>시간 순서가 혼란스럽게 제시됨. 논리적 순서로 재배치 필요.</Explanation>
+        <ReferenceRule>03-LG-LOGIC-002 (시간적 순서 일관성 확보)</ReferenceRule>
+        <Pattern>
+          <ErrorType>시간 역행 표현</ErrorType>
+          <Structure>
+            <LaterEvent>후행 사건</LaterEvent>
+            <Connector>서술어</Connector>
+            <EarlierEvent>선행 사건</EarlierEvent>
+          </Structure>
+        </Pattern>
+      </EditingCase>
+    </EditingCasesCollection>
+
+    <ErrorTypePatterns>
+      <Pattern id="PAT-GRAM-001" category="문법 호응 오류">
+        <Description>주어-서술어 불일치, 관형사-명사 불일치 등의 문법적 호응 오류</Description>
+        <ExampleReference>EX-001</ExampleReference>
+        <DetectionStrategies>
+          <Strategy>주어부와 서술부 간의 의미적 연결 확인</Strategy>
+          <Strategy>수식어와 피수식어 간의 호응 확인</Strategy>
+          <Strategy>시제 일치 확인</Strategy>
+        </DetectionStrategies>
+        <CommonSubPatterns>
+          <SubPattern>
+            <Name>소유격 주어 오류</Name>
+            <Example>'정부의'가 주어인데 '발표했다'와 같은 행위 동사 사용</Example>
+            <Fix>'정부는'으로 변경</Fix>
+          </SubPattern>
+          <SubPattern>
+            <Name>복수-단수 불일치</Name>
+            <Example>'기업들은'이 주어인데 '추진한다'와 같은 단수 동사 사용</Example>
+            <Fix>'추진한다' 유지 또는 맥락에 따라 '추진합니다'로 변경</Fix>
+          </SubPattern>
+        </CommonSubPatterns>
+        <Priority>5</Priority>
+      </Pattern>
+
+      <Pattern id="PAT-STYLE-001" category="불필요한 표현">
+        <Description>군더더기 말투, 장황한 문장 구성 등 간결성을 해치는 표현</Description>
+        <ExampleReference>EX-002</ExampleReference>
+        <DetectionStrategies>
+          <Strategy>불필요한 접속어, 부사구 확인</Strategy>
+          <Strategy>중복 표현 확인</Strategy>
+          <Strategy>간결하게 표현 가능한 우회적 표현 확인</Strategy>
+        </DetectionStrategies>
+        <CommonSubPatterns>
+          <SubPattern>
+            <Name>우회적 표현</Name>
+            <Example>'~에 있어서', '~에 관련하여', '~의 측면에서'</Example>
+            <Fix>간단한 조사로 대체 ('~에')</Fix>
+          </SubPattern>
+          <SubPattern>
+            <Name>중복 접속사</Name>
+            <Example>'그리고 또한', '그러나 하지만'</Example>
+            <Fix>하나만 선택</Fix>
+          </SubPattern>
+        </CommonSubPatterns>
+        <Priority>3</Priority>
+      </Pattern>
+
+      <Pattern id="PAT-DATA-001" category="통계 수치 오류">
+        <Description>해석 오류, 단위 부정확, 혼동되는 표현 등 통계 및 수치 관련 오류</Description>
+        <ExampleReference>EX-003</ExampleReference>
+        <DetectionStrategies>
+          <Strategy>경제 지표별 적합한 동사 확인</Strategy>
+          <Strategy>단위 표기 정확성 확인</Strategy>
+          <Strategy>비교 기준 명시 여부 확인</Strategy>
+        </DetectionStrategies>
+        <CommonSubPatterns>
+          <SubPattern>
+            <Name>경제 지표 동사 오류</Name>
+            <Example>'실업률이 증가', '물가가 내려갔다'</Example>
+            <Fix>'실업률이 상승', '물가가 하락했다'</Fix>
+          </SubPattern>
+          <SubPattern>
+            <Name>단위 오류</Name>
+            <Example>'0.5% 높아졌다' (포인트 단위 누락)</Example>
+            <Fix>'0.5%포인트 높아졌다'</Fix>
+          </SubPattern>
+        </CommonSubPatterns>
+        <Priority>4</Priority>
+      </Pattern>
+
+      <Pattern id="PAT-REDUND-001" category="동어 반복">
+        <Description>의미가 중복되는 표현 병렬 사용</Description>
+        <ExampleReference>EX-004</ExampleReference>
+        <DetectionStrategies>
+          <Strategy>유사 의미 단어 인접 사용 확인</Strategy>
+          <Strategy>동일 의미 반복 확인</Strategy>
+        </DetectionStrategies>
+        <CommonRedundancies>
+          <Redundancy>
+            <Original>더욱 더</Original>
+            <Fix>더</Fix>
+          </Redundancy>
+          <Redundancy>
+            <Original>과거 이력</Original>
+            <Fix>이력</Fix>
+          </Redundancy>
+          <Redundancy>
+            <Original>계속 지속</Original>
+            <Fix>지속</Fix>
+          </Redundancy>
+        </CommonRedundancies>
+        <Priority>3</Priority>
+      </Pattern>
+
+      <Pattern id="PAT-LOGIC-001" category="인과 관계 오류">
+        <Description>'때문에', '덕분에' 등 논리적 연결 어색함</Description>
+        <DetectionStrategies>
+          <Strategy>인과 관계의 논리적 타당성 확인</Strategy>
+          <Strategy>원인과 결과의 순서 확인</Strategy>
+        </DetectionStrategies>
+        <CommonSubPatterns>
+          <SubPattern>
+            <Name>역인과 표현</Name>
+            <Example>'소비자 수요가 증가해서 공급이 늘어났다'</Example>
+            <Fix>맥락에 따라 인과 관계 재구성</Fix>
+          </SubPattern>
+          <SubPattern>
+            <Name>약한 인과 관계</Name>
+            <Example>'A가 일어나서 B가 일어났다' (인과성 불명확)</Example>
+            <Fix>'A로 인해 B가 일어났다' 또는 인과 관계 재검토</Fix>
+          </SubPattern>
+        </CommonSubPatterns>
+        <Priority>5</Priority>
+      </Pattern>
+
+      <Pattern id="PAT-TONE-001" category="어투 일관성 부족">
+        <Description>문체 불일치, 화법 혼합 등 어투 일관성 문제</Description>
+        <DetectionStrategies>
+          <Strategy>문장 종결 어미 일관성 확인</Strategy>
+          <Strategy>격식체/비격식체 혼용 확인</Strategy>
+        </DetectionStrategies>
+        <CommonSubPatterns>
+          <SubPattern>
+            <Name>종결어미 혼용</Name>
+            <Example>'확인했다. ... 전망됩니다.'</Example>
+            <Fix>일관된 종결어미 사용</Fix>
+          </SubPattern>
+          <SubPattern>
+            <Name>인용 화법 불일치</Name>
+            <Example>'그는 "중요하다"라고 말했습니다.'</Example>
+            <Fix>'그는 "중요하다"고 말했다.'</Fix>
+          </SubPattern>
+        </CommonSubPatterns>
+        <Priority>3</Priority>
+      </Pattern>
+    </ErrorTypePatterns>
+
+    <EditingGuidelines>
+      <PriorityGuidelines>
+        <Level value="[5·필수]">
+          <Description>명백한 오류로 반드시 수정이 필요한 항목</Description>
+          <Examples>
+            <Example>주어-서술어 불일치</Example>
+            <Example>인과관계 오류</Example>
+            <Example>통계 해석 심각한 오류</Example>
+          </Examples>
+          <ConfidenceRequired>99.9%</ConfidenceRequired>
+        </Level>
+        <Level value="[4·권고]">
+          <Description>관례적 오용으로 강력 권장되는 수정 항목</Description>
+          <Examples>
+            <Example>경제 용어 부적절한 사용</Example>
+            <Example>단위 표기 오류</Example>
+          </Examples>
+          <ConfidenceRequired>98%</ConfidenceRequired>
+        </Level>
+        <Level value="[3·제안]">
+          <Description>의미 전달은 가능하나 스타일상 개선이 필요한 항목</Description>
+          <Examples>
+            <Example>불필요한 중복 표현</Example>
+            <Example>군더더기 표현</Example>
+          </Examples>
+          <ConfidenceRequired>95%</ConfidenceRequired>
+        </Level>
+      </PriorityGuidelines>
+
+      <ContextualJudgment>
+        <Principle>
+          <Description>통계/사실 관련 표현은 정확성 우선</Description>
+          <Application>경제 지표, 통계 수치 관련 오류는 더 높은 우선순위 부여</Application>
+        </Principle>
+        <Principle>
+          <Description>표현/문장 스타일은 독자 이해도 기준</Description>
+          <Application>독자 혼란을 초래할 가능성이 있는 표현에 우선순위 부여</Application>
+        </Principle>
+      </ContextualJudgment>
+    </EditingGuidelines>
+
+    <FrequencyAnalysis>
+      <MostCommonErrors>
+        <Error rank="1">
+          <Type>띄어쓰기 오류</Type>
+          <Frequency>26%</Frequency>
+          <Example>'안되다' → '안 되다'</Example>
+        </Error>
+        <Error rank="2">
+          <Type>조사 사용 오류</Type>
+          <Frequency>18%</Frequency>
+          <Example>'기업에' → '기업이'</Example>
+        </Error>
+        <Error rank="3">
+          <Type>경제 용어 부적절 사용</Type>
+          <Frequency>15%</Frequency>
+          <Example>'금리가 늘었다' → '금리가 올랐다'</Example>
+        </Error>
+        <Error rank="4">
+          <Type>주어-서술어 불일치</Type>
+          <Frequency>12%</Frequency>
+          <Example>'정부의 방침이 발표했다' → '정부는 방침을 발표했다'</Example>
+        </Error>
+        <Error rank="5">
+          <Type>문장부호 오류</Type>
+          <Frequency>10%</Frequency>
+          <Example>문장 사이 마침표 누락</Example>
+        </Error>
+      </MostCommonErrors>
+
+      <CategoryDistribution>
+        <Category name="맞춤법 오류" percentage="35%" />
+        <Category name="문법 오류" percentage="28%" />
+        <Category name="경제 용어 오류" percentage="20%" />
+        <Category name="논리 오류" percentage="10%" />
+        <Category name="문체 문제" percentage="7%" />
+      </CategoryDistribution>
+    </FrequencyAnalysis>
+
+    <ConfidenceCalculation>
+      <Formula>
+        <Description>
+          교열 사례 패턴 매칭의 확신도는 다음 요소의 가중 평균으로 계산됩니다:
+          1. 패턴 일치도: 오류 패턴과의 일치 정도 (가중치: 0.5)
+          2. 맥락 적합성: 발견된 패턴이 맥락에 맞는 정도 (가중치: 0.3)
+          3. 사례 빈도: 과거 유사 사례의 발생 빈도 (가중치: 0.2)
+        </Description>
+        <Calculation>
+          확신도 = (패턴 일치도 × 0.5) + (맥락 적합성 × 0.3) + (사례 빈도 × 0.2)
+        </Calculation>
+      </Formula>
+      <ThresholdApplication>
+        <Threshold level="[5·필수]" value="99.9" />
+        <Threshold level="[4·권고]" value="98.0" />
+        <Threshold level="[3·제안]" value="95.0" />
+        <Threshold level="[2·참고]" value="90.0" />
+      </ThresholdApplication>
+      <ContextualAdjustment>
+        <Adjustment>
+          <Condition>매우 흔한 오류 패턴</Condition>
+          <ConfidenceBoost>+0.5%</ConfidenceBoost>
+        </Adjustment>
+        <Adjustment>
+          <Condition>맥락이 모호한 경우</Condition>
+          <ConfidenceReduction>-1.0%</ConfidenceReduction>
+        </Adjustment>
+      </ContextualAdjustment>
+    </ConfidenceCalculation>
+
+    <FeedbackIntegration>
+      <Process>
+        <Step>
+          <Order>1</Order>
+          <Action>기자의 교정 수용/거부 피드백 수집</Action>
+        </Step>
+        <Step>
+          <Order>2</Order>
+          <Action>거부된 교정 사례 분석</Action>
+        </Step>
+        <Step>
+          <Order>3</Order>
+          <Action>패턴 DB 업데이트 및 확신도 임계값 조정</Action>
+        </Step>
+      </Process>
+      <AdaptiveLearning>
+        <Principle>
+          <Description>지속적으로 기자 피드백을 바탕으로 패턴 DB를 개선합니다.</Description>
+          <Implementation>
+            <Method>자주 거부되는 패턴은 확신도 요구치 상향</Method>
+            <Method>높은 수용률의 패턴은 확신도 요구치 유지</Method>
+          </Implementation>
+        </Principle>
+      </AdaptiveLearning>
+    </FeedbackIntegration>
+  </KnowledgeCategory>
+</SeoulEconomicKnowledgeBase>
+
+## 교열 사례 및 패턴 데이터베이스 요약
+
+### 핵심 원칙
+1. **실증 기반 교정**: 실제 발생한 오류 패턴을 분석하고 표준화
+2. **맥락 고려**: 오류 패턴의 발생 맥락에 따른 적절한 교정 
+3. **최소 개입**: 필요한 부분만 최소한으로 교정하여 기자 스타일 존중
+
+### 주요 교열 사례
+1. **주어-서술어 불일치** [5·필수]
+   - 예: "정부는...기업의 투자 확대를 기대하고 있다" → "기업이 투자를 확대하길 기대하고 있다"
+   - 패턴: 주체 + '~의 ~을/를' + 행위 동사
+
+2. **어색한 조사 사용** [4·권고]
+   - 예: "일에 있어서 성실한" → "일에 성실한"
+   - 패턴: '~에 있어서', '~에 관해서' 등 군더더기 표현
+
+3. **통계 해석 오류** [5·필수]
+   - 예: "실업률은...증가해" → "실업률은...상승해"
+   - 패턴: 경제 지표에 부적절한 변화 동사 사용
+
+4. **동어 반복** [3·제안]
+   - 예: "경제를 활성화하기 위한 경기 부양책" → "경기 부양책"
+   - 패턴: 유사 의미 표현의 중복 사용
+
+5. **시간 표현 오류** [5·필수]
+   - 예: "내년 완공될 예정인 빌딩은 작년부터 공사가 시작됐다" → "작년부터 공사가 시작된 빌딩은 내년 완공될 예정이다"
+   - 패턴: 시간적 순서가 혼란스럽게 제시된 경우
+
+### 오류 유형별 패턴
+1. **문법 호응 오류** (PAT-GRAM-001)
+   - 주어-서술어 불일치, 수식어-피수식어 불일치
+   - 높은 우선순위 (P5) 적용
+
+2. **불필요한 표현** (PAT-STYLE-001)
+   - 군더더기 말투, 장황한 문장 구성
+   - 중간 우선순위 (P3) 적용
+
+3. **통계 수치 오류** (PAT-DATA-001)
+   - 경제 지표 표현 부적절, 단위 오류
+   - 높은 우선순위 (P4) 적용
+
+4. **동어 반복** (PAT-REDUND-001)
+   - 유사 의미 단어 중복, 불필요한 반복
+   - 중간 우선순위 (P3) 적용
+
+5. **인과 관계 오류** (PAT-LOGIC-001)
+   - 원인-결과 순서 뒤바뀜, 인과성 불명확
+   - 최고 우선순위 (P5) 적용
+
+### 확신도 계산 방식
+패턴 일치도(0.5) + 맥락 적합성(0.3) + 사례 빈도(0.2) = 확신도
+
+### 오류 빈도 분석
+- 가장 흔한 오류: 띄어쓰기 오류 (26%)
+- 주요 오류 카테고리: 맞춤법(35%), 문법(28%), 경제 용어(20%)
+
+### 지속적 개선 체계
+- 기자 피드백 수집 및 분석
+- 거부된 교정 사례 연구
+- 패턴 DB 업데이트 및 확신도 임계값 조정

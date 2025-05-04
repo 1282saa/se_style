@@ -1,0 +1,230 @@
+- 두번쨰 문서화
+    
+    # 한국어 교열 서비스 개발 프로젝트 인수인계 문서
+    
+    ## 프로젝트 개요
+    
+    본 프로젝트는 두 가지 버전의 교정 결과를 제공하는 한국어 교열 서비스입니다. 사용자가 제출한 텍스트에 대해 두 가지 다른 스타일의 교정 결과를 생성하고, 사용자 피드백을 통해 맞춤형 시스템으로 발전시키는 것을 목표로 합니다.
+    
+    ## 기술 스택
+    
+    - **백엔드**: Node.js/Express.js, MongoDB
+    - **AI 모델**: Anthropic Claude API (임베딩 및 텍스트 생성)
+    - **기타 라이브러리**: axios, winston, cors 등
+    
+    ## 파일 구조 및 주요 구현 내용
+    
+    ### 모델 (src/models/)
+    
+    - **article.model.js**: 교정 요청 데이터를 저장하는 모델
+    - **correction.model.js**: 교정 결과를 저장하는 모델
+    - **styleguide.model.js**: 스타일 가이드 규칙을 저장하는 모델
+    - **userChoice.model.js**: 사용자의 선택 및 피드백을 저장하는 모델
+    
+    ### 컨트롤러 (src/controllers/)
+    
+    - **article.controller.js**: 기사 관련 API 컨트롤러 (생성, 조회, 교정 등)
+    - **styleGuide.controller.js**: 스타일 가이드 관련 API 컨트롤러
+    - **analytics.controller.js**: 분석 관련 API 컨트롤러
+    
+    ### 서비스 (src/services/)
+    
+    - **proofreadingService.js**: 교정 핵심 로직을 담당하는 통합 서비스
+    - **styleGuideService.js**: 스타일 가이드 검색 및 관리 서비스
+    - **analyticsService.js**: 사용자 피드백 및 서비스 분석 서비스
+    - **llm/llm.service.js**: Claude API 연동 서비스
+    - **llm/promptGenerator.service.js**: 교정 프롬프트 생성 서비스
+    
+    ### 라우터 (src/routes/)
+    
+    - **index.js**: 모든 라우터를 통합하는 메인 라우터
+    - **article.routes.js**: 기사 관련 API 라우트
+    - **styleGuide.routes.js**: 스타일 가이드 관련 API 라우트
+    - **analytics.routes.js**: 분석 관련 API 라우트
+    
+    ### 기타
+    
+    - **src/config/index.js**: 환경 설정 관리
+    - **src/utils/logger.js**: 로깅 유틸리티
+    - **src/app.js**: 애플리케이션 진입점
+    - **package.json**: 프로젝트 설정 및 의존성 정보
+    - **.env.example**: 환경 변수 예제 파일
+    
+    ## 핵심 기능 구현
+    
+    ### 1. 두 가지 교정 스타일 제공
+    
+    - `promptGenerator.service.js`에서 두 가지 유형의 프롬프트 생성
+        - `generateMinimalPrompt()`: 최소한의 교정 (맞춤법, 띄어쓰기, 문법 오류만 수정)
+        - `generateEnhancedPrompt()`: 적극적인 교정 (문체와 표현까지 적극적으로 개선)
+    - `proofreadingService.js`에서 각 유형별 교정 결과 생성
+    
+    ### 2. RAG 기반 스타일 가이드 적용
+    
+    - `styleGuideService.js`에서 관련 스타일 가이드 검색 구현
+        - `findRelatedStyleGuides()`: 텍스트 관련 가이드 검색
+        - `vectorSearch()`: 벡터 검색 (임베딩 기반)
+        - `keywordSearch()`: 키워드 기반 검색
+    - `promptGenerator.js`에서 검색된 가이드를 프롬프트에 포함
+        - `formatStyleGuides()`: 스타일 가이드를 프롬프트 형식으로 변환
+    
+    ### 3. 사용자 피드백 시스템
+    
+    - `userChoice.model.js`로 사용자 선택 및 피드백 저장
+    - `proofreadingService.js`의 `saveUserChoice()` 함수로 선택 저장
+    - `analyticsService.js`에서 사용자 선호도 분석
+        - `analyzeUserPreferences()`: 사용자별 선호도 분석
+        - `analyzeTopicPreferences()`: 주제별 선호도 분석
+    
+    ### 4. Claude API 연동
+    
+    - `llm.service.js`에서 Claude API 연동 구현
+        - `generateWithClaude()`: 텍스트 생성 API 호출
+        - `createEmbedding()`: 임베딩 생성 API 호출
+    - 캐싱 메커니즘으로 중복 API 호출 방지
+    
+    ### 5. 분석 기능
+    
+    - `analyticsService.js`에서 다양한 서비스 분석 기능 구현
+        - `getServiceStats()`: 전체 서비스 통계
+        - `getCorrectionTimeStats()`: 교정 시간대별 통계
+        - `getPromptTypeDistribution()`: 프롬프트 유형별 분포
+        - `getCommonCorrections()`: 자주 발생하는 교정 유형
+        - `getFeedbackStats()`: 사용자 피드백 통계
+        - `getCategoryStats()`: 카테고리별 교정 통계
+    
+    ## API 엔드포인트
+    
+    ### 기사 관련 API
+    
+    - `POST /api/articles`: 새 기사 생성
+    - `GET /api/articles/:id`: 특정 기사 조회
+    - `GET /api/articles`: 사용자별 기사 목록 조회
+    - `POST /api/articles/quick-proofread`: 빠른 교정 수행
+    - `POST /api/articles/:id/proofread`: 특정 기사 교정
+    - `GET /api/articles/:id/corrections`: 특정 기사의 교정 결과 조회
+    - `POST /api/articles/:id/choose`: 사용자 선택 저장
+    
+    ### 스타일 가이드 관련 API
+    
+    - `GET /api/style-guides`: 스타일 가이드 목록 조회
+    - `GET /api/style-guides/:id`: 특정 스타일 가이드 조회
+    - `POST /api/style-guides`: 스타일 가이드 생성
+    - `PUT /api/style-guides/:id`: 스타일 가이드 업데이트
+    - `DELETE /api/style-guides/:id`: 스타일 가이드 삭제
+    - `POST /api/style-guides/search`: 관련 스타일 가이드 검색
+    - `POST /api/style-guides/import`: 스타일북 가져오기
+    - `POST /api/style-guides/generate-embeddings`: 임베딩 생성
+    - `POST /api/style-guides/vector-search`: 벡터 검색 테스트
+    
+    ### 분석 관련 API
+    
+    - `GET /api/analytics/user-preferences/:userId`: 사용자별 교정 선호도 분석
+    - `GET /api/analytics/stats`: 전체 서비스 통계
+    - `GET /api/analytics/correction-time`: 교정 시간 통계
+    - `GET /api/analytics/common-corrections`: 자주 발생하는 교정 유형
+    - `GET /api/analytics/prompt-preferences`: 프롬프트 유형별 선호도
+    - `GET /api/analytics/feedback`: 사용자 피드백 통계
+    - `GET /api/analytics/category-stats`: 카테고리별 교정 통계
+    
+    ## 환경 설정
+    
+    서비스 구동에 필요한 환경 변수는 `.env.example` 파일에 정의되어 있습니다:
+    
+    ```
+    # 서버 설정
+    PORT=3000
+    NODE_ENV=development
+    LOG_LEVEL=info
+    
+    # MongoDB 설정
+    MONGODB_URI=mongodb://localhost:27017/proofreading-service
+    
+    # Claude API 설정
+    ANTHROPIC_API_KEY=your_anthropic_api_key_here
+    CLAUDE_MODEL=claude-3-opus-20240229
+    EMBEDDING_MODEL=claude-3-sonnet-20240229
+    
+    # 스타일북 설정
+    STYLE_BOOK_DIR=./data/stylebook
+    
+    # CORS 설정
+    CORS_ORIGIN=http://localhost:3001
+    
+    # 토큰 제한
+    TOKEN_LIMIT=16000
+    
+    ```
+    
+    ## 실행 방법
+    
+    1. 의존성 설치
+        
+        ```bash
+        npm install
+        
+        ```
+        
+    2. 환경 변수 설정
+        
+        ```bash
+        cp .env.example .env
+        # .env 파일을 편집하여 API 키 및 MongoDB URI 설정
+        
+        ```
+        
+    3. 개발 모드로 실행
+        
+        ```bash
+        npm run dev
+        
+        ```
+        
+    4. 또는 일반 모드로 실행
+        
+        ```bash
+        npm start
+        
+        ```
+        
+    
+    ## 데이터 가져오기
+    
+    스타일북 데이터는 `scripts/import-stylebook.js`를 사용하여 가져올 수 있습니다:
+    
+    ```bash
+    npm run import-stylebook
+    
+    ```
+    
+    임베딩 생성은 다음 명령으로 수행합니다:
+    
+    ```bash
+    npm run generate-embeddings
+    
+    ```
+    
+    ## 다음 단계 및 개선 사항
+    
+    1. **프론트엔드 개발**
+        - React와 Tailwind CSS를 활용한 UI 구현
+        - 교정 결과 비교 및 선택 인터페이스 구현
+    2. **테스트 작성**
+        - 단위 테스트 및 통합 테스트 구현
+        - 성능 및 스트레스 테스트 구현
+    3. **벡터 검색 고도화**
+        - 임베딩 최적화
+        - 더 정확한 관련 규칙 검색 알고리즘 개발
+    4. **배포 환경 구축**
+        - Docker 컨테이너화
+        - CI/CD 파이프라인 구축
+        - 모니터링 및 로그 분석
+    
+    ## 특이 사항
+    
+    - 이 서비스는 **Claude API**만 사용하여 구현되었습니다. OpenAI API는 사용하지 않습니다.
+    - 스타일북 데이터는 `data/stylebook` 디렉토리에 JSON 형식으로 저장됩니다.
+    - 교정 결과의 캐싱 메커니즘이 구현되어 있어 중복 API 호출을 방지합니다.
+    - 모든 로그는 `logs` 디렉토리에 일별로 저장됩니다.
+    
+    이 문서가 프로젝트의 전반적인 구조와 기능을 이해하는 데 도움이 되길 바랍니다. 추가 질문이 있으시면 언제든지 문의해주세요.

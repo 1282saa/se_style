@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<versionInfo>
+  <version>1.1</version>
+  <lastUpdated>2025-04-27</lastUpdated>
+  <lastEditor>교열팀</lastEditor>
+</versionInfo>
+
+<SeoulEconomicKnowledgeBase>
+  <KnowledgeCategory id="KB4" name="경제 전문용어 및 분야별 표현">
+    <Description>
+      서울경제신문 교열 기준에 따른 경제 전문용어, 분야별 표현 규칙, 기관 및 약어 처리 방식 등입니다.
+      경제 용어의 일관성, 통용 용어 우선 원칙, 분야별 표준 용어, 기관명 표기법 등을 포함합니다.
+    </Description>
+    
+    <MetaInformation>
+<principleReference>
+  핵심 원칙 및 우선순위 분류는 디스_교열.txt의 다음 섹션을 참조합니다:
+  • <corePrinciples id="master">
+  • <decisionTree id="priorityClassification">
+</principleReference>
+
+      <Version>1.2</Version>
+      <LastUpdated>2024-04-27</LastUpdated>
+      <Source>04_경제전문용어_분야별 표현규칙.txt</Source>
+      <MaintenanceOwner>서울경제신문 교열팀</MaintenanceOwner>
+    </MetaInformation>
+    
+    <SearchAlgorithm>
+      <Method>경제 용어 사전 매칭</Method>
+      <Method>분야별 용어 규칙 적용</Method>
+      <Method>기관명 및 약어 표준화 검사</Method>
+      <Method>혼동 가능 용어 구분 검증</Method>
+    </SearchAlgorithm>
+    
+    <GeneralPrinciples>
+      <Principle id="ET-001">
+        <n>경제 용어 일관성 원칙</n>
+        <Description>동일한 경제 개념은 기사 내에서 일관된 용어로 표현합니다.</Description>
+        <Application>특히 전문 용어, 지표명, 기관명 등은 일관되게 사용해야 합니다.</Application>
+        <Priority>1</Priority>
+      </Principle>
+      
+      <Principle id="ET-002">
+        <n>통용 용어 우선 원칙</n>
+        <Description>경제 분야에서 통상적으로 사용되는 용어를 우선 사용합니다.</Description>
+        <Application>다만, 어려운 전문용어는 필요시 쉬운 설명을 병기할 수 있습니다.</Application>
+        <Priority>2</Priority>
+      </Principle>
+      
+      <Principle id="ET-003">
+        <n>약어 명확화 원칙</n>
+        <Description>전문 약어는 최초 등장 시 전체 명칭과 함께 표기합니다.</Description>
+        <Application>이후 언급부터는 약어만 사용 가능합니다.</Application>
+        <Priority>2</Priority>
+      </Principle>
+    </GeneralPrinciples>
+
+    <RuleCategories>
+      <Category name="경제 전문용어 사용">
+        <Rule id="SE-EC-TERM-001" priority="5" confidenceThreshold="99.9">
+          <Title>용어의 일관된 사용</Title>
+          <Description>
+            동일 문서 내에서 경제 용어는 일관되게 사용해야 합니다.
+            같은 개념에 대해 다른 용어를 혼용하면 독자에게 혼란을 줄 수 있습니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>기준금리 / 기준금리</Correct>
+              <Wrong>기준금리 / 기준 이자율</Wrong>
+              <Explanation>동일 개념에 다른 용어 사용</Explanation>
+            </Example>
+            <Example>
+              <Correct>물가상승률 / 물가상승률</Correct>
+              <Wrong>물가상승률 / 인플레이션율</Wrong>
+              <Explanation>한글 용어와 외래어 혼용</Explanation>
+            </Example>
+          </Examples>
+          <ConsistencyPattern>
+            <Element>경제 지표명</Element>
+            <Element>정책 명칭</Element>
+            <Element>기관명 및 약어</Element>
+            <Element>금융상품명</Element>
+          </ConsistencyPattern>
+          <ConfidenceFactors>
+            <Factor name="용어 명확성">
+              <Description>용어의 의미가 동일한지 여부</Description>
+              <Weight>0.6</Weight>
+            </Factor>
+            <Factor name="독자 혼란 가능성">
+              <Description>혼용 시 독자 혼란 초래 정도</Description>
+              <Weight>0.4</Weight>
+            </Factor>
+          </ConfidenceFactors>
+        </Rule>
+
+        <Rule id="SE-EC-TERM-002" priority="4" confidenceThreshold="98">
+          <Title>통상 용어 우선 사용</Title>
+          <Description>
+            대중적으로 통용되는 용어를 우선 사용하되, 전문용어는 괄호 병기합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>디폴트(채무불이행)</Correct>
+              <Wrong>채무불이행(디폴트)</Wrong>
+              <Explanation>통용 용어인 '디폴트'를 앞에 배치</Explanation>
+            </Example>
+            <Example>
+              <Correct>양적완화(QE)</Correct>
+              <Wrong>QE</Wrong>
+              <Explanation>약어만 단독 사용</Explanation>
+            </Example>
+          </Examples>
+          <SEStylePreference>
+            <Preference>
+              경제 기사에서는 일반적으로 통용되는 용어를 선호하되, 전문 독자를 고려해
+              필요한 경우 전문 용어나 약어를 병기합니다.
+              단, 매우 일반화된 약어(GDP, IMF 등)는 바로 사용할 수 있습니다.
+            </Preference>
+          </SEStylePreference>
+        </Rule>
+      </Category>
+
+      <Category name="분야별 용어 규칙">
+        <Rule id="SE-EC-FIELD-001" priority="4" confidenceThreshold="97">
+          <Title>금융 분야</Title>
+          <Description>
+            금융 분야 용어는 표준화된 표현을 사용하고, 필요시 약어를
+            병기합니다.
+          </Description>
+          <KeyTerms>
+            <Term name="기준금리">
+              <Definition>중앙은행이 금융기관과 거래할 때 기준이 되는 금리</Definition>
+              <Usage>한국은행이 기준금리를 0.25%포인트 인상했다.</Usage>
+              <CommonMistakes>
+                <Wrong>베이스 금리</Wrong>
+                <Wrong>기본금리</Wrong>
+              </CommonMistakes>
+            </Term>
+            <Term name="양적완화">
+              <Definition>중앙은행이 시중에 자금을 공급하는 통화정책</Definition>
+              <Usage>미 연준은 양적완화(QE) 종료를 선언했다.</Usage>
+              <Note>영문 약어 QE 병기 가능</Note>
+            </Term>
+            <Term name="유동성">
+              <Definition>현금으로 쉽게 바꿀 수 있는 자산의 정도</Definition>
+              <Usage>시중 유동성이 증가하고 있다.</Usage>
+            </Term>
+            <Term name="채권수익률">
+              <Definition>채권 투자로 얻을 수 있는 수익률</Definition>
+              <Usage>10년물 국채 수익률이 상승했다.</Usage>
+              <CommonMistakes>
+                <Wrong>채권 이자율</Wrong>
+              </CommonMistakes>
+            </Term>
+          </KeyTerms>
+          <SEStyleNotes>
+            <Note>금융 용어는 한국은행, 금융감독원 등 공식 기관의 표준 용어를 우선 적용합니다.</Note>
+            <Note>영문 약어가 통용되는 경우 첫 등장 시 한글 표기 후 괄호 안에 약어를 병기합니다.</Note>
+          </SEStyleNotes>
+        </Rule>
+
+        <Rule id="SE-EC-FIELD-002" priority="4" confidenceThreshold="97">
+          <Title>산업 분야</Title>
+          <Description>
+            산업 분야 용어는 분야별 표준 용어를 사용하고, 특히 수출입 통계는 정확한 수치와 기간을 포함해야 합니다.
+          </Description>
+          <KeyTerms>
+            <Term name="반도체">
+              <SubTerms>
+                <Term>파운드리(위탁생산)</Term>
+                <Term>시스템반도체</Term>
+                <Term>메모리반도체</Term>
+              </SubTerms>
+              <Usage>삼성전자는 파운드리 사업에 대규모 투자를 진행한다.</Usage>
+            </Term>
+            <Term name="공급망">
+              <Definition>원자재부터 최종 제품까지의 생산·유통 과정</Definition>
+              <Usage>글로벌 공급망 재편이 가속화되고 있다.</Usage>
+              <CommonMistakes>
+                <Wrong>서플라이체인</Wrong>
+              </CommonMistakes>
+            </Term>
+            <Term name="제조업 PMI">
+              <Definition>구매관리자지수로, 제조업 경기 동향을 나타내는 지표</Definition>
+              <Usage>지난달 제조업 PMI는, 50.2를 기록했다.</Usage>
+              <Note>첫 등장 시 '구매관리자지수(PMI)'로 표기</Note>
+            </Term>
+          </KeyTerms>
+          <DataPresentationRules>
+            <Rule>수출입 통계는 반드시 비교 시점과 증감률을 명시해야 함</Rule>
+            <Example>
+              <Correct>6월 수출은 전년 동기 대비 5.3% 증가한 541억 달러를 기록했다.</Correct>
+              <Wrong>수출이 541억 달러를 기록했다.</Wrong>
+            </Example>
+          </DataPresentationRules>
+        </Rule>
+
+        <Rule id="SE-EC-FIELD-003" priority="4" confidenceThreshold="97">
+          <Title>노동/고용 분야</Title>
+          <Description>
+            노동 및 고용 관련 용어는 통계청 표준 용어에 준거하여 사용합니다.
+          </Description>
+          <KeyTerms>
+            <Term name="실업률">
+              <Definition>경제활동인구 중 실업자 비율</Definition>
+              <Usage>실업률은 전월보다 0.2%포인트 하락한 3.3%를 기록했다.</Usage>
+              <Note>반드시 '%포인트'로 증감 표시</Note>
+            </Term>
+            <Term name="고용률">
+              <Definition>15세 이상 인구 중 취업자 비율</Definition>
+              <Usage>고용률은 61.8%를 기록했다.</Usage>
+            </Term>
+            <Term name="경제활동참가율">
+              <Definition>15세 이상 인구 중 경제활동인구 비율</Definition>
+              <Usage>경제활동참가율은 63.5%로 집계됐다.</Usage>
+            </Term>
+            <Term name="비정규직">
+              <Definition>한시적, 시간제, 비전형 근로자 등 정규직이 아닌 근로자</Definition>
+              <Usage>비정규직 비율이 36.3%로 나타났다.</Usage>
+              <Alternatives>
+                <Term>한시적 근로자</Term>
+                <Term>계약직 근로자</Term>
+              </Alternatives>
+            </Term>
+          </KeyTerms>
+          <SEStyleNotes>
+            <Note>고용 지표는 통계청 기준 용어를 사용하고, 발표 출처 및 조사 기간을 명시합니다.</Note>
+            <Note>실업률, 고용률 등 비율 지표의 변화는 '%포인트'로 표기합니다.</Note>
+          </SEStyleNotes>
+        </Rule>
+      </Category>
+
+      <Category name="기관명 및 약어 표기">
+        <Rule id="SE-EC-ORG-001" priority="4" confidenceThreshold="98">
+          <Title>공식 기관명 첫 언급 시 전체 명칭</Title>
+          <Description>
+            기사 내 기관명은 첫 언급 시 전체 명칭 + 약어 병기해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>한국은행(한은)은 기준금리를 동결했다. 이후 한은은...</Correct>
+              <Wrong>한은은 기준금리를 동결했다. 이후 한은은...</Wrong>
+              <Explanation>첫 언급 시 전체 명칭 없이 약어만 사용</Explanation>
+            </Example>
+          </Examples>
+          <InstitutionNamingPatterns>
+            <Pattern type="정부부처">
+              <FirstMention>기획재정부(기재부)</FirstMention>
+              <SubsequentMention>기재부</SubsequentMention>
+            </Pattern>
+            <Pattern type="중앙은행">
+              <FirstMention>한국은행(한은)</FirstMention>
+              <SubsequentMention>한은</SubsequentMention>
+            </Pattern>
+            <Pattern type="연구기관">
+              <FirstMention>한국경제연구원(한경연)</FirstMention>
+              <SubsequentMention>한경연</SubsequentMention>
+            </Pattern>
+          </InstitutionNamingPatterns>
+        </Rule>
+
+        <Rule id="SE-EC-ORG-002" priority="3" confidenceThreshold="95">
+          <Title>외국 기관은 원어 병기 가능</Title>
+          <Description>
+            연준(Fed), 유럽중앙은행(ECB) 등 외국 기관은 영문 병기가 가능합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>미국 연방준비제도이사회(Fed)는 기준금리를 동결했다.</Correct>
+              <Wrong>Fed는 기준금리를 동결했다.</Wrong>
+              <Explanation>첫 언급 시 한글 명칭 없이 약어만 사용</Explanation>
+            </Example>
+          </Examples>
+          <ForeignInstitutionPatterns>
+            <Pattern language="영어">
+              <Format>한글명(영문약어)</Format>
+              <Example>국제통화기금(IMF)</Example>
+            </Pattern>
+            <Pattern language="중국어">
+              <Format>한글명(중문명)</Format>
+              <Example>중국인민은행(中国人民银行)</Example>
+            </Pattern>
+          </ForeignInstitutionPatterns>
+          <CommonAbbreviations>
+            <Item fullname="미국 연방준비제도이사회" abbr="Fed" />
+            <Item fullname="유럽중앙은행" abbr="ECB" />
+            <Item fullname="국제통화기금" abbr="IMF" />
+            <Item fullname="경제협력개발기구" abbr="OECD" />
+          </CommonAbbreviations>
+        </Rule>
+      </Category>
+
+      <Category name="용어 혼동 방지">
+        <Rule id="SE-EC-CONFUSE-001" priority="5" confidenceThreshold="99.9">
+          <Title>유사 용어 구분 표기</Title>
+          <Description>
+            비슷한 개념을 정확히 구분하여 사용해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Term>인플레이션</Term>
+              <Contrast>디플레이션</Contrast>
+              <Explanation>물가 상승 vs. 물가 하락</Explanation>
+            </Example>
+            <Example>
+              <Term>환율 상승(원화 약세)</Term>
+              <Contrast>환율 하락(원화 강세)</Contrast>
+              <Explanation>추가 설명 병기로 혼동 방지</Explanation>
+            </Example>
+          </Examples>
+          <FrequentlyConfusedTerms>
+            <TermPair>
+              <Term1>금리 인상</Term1>
+              <Term2>금리 인하</Term2>
+              <Distinction>높이는 것 vs. 낮추는 것</Distinction>
+            </TermPair>
+            <TermPair>
+              <Term1>경기 침체</Term1>
+              <Term2>경기 둔화</Term2>
+              <Distinction>마이너스 성장 vs. 성장률 감소</Distinction>
+            </TermPair>
+            <TermPair>
+              <Term1>수출 증가율</Term1>
+              <Term2>수출 규모</Term2>
+              <Distinction>변화 속도 vs. 절대적 크기</Distinction>
+            </TermPair>
+          </FrequentlyConfusedTerms>
+          <SEStyleRecommendation>
+            <Recommendation>
+              경제 지표의 변화를 설명할 때는 '증가/감소', '상승/하락', '개선/악화' 등
+              방향성이 명확한 용어를 사용하고, 필요시 부연 설명을 추가합니다.
+            </Recommendation>
+          </SEStyleRecommendation>
+        </Rule>
+
+        <Rule id="SE-EC-CONFUSE-002" priority="4" confidenceThreshold="98">
+          <Title>정책 명칭 정확 표기</Title>
+          <Description>
+            정책명은 공식 발표문 기준으로 정확하게 표기해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>한국형 뉴딜</Correct>
+              <Wrong>뉴딜 정책</Wrong>
+              <Explanation>공식 정책명 사용</Explanation>
+            </Example>
+          </Examples>
+          <OfficialPolicyNames>
+            <Policy name="한국형 뉴딜" ministry="기획재정부" />
+            <Policy name="신성장동력 정책" ministry="산업통상자원부" />
+            <Policy name="혁신성장 전략" ministry="기획재정부" />
+          </OfficialPolicyNames>
+          <SEStyleNotes>
+            <Note>정책 명칭은 담당 부처의 공식 명칭을 사용하고, 필요시 정책 시행 주체를 명시합니다.</Note>
+            <Note>유사한 정책들을 구분할 필요가 있을 때는 시행 시기나 특성을 병기할 수 있습니다.</Note>
+          </SEStyleNotes>
+        </Rule>
+      </Category>
+
+      <Category name="경제 문체 특화 규칙">
+        <Rule id="SE-EC-STYLE-001" priority="3" confidenceThreshold="95">
+          <Title>간결한 문장 우선</Title>
+          <Description>
+            경제 기사는 숫자, 용어가 많기 때문에 문장은 간결해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Correct>금리는 0.25%포인트 올랐다.</Correct>
+              <Wrong>기준금리는 총재의 회의 결과에 따라 소폭 인상됐다.</Wrong>
+              <Explanation>불필요한 설명 제거</Explanation>
+            </Example>
+          </Examples>
+          <SentenceStructureGuidelines>
+            <Guideline>주요 경제 지표는 수치와 함께 간결하게 제시</Guideline>
+            <Guideline>주어-서술어 간 거리를 최소화</Guideline>
+            <Guideline>부수적 설명은 별도 문장으로 분리</Guideline>
+          </SentenceStructureGuidelines>
+          <SEStylePreference>
+            <Preference>
+              경제 기사는 정보 전달이 중심이므로, 장식적 표현보다는 
+              명확하고 간결한 문장 구조를 선호합니다.
+            </Preference>
+          </SEStylePreference>
+        </Rule>
+
+        <Rule id="SE-EC-STYLE-002" priority="3" confidenceThreshold="95">
+          <Title>동어 반복 지양</Title>
+          <Description>
+            의미가 중복되는 표현의 사용을 피합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>기준금리를 인상하여 금리를 올렸다.</Wrong>
+              <Correct>기준금리를 인상했다.</Correct>
+              <Explanation>유사 의미 반복 제거</Explanation>
+            </Example>
+          </Examples>
+          <CommonRedundancies>
+            <Redundancy>
+              <Wrong>전망 예측</Wrong>
+              <Correct>전망</Correct>
+            </Redundancy>
+            <Redundancy>
+              <Wrong>감소 하락</Wrong>
+              <Correct>감소</Correct>
+            </Redundancy>
+            <Redundancy>
+              <Wrong>순차적으로 차례대로</Wrong>
+              <Correct>순차적으로</Correct>
+            </Redundancy>
+          </CommonRedundancies>
+        </Rule>
+      </Category>
+    </RuleCategories>
+
+    <EconomicIndicatorGuidelines>
+      <IndicatorPresentation>
+        <Indicator name="GDP">
+          <Format>전(년/분기) 대비 (X)% (증가/감소)</Format>
+          <Example>한국 경제는 1분기에 전 분기 대비 0.8% 성장했다.</Example>
+          <UnitsOfMeasure>
+            <Quarterly>전 분기 대비 %</Quarterly>
+            <Yearly>전년 대비 %</Yearly>
+          </UnitsOfMeasure>
+        </Indicator>
+        <Indicator name="물가상승률">
+          <Format>전(년/월) 대비 (X)% (상승/하락)</Format>
+          <Example>소비자물가는 전년 동월 대비 3.3% 상승했다.</Example>
+          <UnitsOfMeasure>
+            <Monthly>전년 동월 대비 %</Monthly>
+            <Change>%포인트</Change>
+          </UnitsOfMeasure>
+        </Indicator>
+        <Indicator name="금리">
+          <Format>(X)% / (X)%포인트 (인상/인하/동결)</Format>
+          <Example>한국은행은 기준금리를 0.25%포인트 인상해 3.50%로 결정했다.</Example>
+          <UnitsOfMeasure>
+            <Level>%</Level>
+            <Change>%포인트</Change>
+          </UnitsOfMeasure>
+        </Indicator>
+      </IndicatorPresentation>
+      
+      <ComparisonStandardization>
+        <Rule>
+          <Description>경제 지표 비교 시 기준 시점과 단위를 명확히 표시해야 합니다.</Description>
+          <Formats>
+            <Format type="전년 동기 대비">전년 동기 대비 (증감률)%</Format>
+            <Format type="전월 대비">전월 대비 (증감률)%</Format>
+            <Format type="전 분기 대비">전 분기 대비 (증감률)%</Format>
+          </Formats>
+          <Examples>
+            <Example>4월 수출은 전년 동월 대비 5.7% 감소했다.</Example>
+            <Example>3분기 경제성장률은 전 분기 대비 0.6% 성장했다.</Example>
+          </Examples>
+        </Rule>
+      </ComparisonStandardization>
+    </EconomicIndicatorGuidelines>
+
+    <FinancialTermsStandardization>
+      <Category name="주식시장">
+        <Term standard="코스피" variants="KOSPI, 종합주가지수" />
+        <Term standard="코스닥" variants="KOSDAQ, 코스닥지수" />
+        <Term standard="시가총액" variants="시총" />
+        <Term standard="주가수익비율(PER)" variants="PER" note="첫 언급 시 풀네임+약어 표기" />
+      </Category>
+      
+      <Category name="금융상품">
+        <Term standard="회사채" variants="기업채권" />
+        <Term standard="국고채" variants="국채" />
+        <Term standard="양도성예금증서" variants="CD" note="첫 언급 시 한글명+영문약어 표기" />
+        <Term standard="자산유동화증권" variants="ABS" note="첫 언급 시 한글명+영문약어 표기" />
+      </Category>
+      
+      <Category name="환율">
+        <Term standard="원/달러 환율" variants="원달러 환율, 달러당 원화 가치" />
+        <Term standard="원화 강세" variants="환율 하락" />
+        <Term standard="원화 약세" variants="환율 상승" />
+      </Category>
+    </FinancialTermsStandardization>
+
+    <ConfidenceCalculation>
+      <Formula>
+        <Description>
+          경제 전문용어 규칙의 확신도는 다음 요소의 가중 평균으로 계산됩니다:
+          1. 용어의 표준성: 해당 용어가 표준에서 벗어난 정도 (가중치: 0.5)
+          2. 혼동 가능성: 용어 혼용이 독자 혼란을 초래할 가능성 (가중치: 0.3)
+          3. 일관성 위반: 기사 내 일관성 위반 정도 (가중치: 0.2)
+        </Description>
+        <Calculation>
+          확신도 = (용어의 표준성 × 0.5) + (혼동 가능성 × 0.3) + (일관성 위반 × 0.2)
+        </Calculation>
+      </Formula>
+      <ThresholdApplication>
+        <Threshold level="[5·필수]" value="99.9" />
+        <Threshold level="[4·권고]" value="98.0" />
+        <Threshold level="[3·제안]" value="95.0" />
+        <Threshold level="[2·참고]" value="90.0" />
+      </ThresholdApplication>
+    </ConfidenceCalculation>
+  </KnowledgeCategory>
+</SeoulEconomicKnowledgeBase>
+
+## 경제 전문용어 및 분야별 표현 규칙 요약
+
+### 핵심 원칙
+1. **경제 용어 일관성**: 동일 개념은 일관된 용어로 표현
+2. **통용 용어 우선**: 통상적으로 사용되는 용어 우선 적용
+3. **약어 명확화**: 첫 등장 시 전체 명칭과 함께 표기
+
+### 주요 규칙 카테고리
+1. **경제 전문용어 사용**
+   - 용어 일관된 사용 (혼용 지양)
+   - 통상 용어 우선 사용 (필요시 전문용어 병기)
+   
+2. **분야별 용어 규칙**
+   - 금융 분야 (기준금리, 양적완화, 유동성 등)
+   - 산업 분야 (반도체, 공급망, 제조업 PMI 등)
+   - 노동/고용 분야 (실업률, 고용률, 경제활동참가율 등)
+   
+3. **기관명 및 약어 표기**
+   - 공식 기관명 첫 언급 시 전체 명칭 + 약어 병기
+   - 외국 기관은 원어 병기 가능
+
+4. **용어 혼동 방지**
+   - 유사 용어 구분 표기 (인플레이션 vs 디플레이션)
+   - 정책 명칭 정확 표기 (공식 발표문 기준)
+   
+5. **경제 문체 특화 규칙**
+   - 간결한 문장 우선 (불필요한 설명 제거)
+   - 동어 반복 지양 (중복 표현 제거)
+
+### 경제 지표 표현 가이드
+- **GDP**: 전(년/분기) 대비 X% (증가/감소)
+- **물가상승률**: 전(년/월) 대비 X% (상승/하락)
+- **금리**: X% / X%포인트 (인상/인하/동결)
+- **비교 기준**: 전년 동기 대비, 전월 대비 등 명확히 표시
+
+### 우선순위에 따른 규칙 구분
+- **[5·필수]**: 용어 일관성, 유사 용어 혼동 (확신도 99.9% 이상)
+- **[4·권고]**: 기관명 표기, 정책명 정확 표기 (확신도 98% 이상)
+- **[3·제안]**: 문체 개선, 간결성 향상 (확신도 95% 이상)
+
+### 판단 기준
+용어의 표준성(0.5) + 혼동 가능성(0.3) + 일관성 위반(0.2) = 확신도

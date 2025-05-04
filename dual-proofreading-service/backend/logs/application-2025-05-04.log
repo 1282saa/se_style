@@ -1,0 +1,479 @@
+2025-05-04 15:01:26 [ERROR] MongoDB 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:07:45 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:09:49 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:23:36 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:28:16 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 15:28:17 [INFO] 스타일북 가져오기 완료: 총 8개 중 7개 생성, 1개 업데이트, 0개 실패 
+2025-05-04 15:28:54 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:28:54 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:28:54 [INFO] 환경: development 
+2025-05-04 15:29:23 [INFO] 서버를 종료합니다 
+2025-05-04 15:29:25 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 15:29:25 [INFO] 스타일 가이드 임베딩 생성 시작... 
+2025-05-04 15:29:25 [INFO] 임베딩 생성 대상: 7개 항목 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83de): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ea): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ee): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f2): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f5): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f8): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:39 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:29:39 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:29:39 [INFO] 환경: development 
+2025-05-04 15:29:51 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 15:29:51 [INFO] 스타일 가이드 임베딩 생성 시작... 
+2025-05-04 15:29:51 [INFO] 임베딩 생성 대상: 7개 항목 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83de): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ea): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ee): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f2): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f5): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f8): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [INFO] GET /health 
+2025-05-04 15:29:55 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 15:29:55 [INFO] 새 기사 생성 완료 (ID: 681709631c73390ba157a3de) 
+2025-05-04 15:29:55 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:55 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 15:29:55 [INFO] 새 기사 생성 완료 (ID: 681709631c73390ba157a3e4) 
+2025-05-04 15:29:55 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:55 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [INFO] 새 기사 생성 완료 (ID: 681709631c73390ba157a3ea) 
+2025-05-04 15:29:56 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:56 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:56 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:56 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:30:03 [INFO] GET /__server_sent_events__ 
+2025-05-04 15:30:31 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:30:31 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:30:31 [INFO] 환경: development 
+2025-05-04 15:30:33 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:30:33 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:30:33 [INFO] 환경: development 
+2025-05-04 15:30:34 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:30:34 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:30:34 [INFO] 환경: development 
+2025-05-04 15:30:56 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:30:56 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:30:56 [INFO] 환경: development 
+2025-05-04 15:30:58 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:30:58 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:30:58 [INFO] 환경: development 
+2025-05-04 15:31:04 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:31:04 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:31:04 [INFO] 환경: development 
+2025-05-04 15:31:42 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:31:42 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:31:42 [INFO] 환경: development 
+2025-05-04 15:31:42 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:32:10 [INFO] GET /__server_sent_events__ 
+2025-05-04 15:33:28 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:33:28 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:33:28 [INFO] 환경: development 
+2025-05-04 15:33:28 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:34:37 [INFO] GET /__server_sent_events__ 
+2025-05-04 15:34:40 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:34:40 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:34:40 [INFO] 환경: development 
+2025-05-04 15:34:58 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:34:58 [INFO] 서버가 포트 3000에서 실행 중입니다 
+2025-05-04 15:34:58 [INFO] 환경: development 
+2025-05-04 15:35:16 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:35:16 [INFO] 서버가 포트 3001에서 실행 중입니다 
+2025-05-04 15:35:16 [INFO] 환경: development 
+2025-05-04 15:35:16 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:35:55 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:35:55 [INFO] 서버가 포트 3001에서 실행 중입니다 
+2025-05-04 15:35:55 [INFO] 환경: development 
+2025-05-04 15:35:57 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:35:57 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:35:57 [INFO] 환경: development 
+2025-05-04 15:36:14 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:36:14 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:36:14 [INFO] 환경: development 
+2025-05-04 15:36:15 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:36:15 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:36:15 [INFO] 환경: development 
+2025-05-04 15:36:26 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:36:26 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:36:26 [INFO] 환경: development 
+2025-05-04 15:36:27 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:37:19 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:37:19 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:37:19 [INFO] 환경: development 
+2025-05-04 15:37:19 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:38:40 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:38:40 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:38:40 [INFO] 환경: development 
+2025-05-04 15:44:18 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:44:18 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:44:18 [INFO] 환경: development 
+2025-05-04 15:44:27 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:44:27 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:44:27 [INFO] 환경: development 
+2025-05-04 15:45:54 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:45:54 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:45:54 [INFO] 환경: development 
+2025-05-04 15:46:06 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:46:06 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:46:06 [INFO] 환경: development 
+2025-05-04 15:46:07 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:46:07 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:46:07 [INFO] 환경: development 
+2025-05-04 15:49:49 [INFO] 서버를 종료합니다 
+2025-05-04 15:51:52 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 15:51:52 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 15:51:52 [INFO] 환경: development 
+2025-05-04 16:02:15 [INFO] GET / 
+2025-05-04 16:02:15 [INFO] GET /favicon.ico 
+2025-05-04 16:04:16 [INFO] GET /health 
+2025-05-04 16:05:26 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:05:26 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:05:26 [INFO] 환경: development 
+2025-05-04 16:05:26 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:07:06 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:07:06 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:07:06 [INFO] 환경: development 
+2025-05-04 16:08:56 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:08:56 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:08:56 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:08:56 [INFO] 환경: development 
+2025-05-04 16:09:04 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:09:04 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:09:04 [INFO] 환경: development 
+2025-05-04 16:09:04 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:09:23 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:09:23 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:09:23 [INFO] 환경: development 
+2025-05-04 16:09:23 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:09:58 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:09:58 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:09:58 [INFO] 환경: development 
+2025-05-04 16:09:58 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:10:57 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:10:57 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:10:57 [INFO] 환경: development 
+2025-05-04 16:10:58 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:12:24 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:12:24 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:12:24 [INFO] 환경: development 
+2025-05-04 16:16:30 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 16:16:30 [INFO] 스타일북 가져오기 완료: 총 8개 중 0개 생성, 8개 업데이트, 0개 실패 
+2025-05-04 16:18:14 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:18:14 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:18:14 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:18:14 [INFO] 환경: development 
+2025-05-04 16:18:14 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:33 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:33 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:33 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:33 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:19:33 [INFO] 환경: development 
+2025-05-04 16:19:35 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:35 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:35 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:19:35 [INFO] 환경: development 
+2025-05-04 16:19:35 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:19:51 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:20:45 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:20:45 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:20:45 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:20:45 [INFO] 환경: development 
+2025-05-04 16:22:57 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:22:57 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:22:57 [INFO] 환경: development 
+2025-05-04 16:24:37 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 16:24:37 [INFO] 스타일북 가져오기 완료: 총 8개 중 0개 생성, 8개 업데이트, 0개 실패 
+2025-05-04 16:24:47 [INFO] GET /health 
+2025-05-04 16:24:47 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:24:47 [INFO] 새 기사 생성 완료 (ID: 6817163f283d2b6865615729) 
+2025-05-04 16:24:47 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:47 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:47 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:47 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [INFO] 교정 결과 저장 완료 (ID: 6817163f283d2b686561572f) 
+2025-05-04 16:24:47 [INFO] 교정 결과 저장 완료 (ID: 6817163f283d2b686561573c) 
+2025-05-04 16:24:47 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:24:47 [INFO] 새 기사 생성 완료 (ID: 6817163f283d2b6865615749) 
+2025-05-04 16:24:47 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:47 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:47 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:47 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:47 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [INFO] 교정 결과 저장 완료 (ID: 6817163f283d2b686561574f) 
+2025-05-04 16:24:47 [INFO] 교정 결과 저장 완료 (ID: 6817163f283d2b686561575d) 
+2025-05-04 16:24:47 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:24:47 [INFO] 새 기사 생성 완료 (ID: 6817163f283d2b686561576b) 
+2025-05-04 16:24:48 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:48 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:48 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:48 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:48 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:48 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:48 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:24:48 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:24:48 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:24:48 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [INFO] 교정 결과 저장 완료 (ID: 68171640283d2b6865615771) 
+2025-05-04 16:24:48 [INFO] 교정 결과 저장 완료 (ID: 68171640283d2b6865615780) 
+2025-05-04 16:25:53 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:25:53 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:25:53 [INFO] 환경: development 
+2025-05-04 16:26:22 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:26:22 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:26:22 [INFO] 환경: development 
+2025-05-04 16:26:42 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:26:42 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:26:42 [INFO] 환경: development 
+2025-05-04 16:26:42 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:27:22 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:27:22 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:27:22 [INFO] 환경: development 
+2025-05-04 16:27:36 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:28:22 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:28:22 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:28:22 [INFO] 환경: development 
+2025-05-04 16:28:43 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:28:59 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:30:19 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:30:19 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:30:19 [INFO] 환경: development 
+2025-05-04 16:30:50 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:31:56 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:31:56 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:31:56 [INFO] 환경: development 
+2025-05-04 16:32:25 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:32:44 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:34:16 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:34:16 [INFO] 서버가 포트 3002에서 실행 중입니다 
+2025-05-04 16:34:16 [INFO] 환경: development 
+2025-05-04 16:35:05 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:38:33 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:38:33 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 16:38:33 [INFO] 환경: development 
+2025-05-04 16:38:57 [INFO] GET /health 
+2025-05-04 16:38:57 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:38:57 [INFO] 새 기사 생성 완료 (ID: 6817199192dcadbb8df56a0f) 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a15) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a18) 
+2025-05-04 16:38:57 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:38:57 [INFO] 새 기사 생성 완료 (ID: 6817199192dcadbb8df56a1b) 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a21) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a2c) 
+2025-05-04 16:38:57 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:38:57 [INFO] 새 기사 생성 완료 (ID: 6817199192dcadbb8df56a37) 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:38:57 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:38:57 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:38:57 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a3d) 
+2025-05-04 16:38:57 [INFO] 교정 결과 저장 완료 (ID: 6817199192dcadbb8df56a41) 
+2025-05-04 16:41:45 [INFO] MongoDB에 연결되었습니다: mongodb://localhost:27017/proofreading 
+2025-05-04 16:41:45 [INFO] 스타일북 가져오기 완료: 총 8개 중 0개 생성, 8개 업데이트, 0개 실패 
+2025-05-04 16:42:59 [INFO] GET /health 
+2025-05-04 16:42:59 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:42:59 [INFO] 새 기사 생성 완료 (ID: 68171a8392dcadbb8df56a45) 
+2025-05-04 16:42:59 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:42:59 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:42:59 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:42:59 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:42:59 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:42:59 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:42:59 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:42:59 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:42:59 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:42:59 [INFO] [PromptGenerator] 안녕하세요, 오늘은 방증하기 위해 문장을 쓴 것이에요. 과반수 이상이 찬성했다고 합니다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:42:59 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:42:59 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:42:59 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:42:59 [INFO] 교정 결과 저장 완료 (ID: 68171a8392dcadbb8df56a4b) 
+2025-05-04 16:42:59 [INFO] 교정 결과 저장 완료 (ID: 68171a8392dcadbb8df56a4e) 
+2025-05-04 16:42:59 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:42:59 [INFO] 새 기사 생성 완료 (ID: 68171a8392dcadbb8df56a51) 
+2025-05-04 16:43:00 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:43:00 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:43:00 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 시작 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 구글과 마이크로소프트는 AI 개발에 힘쓰고 있습니다. 페이스북역시 AI 기술 발전에 투자하고 있지요. 교정용 프롬프트 생성 완료 
+2025-05-04 16:43:00 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:43:00 [INFO] 교정 결과 저장 완료 (ID: 68171a8492dcadbb8df56a57) 
+2025-05-04 16:43:00 [INFO] 교정 결과 저장 완료 (ID: 68171a8492dcadbb8df56a62) 
+2025-05-04 16:43:00 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 16:43:00 [INFO] 새 기사 생성 완료 (ID: 68171a8492dcadbb8df56a6d) 
+2025-05-04 16:43:00 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:43:00 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:43:00 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:43:00 [INFO] 교정 결과 저장 완료 (ID: 68171a8492dcadbb8df56a73) 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 시작 
+2025-05-04 16:43:00 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다. 교정용 프롬프트 생성 완료 
+2025-05-04 16:43:00 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 시작 
+2025-05-04 16:43:00 [INFO] [AnthropicService] Claude API 호출 완료 (모의 응답) 
+2025-05-04 16:43:00 [INFO] 교정 결과 저장 완료 (ID: 68171a8492dcadbb8df56a77) 
+2025-05-04 16:48:31 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:55:31 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:55:31 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 16:55:31 [INFO] 환경: development 
+2025-05-04 16:59:03 [INFO] 서버를 종료합니다 
+2025-05-04 16:59:09 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 16:59:09 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 16:59:09 [INFO] 환경: development 
+2025-05-04 17:10:08 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 17:10:08 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 17:10:08 [INFO] 환경: development 
+2025-05-04 17:10:46 [INFO] 서버를 종료합니다 
+2025-05-04 17:11:03 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 17:11:03 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 17:11:03 [INFO] 환경: development 
+2025-05-04 17:11:33 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 17:11:34 [INFO] 새 기사 생성 완료 (ID: 68172135ac40c95f6243ccb5) 
+2025-05-04 17:11:34 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 17:11:34 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 17:11:34 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:11:34 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 시작 
+2025-05-04 17:11:34 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 완료 
+2025-05-04 17:11:34 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 17:11:34 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [INFO] 교정 결과 저장 완료 (ID: 68172136ac40c95f6243ccbb) 
+2025-05-04 17:11:34 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 시작 
+2025-05-04 17:11:34 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 완료 
+2025-05-04 17:11:34 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 17:11:34 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [INFO] 교정 결과 저장 완료 (ID: 68172136ac40c95f6243cccb) 
+2025-05-04 17:14:27 [INFO] MongoDB에 연결되었습니다 
+2025-05-04 17:14:27 [INFO] 서버가 포트 3003에서 실행 중입니다 
+2025-05-04 17:14:27 [INFO] 환경: development 
+2025-05-04 17:14:42 [INFO] POST /api/articles/quick-proofread 
+2025-05-04 17:14:42 [INFO] 새 기사 생성 완료 (ID: 681721f2e49202bda63cc935) 
+2025-05-04 17:14:42 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 17:14:42 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 17:14:42 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:14:42 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 시작 
+2025-05-04 17:14:42 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 완료 
+2025-05-04 17:14:42 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 17:14:42 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 시작 
+2025-05-04 17:14:42 [INFO] [PromptGenerator] 이 기업은 매출이 증가했다. 하지만 순이익은 감소했다. 왜냐하면 비용이 더 많이 발생했기 때문이다.
+ 교정용 프롬프트 생성 완료 
+2025-05-04 17:14:42 [INFO] [LLMService] Claude로 텍스트 생성 시작 
+2025-05-04 17:14:42 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [INFO] 교정 결과 저장 완료 (ID: 681721f2e49202bda63cc93b) 
+2025-05-04 17:14:42 [INFO] 교정 결과 저장 완료 (ID: 681721f2e49202bda63cc94b) 

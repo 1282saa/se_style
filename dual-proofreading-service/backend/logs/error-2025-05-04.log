@@ -1,0 +1,120 @@
+2025-05-04 15:01:26 [ERROR] MongoDB 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:07:45 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:09:49 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:23:36 [ERROR] 데이터베이스 연결 오류: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017 
+2025-05-04 15:28:17 [ERROR] 임베딩 생성 오류: Client must be connected before running operations 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83de): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ea): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ee): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:26 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:26 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f2): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f5): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f8): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:27 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83de): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ea): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090013cf35a423bb83ee): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f2): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:52 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:52 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f5): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류 (ID: 6817090113cf35a423bb83f8): 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:53 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:55 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:55 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:55 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 15:29:56 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 15:29:56 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 15:29:56 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 간편 교정 오류: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 빠른 교정 오류: 간편 교정 중 오류 발생: 교정 생성 중 오류 발생: promptGenerator.generatePrompt is not a function 
+2025-05-04 15:29:56 [ERROR] 교정 생성 오류 (프롬프트 유형: 2): promptGenerator.generatePrompt is not a function 
+2025-05-04 16:16:30 [ERROR] 임베딩 생성 오류: Client must be connected before running operations 
+2025-05-04 16:24:37 [ERROR] 임베딩 생성 오류: Client must be connected before running operations 
+2025-05-04 16:24:47 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:47 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:47 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:47 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:24:48 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:24:48 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:24:48 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:24:48 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:38:57 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:38:57 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:41:45 [ERROR] 임베딩 생성 오류: Client must be connected before running operations 
+2025-05-04 16:42:59 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:42:59 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:42:59 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:43:00 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 16:43:00 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 16:43:00 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:11:34 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 17:11:34 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 17:11:34 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:11:34 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:11:34 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 17:14:42 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 17:14:42 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:14:42 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 

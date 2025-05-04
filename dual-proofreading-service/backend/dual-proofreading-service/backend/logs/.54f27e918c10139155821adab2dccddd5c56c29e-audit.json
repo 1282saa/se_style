@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/dual-proofreading-service/backend/logs/.54f27e918c10139155821adab2dccddd5c56c29e-audit.json",
+    "files": [
+        {
+            "date": 1746344224524,
+            "name": "/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/dual-proofreading-service/backend/logs/application-2025-05-04.log",
+            "hash": "fdd033a0daf853e608736cbdd34a717e302bf95c4eb791addbf77573b22d0853"
+        }
+    ],
+    "hashType": "sha256"
+}

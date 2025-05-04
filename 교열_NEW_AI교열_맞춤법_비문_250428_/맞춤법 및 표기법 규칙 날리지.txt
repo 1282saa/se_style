@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<versionInfo>
+  <version>1.1</version>
+  <lastUpdated>2025-04-27</lastUpdated>
+  <lastEditor>교열팀</lastEditor>
+</versionInfo>
+
+<SeoulEconomicKnowledgeBase>
+  <KnowledgeCategory id="KB1" name="맞춤법 및 표기법 규칙">
+    <Description>
+      서울경제신문 교열 시스템 내 맞춤법 및 표기 관련 규칙입니다. 
+      각 규칙은 고유 ID, 우선순위, 설명, 예시, 확신도 기준 등으로 구성되어 있습니다.
+    </Description>
+    
+    <MetaInformation>
+      <principleReference>
+        핵심 원칙 및 우선순위 분류는 디스_교열.txt의 다음 섹션을 참조합니다:
+         • <corePrinciples id="master">
+         • <decisionTree id="priorityClassification">
+      </principleReference>
+      <Version>1.2</Version>
+      <LastUpdated>2024-04-27</LastUpdated>
+      <Source>01_맞춤법_표기법 규칙.txt</Source>
+      <MaintenanceOwner>서울경제신문 교열팀</MaintenanceOwner>
+    </MetaInformation>
+    
+    <SearchAlgorithm>
+      <Method>정규식 패턴 매칭</Method>
+      <Method>형태소 분석 기반 검사</Method>
+      <Method>맥락 고려 유사 패턴 매칭</Method>
+    </SearchAlgorithm>
+    
+    <GeneralPrinciples>
+      <!-- 기본 원칙 -->
+      <Principle id="GSP-001">
+        <Name>표준어 규정 준수 원칙</Name>
+        <Description>국립국어원의 표준어 규정과 한글 맞춤법을 기본으로 합니다.</Description>
+        <Application>실제 오류가 확실한 경우(99.9% 확신)만 수정합니다.</Application>
+        <Priority>1</Priority>
+      </Principle>
+      
+      <Principle id="GSP-002">
+        <Name>서울경제신문 스타일 우선 원칙</Name>
+        <Description>표준어 규정과 서울경제신문 스타일이 충돌할 경우, 서울경제신문 스타일을 우선합니다.</Description>
+        <Application>경제 전문 용어, 합성어 표기 등에서 특히 주의합니다.</Application>
+        <Priority>0</Priority>
+        <Note>우선순위 0은 최우선을 의미합니다.</Note>
+      </Principle>
+    </GeneralPrinciples>
+
+    <RuleCategories>
+      <Category name="두음법칙">
+        <Rule id="RULE-SPELL-001" priority="5" confidenceThreshold="99.9">
+          <Title>두음법칙 적용</Title>
+          <Description>두음법칙에 따라 '녀', '률' 등은 특정 환경에서 '여', '율'로 표기합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>녀자중학교</Wrong>
+              <Correct>여자중학교</Correct>
+              <Explanation>단어 첫음절의 'ㄴ'이 'ㅇ'으로 교체</Explanation>
+            </Example>
+            <Example>
+              <Wrong>출산률</Wrong>
+              <Correct>출산율</Correct>
+              <Explanation>'률'이 '율'로 교체</Explanation>
+            </Example>
+          </Examples>
+          <Exceptions>
+            <Exception>고유명사, 인명, 외래어는 원형 유지 가능</Exception>
+            <Example>뉴욕, 남산</Example>
+          </Exceptions>
+          <Pattern>
+            <RegexPattern>(^|[^가-힣])([르])</RegexPattern>
+            <RegexPattern>(^|[^가-힣])([녀|뇨|뉴|니|립|렬|률])</RegexPattern>
+          </Pattern>
+          <ReferenceLinks>
+            <Link>https://kornorms.korean.go.kr/regltn/regltnView.do?regltn_code=0001#a</Link>
+          </ReferenceLinks>
+        </Rule>
+      </Category>
+
+      <Category name="준말 표기">
+        <Rule id="RULE-SPELL-002" priority="4" confidenceThreshold="99.5">
+          <Title>준말 표기 통일</Title>
+          <Description>
+            '하였' → '했', '하였다' → '했다' 등 준말 표기를 통일합니다.
+            특히 문장 말미의 어투 일관성을 위해 필수적으로 적용합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>수출하였다</Wrong>
+              <Correct>수출했다</Correct>
+              <Explanation>준말 표기 적용</Explanation>
+            </Example>
+            <Example>
+              <Wrong>사랑스러웠섰다</Wrong>
+              <Correct>사랑스러웠다</Correct>
+              <Explanation>잘못된 준말 표기 교정</Explanation>
+            </Example>
+            <Example>
+              <Wrong>됬다</Wrong>
+              <Correct>됐다</Correct>
+              <Explanation>'되었다'의 준말은 '됐다'</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <RegexPattern>([가-힣]+)(하였다|하였습니다|하였음|하였고)</RegexPattern>
+            <RegexPattern>됬</RegexPattern>
+          </Pattern>
+          <ExactMatches>
+            <Match>됬다</Match>
+            <Match>됬습니다</Match>
+          </ExactMatches>
+        </Rule>
+      </Category>
+
+      <Category name="외래어 표기">
+        <Rule id="RULE-SPELL-003" priority="5" confidenceThreshold="99.9">
+          <Title>외래어 표기법 준수</Title>
+          <Description>국립국어원 외래어 표기법 기준을 준수합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>포르셰</Wrong>
+              <Correct>포르쉐</Correct>
+              <Explanation>외래어 표기법 준수</Explanation>
+            </Example>
+            <Example>
+              <Wrong>바터</Wrong>
+              <Correct>버터</Correct>
+              <Explanation>외래어 표기법 준수</Explanation>
+            </Example>
+            <Example>
+              <Wrong>컨텐츠</Wrong>
+              <Correct>콘텐츠</Correct>
+              <Explanation>'content'의 올바른 외래어 표기</Explanation>
+            </Example>
+          </Examples>
+          <Exceptions>
+            <Exception>회사명 등 고유명사는 해당 기관의 공식 표기를 따릅니다.</Exception>
+          </Exceptions>
+          <CommonMistakes>
+            <Item wrong="컨텐츠" correct="콘텐츠" />
+            <Item wrong="어플" correct="앱" />
+            <Item wrong="닥터" correct="의사" context="한글 대체어 있는 경우" />
+            <Item wrong="바이러스" correct="바이러스" context="맞는 표현이나 자주 틀리는 사례" />
+            <Item wrong="허들" correct="허들" context="스포츠 용어" />
+          </CommonMistakes>
+          <ReferenceLinks>
+            <Link>https://kornorms.korean.go.kr/regltn/regltnView.do?regltn_code=0003</Link>
+          </ReferenceLinks>
+        </Rule>
+        
+        <Rule id="RULE-SPELL-003-1" priority="4" confidenceThreshold="99">
+          <Title>외래어 남용 지양</Title>
+          <Description>불필요한 외래어 사용을 지양하고, 적절한 한글 대체어가 있는 경우 한글 표현을 사용합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>글로벌 이슈</Wrong>
+              <Correct>세계적 현안</Correct>
+              <Explanation>한글 대체어 사용</Explanation>
+            </Example>
+          </Examples>
+          <Priority>3</Priority>
+          <Note>서울경제신문 스타일 가이드 기준</Note>
+        </Rule>
+      </Category>
+
+      <Category name="숫자 표기">
+        <Rule id="RULE-SPELL-004" priority="4" confidenceThreshold="99">
+          <Title>숫자 표기</Title>
+          <Description>백 단위 이상은 ',' 삽입. 한글 표기 시 '억', '조' 등 단위 명확히 표기합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>10000원</Wrong>
+              <Correct>10,000원</Correct>
+              <Explanation>천 단위 구분 기호 필요</Explanation>
+            </Example>
+            <Example>
+              <Wrong>십억원</Wrong>
+              <Correct>10억 원</Correct>
+              <Explanation>큰 단위는 아라비아 숫자와 한글 혼용</Explanation>
+            </Example>
+          </Examples>
+          <SubRules>
+            <SubRule id="RULE-SPELL-004-1">
+              <Title>화폐 단위 띄어쓰기</Title>
+              <Description>화폐 단위는 숫자와 띄어씁니다.</Description>
+              <Example>
+                <Wrong>100원</Wrong>
+                <Correct>100 원</Correct>
+              </Example>
+              <Priority>3</Priority>
+            </SubRule>
+            <SubRule id="RULE-SPELL-004-2">
+              <Title>백분율 표기</Title>
+              <Description>백분율 기호(%)는 숫자와 붙여씁니다.</Description>
+              <Example>
+                <Wrong>50 %</Wrong>
+                <Correct>50%</Correct>
+              </Example>
+              <Priority>4</Priority>
+            </SubRule>
+          </SubRules>
+          <SESpecificRules>
+            <Rule>기준금리는 소수점 둘째 자리까지만 표시 (예: 3.25%)</Rule>
+            <Rule>증시 지표는 소수점 둘째 자리까지만 표시 (예: 2,530.54)</Rule>
+          </SESpecificRules>
+        </Rule>
+      </Category>
+
+      <Category name="띄어쓰기">
+        <Rule id="RULE-SPELL-005" priority="5" confidenceThreshold="99.9">
+          <Title>띄어쓰기 일반 원칙</Title>
+          <Description>조사, 의존명사, 단위 등 문법 요소에 따른 띄어쓰기를 적용합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>하는것이</Wrong>
+              <Correct>하는 것이</Correct>
+              <Explanation>의존명사는 띄어씁니다</Explanation>
+            </Example>
+            <Example>
+              <Wrong>100명중</Wrong>
+              <Correct>100명 중</Correct>
+              <Explanation>명사와 조사는 띄어씁니다</Explanation>
+            </Example>
+          </Examples>
+          <Exceptions>
+            <Exception>관용 표현(예: 하루아침에) 등은 붙여 씁니다.</Exception>
+          </Exceptions>
+          <SubRules>
+            <SubRule id="RULE-SPELL-005-1">
+              <Title>의존명사 띄어쓰기</Title>
+              <Description>의존명사는 앞말과 띄어씁니다.</Description>
+              <Examples>
+                <Example>
+                  <Wrong>할수</Wrong>
+                  <Correct>할 수</Correct>
+                </Example>
+                <Example>
+                  <Wrong>볼것</Wrong>
+                  <Correct>볼 것</Correct>
+                </Example>
+              </Examples>
+              <Priority>5</Priority>
+              <HighConfidence>true</HighConfidence>
+            </SubRule>
+            <SubRule id="RULE-SPELL-005-2">
+              <Title>부정 부사 띄어쓰기</Title>
+              <Description>부정 부사 '안', '못'은 뒤따르는 용언과 띄어씁니다.</Description>
+              <Examples>
+                <Example>
+                  <Wrong>안된다</Wrong>
+                  <Correct>안 된다</Correct>
+                </Example>
+                <Example>
+                  <Wrong>못미친다</Wrong>
+                  <Correct>못 미친다</Correct>
+                </Example>
+              </Examples>
+              <Priority>4</Priority>
+              <ConfidenceRequired>99.5</ConfidenceRequired>
+            </SubRule>
+            <SubRule id="RULE-SPELL-005-3">
+              <Title>수량 단위 표기</Title>
+              <Description>만 단위 수량 표기 시 일관성 있게 띄어쓰기를 적용합니다.</Description>
+              <Examples>
+                <Example>
+                  <Pattern>179만대</Pattern>
+                  <Correction>179만 대</Correction>
+                </Example>
+                <Example>
+                  <Pattern>49만5570대</Pattern>
+                  <Correction>49만 5570대</Correction>
+                </Example>
+              </Examples>
+              <Exceptions>
+                <Exception>
+                  숫자와 단위가 복합적으로 표현되는 경우에도 일관성 있게 적용합니다
+                  (예: 49만 5570대).
+                </Exception>
+              </Exceptions>
+              <Priority>3</Priority>
+            </SubRule>
+          </SubRules>
+        </Rule>
+      </Category>
+
+      <Category name="시간 표현">
+        <Rule id="RULE-SPELL-006" priority="3" confidenceThreshold="95">
+          <Title>시간 표현 표기 원칙</Title>
+          <Description>시간 표현은 서울경제신문 스타일에 따라 표기합니다.</Description>
+          <SEPreference>
+            <Preference original="작년" preferred="지난해" priority="3" />
+            <Preference original="금년" preferred="올해" priority="3" />
+            <Preference original="올해 연말" preferred="올해 말" priority="3" />
+            <Preference original="이번 달" preferred="이달" priority="3" />
+            <Preference original="오늘" preferred="특정 날짜(예: 3일)" context="날짜가 특정된 경우" priority="3" />
+          </SEPreference>
+          <Note>
+            서울경제신문 스타일 가이드는 더 명확하고 구체적인 시간 표현을 선호합니다.
+            다만 문맥에 따라 적용 여부가 달라질 수 있으므로 [3·제안] 수준으로 분류합니다.
+          </Note>
+        </Rule>
+      </Category>
+
+      <Category name="단위 및 기호">
+        <Rule id="RULE-SPELL-007" priority="3" confidenceThreshold="95">
+          <Title>단위 및 기호 사용</Title>
+          <Description>SI 단위 기준, %, ℃, km 등 기호 띄어쓰기 규칙을 적용합니다.</Description>
+          <Examples>
+            <Example>
+              <Wrong>10km</Wrong>
+              <Correct>10 km</Correct>
+              <Explanation>SI 단위는 띄어쓰기 적용</Explanation>
+            </Example>
+            <Example>
+              <Wrong>30도C</Wrong>
+              <Correct>30℃</Correct>
+              <Explanation>온도 기호 올바르게 사용</Explanation>
+            </Example>
+          </Examples>
+          <Exceptions>
+            <Exception>%, ℃ 등 일부 기호는 붙여쓰기도 허용됩니다.</Exception>
+          </Exceptions>
+          <SESpecificRules>
+            <Rule>퍼센트(%)는 숫자에 붙여씁니다.</Rule>
+            <Rule>온도 표시(℃)는 숫자에 붙여씁니다.</Rule>
+            <Rule>m², km² 등의 제곱 단위는 숫자와 띄어씁니다.</Rule>
+          </SESpecificRules>
+        </Rule>
+      </Category>
+    </RuleCategories>
+
+    <SpacingPrinciples>
+      <!-- 띄어쓰기 원칙 -->
+      <Principle id="SP-001">
+        <Name>조사 띄어쓰기 원칙</Name>
+        <Description>조사는 앞말에 붙여씁니다.</Description>
+        <Examples>
+          <Example>서울에, 회사의, 학생이</Example>
+        </Examples>
+      </Principle>
+      
+      <Principle id="SP-002">
+        <Name>의존명사 띄어쓰기 원칙</Name>
+        <Description>의존명사는 앞말과 띄어씁니다.</Description>
+        <Examples>
+          <Example>할 수, 볼 것, 갈 때, 먹을 만하다</Example>
+        </Examples>
+        <Exception>관용적으로 붙여쓰는 경우도 있으나, 서울경제신문은 원칙적으로 띄어씁니다.</Exception>
+      </Principle>
+      
+      <Principle id="SP-003">
+        <Name>부정 부사 띄어쓰기 원칙</Name>
+        <Description>부정 부사 '안', '못'은 뒤따르는 용언과 띄어씁니다.</Description>
+        <Examples>
+          <Example>안 된다, 못 미친다, 안 좋다</Example>
+        </Examples>
+      </Principle>
+      
+      <Principle id="SP-004">
+        <Name>합성어 띄어쓰기 원칙</Name>
+        <Description>일반적인 합성어는 국립국어원 규정에 따라 띄어쓰거나 붙여쓰지만, 서울경제신문의 경제 분야 합성어는 특별 규칙을 적용합니다.</Description>
+        <SerializationRule>
+          <Category>경제 용어 합성어</Category>
+          <Pattern>명사+명사 형태의 경제 용어는 붙여씁니다.</Pattern>
+          <Examples>
+            <Example>공동투자, 파운드리사업부, 시스템반도체</Example>
+          </Examples>
+        </SerializationRule>
+      </Principle>
+      
+      <Principle id="SP-005">
+        <Name>숫자와 단위 띄어쓰기 원칙</Name>
+        <Description>숫자와 단위는 띄어씁니다.</Description>
+        <Examples>
+          <Example>1만 7000원, 3억 5000만 원, 2만 7000㎡</Example>
+        </Examples>
+        <Exception>퍼센트(%)와 섭씨온도(℃)는 붙여씁니다.</Exception>
+      </Principle>
+    </SpacingPrinciples>
+
+    <DecisionTree>
+      <!-- 판단 트리 - 실제 오류와 선호 표현 구분 -->
+      <Node id="DT-001">
+        <Question>해당 표기가 한글 맞춤법이나 표준어 규정을 명백히 위반하는가?</Question>
+        <YesPath>
+          <Classification>실제 오류 ([5·필수] 또는 [4·권고])</Classification>
+          <Examples>
+            <Example>'됬다' → '됐다'</Example>
+            <Example>'안되다' → '안 되다'</Example>
+          </Examples>
+        </YesPath>
+        <NoPath>
+          <Question>서울경제신문 스타일 가이드에 명시된 표기 규칙을 위반하는가?</Question>
+          <YesPath>
+            <Classification>스타일 불일치 ([4·권고] 또는 [3·제안])</Classification>
+            <Examples>
+              <Example>'공동 투자' → '공동투자'</Example>
+              <Example>'작년' → '지난해'</Example>
+            </Examples>
+          </YesPath>
+          <NoPath>
+            <Question>의미 혼동이나 가독성에 문제가 있는가?</Question>
+            <YesPath>
+              <Classification>개선 권장 사항 ([3·제안])</Classification>
+            </YesPath>
+            <NoPath>
+              <Classification>교정 불필요 (언급하지 않음)</Classification>
+            </NoPath>
+          </Question>
+        </NoPath>
+      </Node>
+    </DecisionTree>
+
+    <ConfidenceCalculation>
+      <Formula>
+        <Description>
+          교정 제안의 확신도는 다음 요소의 가중 평균으로 계산됩니다:
+          1. 규칙 명확성: 해당 오류가 규칙에 명확히 위배되는 정도 (가중치: 0.5)
+          2. 맥락 적합성: 주변 문맥에서 오류가 명확한 정도 (가중치: 0.3)
+          3. 사례 빈도: 유사 오류의 과거 교정 빈도 (가중치: 0.2)
+        </Description>
+        <Calculation>
+          확신도 = (규칙 명확성 × 0.5) + (맥락 적합성 × 0.3) + (사례 빈도 × 0.2)
+        </Calculation>
+      </Formula>
+      <ThresholdApplication>
+        <Threshold level="[5·필수]" value="99.9" />
+        <Threshold level="[4·권고]" value="99.0" />
+        <Threshold level="[3·제안]" value="95.0" />
+        <Threshold level="[2·참고]" value="90.0" />
+        <Threshold level="[1·지식]" value="85.0" />
+      </ThresholdApplication>
+    </ConfidenceCalculation>
+  </KnowledgeCategory>
+</SeoulEconomicKnowledgeBase>
+
+## 맞춤법 및 표기법 규칙 요약
+
+### 핵심 원칙
+1. **표준어 규정 준수**: 국립국어원 표준어 규정과 한글 맞춤법을 기본으로 합니다
+2. **서울경제신문 스타일 우선**: 표준어 규정과 서울경제신문 스타일이 충돌할 경우, 서울경제신문 스타일을 우선합니다
+
+### 주요 규칙 카테고리
+1. **두음법칙**: '녀'→'여', '률'→'율' 등 적용 (고유명사 예외)
+2. **준말 표기**: '하였다'→'했다', '됬다'→'됐다' 등 통일
+3. **외래어 표기**: 국립국어원 외래어 표기법 준수 ('컨텐츠'→'콘텐츠')
+4. **숫자 표기**: 천 단위 구분 기호 사용, 큰 단위는 아라비아 숫자와 한글 혼용
+5. **띄어쓰기**: 의존명사, 부정 부사, 단위 등 문법 요소별 규칙 적용
+6. **시간 표현**: '작년'→'지난해', '이번 달'→'이달' 등 서울경제 스타일 적용
+7. **단위 및 기호**: SI 단위 띄어쓰기, %, ℃ 등 일부 기호는 붙여쓰기
+
+### 우선순위에 따른 규칙 구분
+- **[5·필수]**: 표준 맞춤법 명백한 위반, 의미 왜곡 (확신도 99.9% 이상)
+- **[4·권고]**: 문법적 오류, 서울경제 스타일 중요 위반 (확신도 99% 이상)
+- **[3·제안]**: 가독성 향상, 선호 표현 (확신도 95% 이상)
+- **[2·참고]** / **[1·지식]**: 참고용 정보 (낮은 우선순위)
+
+### 판단 기준
+사규 위반 → [5·필수] / [4·권고]  
+스타일 불일치 → [4·권고] / [3·제안]  
+가독성 문제 → [3·제안]  
+문제 없음 → 언급하지 않음
