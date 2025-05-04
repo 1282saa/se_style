@@ -118,3 +118,10 @@
 2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
 2025-05-04 17:14:42 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
 2025-05-04 17:14:42 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:39:08 [ERROR] 임베딩 생성 오류: Request failed with status code 404 
+2025-05-04 17:39:08 [ERROR] Claude API 응답: {"type":"error","error":{"type":"not_found_error","message":"Not Found"}} 
+2025-05-04 17:39:08 [ERROR] 벡터 검색 오류: 임베딩 생성 중 오류 발생: Request failed with status code 404 
+2025-05-04 17:39:08 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:39:08 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:39:08 [ERROR] [AnthropicService] Claude API 호출 오류: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 
+2025-05-04 17:39:08 [ERROR] [LLMService] Claude 텍스트 생성 오류: Claude API 호출 중 오류 발생: Anthropic API 키가 설정되지 않았습니다. .env 파일에 ANTHROPIC_API_KEY를 추가하세요. 

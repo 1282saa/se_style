@@ -1,208 +1,221 @@
-// src/services/llm/promptGenerator.service.js
+const config = require("../../config");
 const logger = require("../../utils/logger");
+const {
+  promptGenerator,
+  promptTemplates,
+} = require("./promptGenerator.service");
 
-class PromptGeneratorService {
+/**
+ * LLM 프롬프트 생성 및 관리 서비스
+ */
+class PromptService {
   /**
-   * 스타일 가이드를 프롬프트에 포함할 수 있는 형식으로 변환합니다.
-   * @param {Array} styleGuides - 스타일 가이드 배열
-   * @returns {string} - 포맷팅된 스타일 가이드 텍스트
-   */
-  formatStyleGuides(styleGuides) {
-    if (!styleGuides || styleGuides.length === 0) {
-      return "";
-    }
-
-    try {
-      let formattedText = "## 참고해야 할 스타일 가이드:\n\n";
-
-      styleGuides.forEach((guide, index) => {
-        formattedText += `### ${index + 1}. ${guide.section}\n`;
-        formattedText += `${guide.content}\n\n`;
-
-        // 태그가 있으면 추가
-        if (guide.tags && guide.tags.length > 0) {
-          formattedText += `*관련 태그: ${guide.tags.join(", ")}*\n\n`;
-        }
-      });
-
-      return formattedText;
-    } catch (error) {
-      logger.error(`스타일 가이드 포맷팅 오류: ${error.message}`);
-      return "## 참고해야 할 스타일 가이드 정보를 불러오는 데 실패했습니다.";
-    }
-  }
-
-  /**
-   * 최소한의 교정을 위한 프롬프트를 생성합니다. (프롬프트 유형 1)
-   * @param {string} text - 교정할 원문 텍스트
-   * @param {Array} styleGuides - 관련 스타일 가이드
-   * @returns {string} - 완성된 프롬프트
-   */
-  generateMinimalPrompt(text, styleGuides = []) {
-    const formattedGuides = this.formatStyleGuides(styleGuides);
-
-    const prompt = `
-# 한국어 텍스트 최소 교정 요청
-
-## 교정 지침
-
-당신은 한국어 텍스트 교정 전문가입니다. 다음 텍스트의 맞춤법, 띄어쓰기, 문법적 오류만 최소한으로 수정해주세요.
-
-### 주요 교정 원칙:
-1. 맞춤법, 띄어쓰기, 문법적 오류만 수정하세요.
-2. 원문의 문체와 어휘 선택은 최대한 유지하세요.
-3. 내용을 추가하거나 삭제하지 마세요.
-4. 문장 구조를 크게 변경하지 마세요.
-5. 문장 순서를 바꾸지 마세요.
-6. 지나치게 간결하게 만들거나 확장하지 마세요.
-
-${formattedGuides}
-
-## 원문:
-${text}
-
-## 교정본:
-`;
-
-    return prompt;
-  }
-
-  /**
-   * 적극적인 교정을 위한 프롬프트를 생성합니다. (프롬프트 유형 2)
-   * @param {string} text - 교정할 원문 텍스트
-   * @param {Array} styleGuides - 관련 스타일 가이드
-   * @returns {string} - 완성된 프롬프트
-   */
-  generateEnhancedPrompt(text, styleGuides = []) {
-    const formattedGuides = this.formatStyleGuides(styleGuides);
-
-    const prompt = `
-# 한국어 텍스트 적극적 교정 요청
-
-## 교정 지침
-
-당신은 한국어 텍스트 교정 전문가입니다. 다음 텍스트를 포괄적으로 개선하여 더 명확하고 효과적으로 만들어주세요.
-
-### 주요 교정 원칙:
-1. 맞춤법, 띄어쓰기, 문법적 오류를 수정하세요.
-2. 어색한 표현이나 문장 구조를 자연스럽게 개선하세요.
-3. 중복되거나 불필요한 표현을 제거하세요.
-4. 어휘 선택을 더 정확하고 적절하게 개선하세요.
-5. 문장 간의 연결을 자연스럽게 다듬어 가독성을 높이세요.
-6. 전체적인 문체의 일관성을 유지하세요.
-7. 내용의 핵심은 유지하되, 표현 방식을 적극적으로 개선하세요.
-
-${formattedGuides}
-
-## 원문:
-${text}
-
-## 교정본:
-`;
-
-    return prompt;
-  }
-
-  /**
-   * 사용자 맞춤형 교정을 위한 프롬프트를 생성합니다.
-   * @param {string} text - 교정할 원문 텍스트
-   * @param {Array} styleGuides - 관련 스타일 가이드
-   * @param {Object} preferences - 사용자 선호사항
-   * @returns {string} - 완성된 프롬프트
-   */
-  generateCustomPrompt(text, styleGuides = [], preferences = {}) {
-    const formattedGuides = this.formatStyleGuides(styleGuides);
-
-    // 기본 교정 수준 설정
-    let correctionLevel = preferences.correctionLevel || "medium";
-    let correctionGuidelines = "";
-
-    // 교정 수준에 따른 지침 설정
-    switch (correctionLevel) {
-      case "minimal":
-        correctionGuidelines = `
-1. 맞춤법, 띄어쓰기, 문법적 오류만 수정하세요.
-2. 원문의 문체와 어휘 선택은 최대한 유지하세요.
-3. 내용을 추가하거나 삭제하지 마세요.
-4. 문장 구조를 변경하지 마세요.`;
-        break;
-
-      case "aggressive":
-        correctionGuidelines = `
-1. 맞춤법, 띄어쓰기, 문법적 오류를 철저히 수정하세요.
-2. 어색한 표현과 문장 구조를 적극적으로 개선하세요.
-3. 중복되거나 불필요한 표현을 과감히 제거하세요.
-4. 어휘 선택을 더 정확하고 효과적으로 개선하세요.
-5. 문장 간의 연결을 자연스럽게 다듬어 가독성을 높이세요.
-6. 필요하다면 문단 구성도 최적화하세요.`;
-        break;
-
-      default: // medium
-        correctionGuidelines = `
-1. 맞춤법, 띄어쓰기, 문법적 오류를 수정하세요.
-2. 명확성을 해치는 어색한 표현을 개선하세요.
-3. 중복되는 표현을 정리하세요.
-4. 문장 구조가 복잡한 경우 간결하게 다듬으세요.
-5. 전체적인 문체의 일관성을 유지하세요.`;
-    }
-
-    // 추가 선호사항 적용
-    if (preferences.formalStyle) {
-      correctionGuidelines += `\n6. 공식적이고 격식있는 문체를 사용하세요.`;
-    }
-
-    if (preferences.conciseStyle) {
-      correctionGuidelines += `\n7. 간결하고 명확한 문체로 작성하세요.`;
-    }
-
-    if (preferences.avoidForeignWords) {
-      correctionGuidelines += `\n8. 가능한 외래어 대신 순우리말을 사용하세요.`;
-    }
-
-    const prompt = `
-# 맞춤형 한국어 텍스트 교정 요청
-
-## 교정 지침
-
-당신은 한국어 텍스트 교정 전문가입니다. 다음 텍스트를 사용자의 선호도에 맞춰 교정해주세요.
-
-### 주요 교정 원칙:
-${correctionGuidelines}
-
-${formattedGuides}
-
-## 원문:
-${text}
-
-## 교정본:
-`;
-
-    return prompt;
-  }
-
-  /**
-   * 프롬프트 유형에 따라 적절한 프롬프트를 생성합니다.
+   * 교정 유형에 따른 프롬프트를 생성합니다.
    * @param {number} promptType - 프롬프트 유형 (1: 최소, 2: 적극적)
-   * @param {string} text - 교정할 원문 텍스트
-   * @param {Array} styleGuides - 관련 스타일 가이드
-   * @param {Object} preferences - 사용자 선호사항 (선택 사항)
-   * @returns {string} - 생성된 프롬프트
+   * @param {string} originalText - 원문 텍스트
+   * @param {Array} styleGuides - 관련 스타일 가이드 배열
+   * @returns {Object} - 프롬프트 객체
    */
-  generatePrompt(promptType, text, styleGuides = [], preferences = {}) {
-    switch (promptType) {
-      case 1:
-        return this.generateMinimalPrompt(text, styleGuides);
-      case 2:
-        return this.generateEnhancedPrompt(text, styleGuides);
-      case 3: // 맞춤형
-        return this.generateCustomPrompt(text, styleGuides, preferences);
-      default:
-        logger.warn(
-          `알 수 없는 프롬프트 유형: ${promptType}, 기본값(최소 교정) 사용`
-        );
-        return this.generateMinimalPrompt(text, styleGuides);
+  generatePrompt(promptType, originalText, styleGuides = []) {
+    // 프롬프트 템플릿 선택
+    const template =
+      promptType === 1 ? promptTemplates.minimal : promptTemplates.enhanced;
+
+    // 스타일 가이드 컨텍스트 생성
+    const styleGuideContext = this.formatStyleGuideContext(styleGuides);
+
+    // 최종 프롬프트 생성
+    const prompt = template
+      .replace("{{ORIGINAL_TEXT}}", originalText)
+      .replace("{{STYLE_GUIDES}}", styleGuideContext);
+
+    logger.debug(
+      `프롬프트 유형 ${promptType} 생성 완료 (길이: ${prompt.length}자)`
+    );
+
+    return {
+      type: promptType === 1 ? "minimal" : "enhanced",
+      prompt,
+      textToAnalyze: originalText,
+      includesStyleGuides: styleGuides.length > 0,
+      styleGuideCount: styleGuides.length,
+    };
+  }
+
+  /**
+   * 맞춤형 교정 프롬프트를 생성합니다.
+   * @param {string} originalText - 원문 텍스트
+   * @param {Array} styleGuides - 관련 스타일 가이드 배열
+   * @param {Object} preferences - 사용자 선호도 설정
+   * @returns {Object} - 프롬프트 객체
+   */
+  generateCustomPrompt(originalText, styleGuides = [], preferences = {}) {
+    // 기본 프롬프트 템플릿
+    let template = promptTemplates.custom;
+
+    // 사용자 선호도 분석 및 적용
+    const userPreferences = this.analyzePreferences(preferences);
+
+    // 사용자 선호도 메시지 생성
+    const preferencesMessage = this.formatPreferencesMessage(userPreferences);
+
+    // 스타일 가이드 컨텍스트 생성
+    const styleGuideContext = this.formatStyleGuideContext(styleGuides);
+
+    // 최종 프롬프트 생성
+    const prompt = template
+      .replace("{{ORIGINAL_TEXT}}", originalText)
+      .replace("{{STYLE_GUIDES}}", styleGuideContext)
+      .replace("{{USER_PREFERENCES}}", preferencesMessage);
+
+    logger.debug(`맞춤형 프롬프트 생성 완료 (길이: ${prompt.length}자)`);
+
+    return {
+      type: "custom",
+      prompt,
+      textToAnalyze: originalText,
+      includesStyleGuides: styleGuides.length > 0,
+      styleGuideCount: styleGuides.length,
+      preferences: userPreferences,
+    };
+  }
+
+  /**
+   * 스타일 가이드를 프롬프트에 적합한 형식으로 변환합니다.
+   * @param {Array} styleGuides - 스타일 가이드 배열
+   * @returns {string} - 형식화된 스타일 가이드 문자열
+   */
+  formatStyleGuideContext(styleGuides) {
+    if (!styleGuides || styleGuides.length === 0) {
+      return "참조할 스타일 가이드가 없습니다.";
     }
+
+    // 스타일 가이드를 텍스트로 변환
+    const formattedGuides = styleGuides.map((guide) => {
+      return `[${guide.category || "일반"}] ${guide.section}: ${guide.content}`;
+    });
+
+    // 최대 토큰 수 제한을 위한 처리
+    const maxGuideLength = config.MAX_STYLE_GUIDE_LENGTH || 2000;
+    let combinedGuides = formattedGuides.join("\n\n");
+
+    if (combinedGuides.length > maxGuideLength) {
+      // 길이 제한 초과 시 우선순위 높은 항목만 선택
+      combinedGuides = formattedGuides
+        .slice(0, Math.max(3, Math.floor(styleGuides.length / 2)))
+        .join("\n\n");
+
+      // 여전히 길이 초과 시 추가 자르기
+      if (combinedGuides.length > maxGuideLength) {
+        combinedGuides = combinedGuides.substring(0, maxGuideLength) + "...";
+      }
+    }
+
+    return combinedGuides;
+  }
+
+  /**
+   * 사용자 선호도를 분석합니다.
+   * @param {Object} preferences - 사용자 선호도 설정
+   * @returns {Object} - 분석된 선호도 객체
+   */
+  analyzePreferences(preferences = {}) {
+    const defaultPreferences = {
+      correctionLevel: "balanced", // minimal, balanced, enhanced
+      focusAreas: ["spelling", "grammar"], // spelling, grammar, style, tone
+      preserveStyle: true,
+      formalityLevel: "neutral", // formal, neutral, casual
+    };
+
+    // 사용자 선호도 병합
+    return {
+      ...defaultPreferences,
+      ...preferences,
+    };
+  }
+
+  /**
+   * 사용자 선호도를 프롬프트 메시지로 변환합니다.
+   * @param {Object} preferences - 분석된 선호도 객체
+   * @returns {string} - 선호도 메시지
+   */
+  formatPreferencesMessage(preferences) {
+    // 교정 수준 메시지
+    let levelMsg = "";
+    switch (preferences.correctionLevel) {
+      case "minimal":
+        levelMsg = "최소한의 필수적인 교정만 수행하세요.";
+        break;
+      case "enhanced":
+        levelMsg = "적극적으로 문체와 표현까지 개선하세요.";
+        break;
+      case "balanced":
+      default:
+        levelMsg = "균형 잡힌 수준으로 교정하세요.";
+        break;
+    }
+
+    // 중점 영역 메시지
+    let focusMsg = "";
+    if (preferences.focusAreas && preferences.focusAreas.length > 0) {
+      const areas = {
+        spelling: "맞춤법",
+        grammar: "문법",
+        style: "문체",
+        tone: "어조",
+      };
+
+      const focusAreas = preferences.focusAreas
+        .map((area) => areas[area] || area)
+        .join(", ");
+
+      focusMsg = `특히 ${focusAreas}에 중점을 두고 교정하세요.`;
+    }
+
+    // 스타일 보존 메시지
+    const styleMsg = preferences.preserveStyle
+      ? "원문의 스타일과 어조를 최대한 유지하세요."
+      : "필요하다면 스타일을 자유롭게 개선하세요.";
+
+    // 격식 수준 메시지
+    let formalityMsg = "";
+    switch (preferences.formalityLevel) {
+      case "formal":
+        formalityMsg = "격식체로 교정하세요.";
+        break;
+      case "casual":
+        formalityMsg = "비격식체로 자연스럽게 교정하세요.";
+        break;
+      case "neutral":
+      default:
+        formalityMsg = "중립적인 어조로 교정하세요.";
+        break;
+    }
+
+    // 최종 메시지 구성
+    return `${levelMsg} ${focusMsg} ${styleMsg} ${formalityMsg}`.trim();
+  }
+
+  /**
+   * 프롬프트 길이를 확인하고 토큰 수 제한을 적용합니다.
+   * @param {string} prompt - 원본 프롬프트
+   * @param {number} maxTokens - 최대 토큰 수
+   * @returns {string} - 제한된 프롬프트
+   */
+  limitPromptLength(prompt, maxTokens = config.TOKEN_LIMIT) {
+    // 대략적인 토큰 수 추정 (한국어: 문자 수 / 1.5)
+    const estimatedTokens = Math.ceil(prompt.length / 1.5);
+
+    if (estimatedTokens <= maxTokens) {
+      return prompt;
+    }
+
+    // 토큰 제한 초과 시 내용 절삭
+    const exceededRatio = maxTokens / estimatedTokens;
+    const newLength = Math.floor(prompt.length * exceededRatio * 0.95); // 안전 마진 5%
+
+    return prompt.substring(0, newLength) + "...[내용이 너무 길어 일부 생략됨]";
   }
 }
 
-module.exports = new PromptGeneratorService();
+module.exports = new PromptService();

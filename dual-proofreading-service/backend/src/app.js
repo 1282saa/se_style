@@ -1,110 +1,127 @@
-// src/app.js 상단 수정
+// src/app.js
+// --------------------------------------------------
+// Express 진입점 – 보안·로깅·에러·종료 처리까지 프로덕션 수준으로 강화
+
+/* 0. 환경변수 로드 ------------------------------------------------ */
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
+/* 1. 외부 의존성 -------------------------------------------------- */
+require("express-async-errors"); // 비동기 에러 자동 전달
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
+const rateLimit = require("express-rate-limit");
+const { v4: uuid } = require("uuid");
+
+/* 2. 내부 모듈 ---------------------------------------------------- */
 const config = require("./config");
 const routes = require("./routes");
 const logger = require("./utils/logger");
+const errorMiddleware = require("./utils/errorMiddleware"); // AppError 핸들러
 
-// Express 앱 생성
+/* 3. 앱 인스턴스 -------------------------------------------------- */
 const app = express();
+app.set("trust proxy", 1); // 로드밸런서 뒤 IP·HTTPS 인식
 
-// 미들웨어 설정
+/* 4. 보안·성능 미들웨어 ------------------------------------------ */
+app.use(helmet());
+app.use(compression());
+app.use(
+  rateLimit({
+    windowMs: 60 * 1000, // 1분
+    max: config.RATE_LIMIT_MAX || 120, // IP당 120 req/분
+    standardHeaders: true,
+    legacyHeaders: false,
+  })
+);
+
+/* 5. 파서 -------------------------------------------------------- */
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// CORS 설정 업데이트
+/* 6. CORS -------------------------------------------------------- */
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:3002",
-    ], // 모든 개발 포트 허용
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS 메소드 추가
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: (origin, cb) => {
+      const regex = new RegExp(
+        process.env.CORS_ORIGIN || "^http://localhost:\\d+$"
+      );
+      cb(null, !origin || regex.test(origin));
+    },
     credentials: true,
   })
 );
 
-// 로깅 미들웨어
+/* 7. request-id & 고급 로깅 -------------------------------------- */
 app.use((req, res, next) => {
-  logger.info(`${req.method} ${req.path}`);
+  req.id = uuid();
+  const started = Date.now();
+  res.on("finish", () => {
+    logger.info(
+      `[${req.id}] ${req.ip} ${req.method} ${req.originalUrl} ` +
+        `${res.statusCode} ${Date.now() - started}ms`
+    );
+  });
   next();
 });
 
-// 헬스체크 엔드포인트 추가
+/* 8. 헬스체크 ---------------------------------------------------- */
 app.get("/health", (req, res) => {
-  res
-    .status(200)
-    .json({ status: "ok", message: "서버가 정상적으로 실행 중입니다." });
+  res.status(200).json({ status: "ok", time: new Date().toISOString() });
 });
 
-// 모든 라우트 설정
+/* 9. 라우트 ------------------------------------------------------ */
 app.use(routes);
 
-// 404 오류 처리
-app.use((req, res, next) => {
-  res.status(404).json({
-    success: false,
-    message: "요청한 리소스를 찾을 수 없습니다",
-  });
-});
+/* 10. 404 ------------------------------------------------------- */
+app.use((req, res) =>
+  res.status(404).json({ success: false, message: "리소스를 찾을 수 없습니다" })
+);
 
-// 전역 오류 처리
-app.use((err, req, res, next) => {
-  logger.error(`오류 처리: ${err.message}`);
+/* 11. 에러 미들웨어 --------------------------------------------- */
+app.use(errorMiddleware); // utils/errorMiddleware.js
 
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "서버 내부 오류가 발생했습니다";
-
-  res.status(statusCode).json({
-    success: false,
-    message,
-    stack: config.NODE_ENV === "development" ? err.stack : undefined,
-  });
-});
-
-// 데이터베이스 연결
+/* 12. DB 연결 ---------------------------------------------------- */
 const connectDB = async () => {
   try {
-    // 옵션 경고 제거
-    await mongoose.connect(config.MONGODB_URI);
-
-    logger.info("MongoDB에 연결되었습니다");
-  } catch (error) {
-    logger.error(`데이터베이스 연결 오류: ${error.message}`);
+    await mongoose.connect(config.MONGODB_URI, {
+      autoIndex: false,
+      maxPoolSize: 10,
+    });
+    logger.info("MongoDB 연결 완료");
+  } catch (err) {
+    logger.error(`DB 연결 실패: ${err.message}`);
     process.exit(1);
   }
 };
 
-// 서버 시작
+/* 13. 서버 기동 -------------------------------------------------- */
+let server; // graceful shutdown 용
 const startServer = async () => {
   await connectDB();
+  const PORT = config.PORT || 3003;
+  server = app.listen(PORT, () =>
+    logger.info(`🚀 Server @ http://localhost:${PORT} (${config.NODE_ENV})`)
+  );
+};
+if (require.main === module) startServer();
 
-  const PORT = 3003;
-
-  app.listen(PORT, () => {
-    logger.info(`서버가 포트 ${PORT}에서 실행 중입니다`);
-    logger.info(`환경: ${config.NODE_ENV}`);
+/* 14. 종료 신호 처리 ------------------------------------------- */
+const graceful = () => {
+  logger.info("⏼  종료 시그널 수신, 서버 정리 중…");
+  server?.close(() => {
+    logger.info("HTTP 서버 종료");
+    mongoose.connection.close(false, () => {
+      logger.info("MongoDB 연결 종료");
+      process.exit(0);
+    });
   });
 };
+process.on("SIGINT", graceful);
+process.on("SIGTERM", graceful);
 
-// 앱이 직접 실행될 때만 서버 시작
-if (require.main === module) {
-  startServer();
-}
-
-// 프로세스 종료 처리
-process.on("SIGINT", () => {
-  logger.info("서버를 종료합니다");
-  mongoose.connection.close(() => {
-    logger.info("MongoDB 연결이 종료되었습니다");
-    process.exit(0);
-  });
-});
-
+/* 15. 모듈 export ---------------------------------------------- */
 module.exports = app;

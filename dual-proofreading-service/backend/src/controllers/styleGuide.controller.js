@@ -1,4 +1,4 @@
-// src/controllers/styleGuide.controller.js
+// src/controllers/styleguide.controller.js
 const Styleguide = require("../models/styleguide.model");
 const styleGuideService = require("../services/styleGuideService");
 const logger = require("../utils/logger");
@@ -8,9 +8,20 @@ const config = require("../config");
 
 /**
  * 스타일 가이드 목록을 조회합니다.
- * @route GET /api/style-guides
+ * @async
+ * @function getStyleguides
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.query - 쿼리 매개변수
+ * @param {string} [req.query.category] - 필터링할 카테고리
+ * @param {string} [req.query.tag] - 필터링할 태그
+ * @param {string} [req.query.section] - 필터링할 섹션 (부분 일치 검색)
+ * @param {number} [req.query.page=1] - 페이지 번호
+ * @param {number} [req.query.limit=20] - 페이지당 항목 수
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 스타일 가이드 목록 및 페이지네이션 정보
+ * @throws {Error} 스타일 가이드 목록 조회 중 발생한 오류
  */
-const getStyleGuides = async (req, res) => {
+const getStyleguides = async (req, res) => {
   try {
     const { category, tag, section, page = 1, limit = 20 } = req.query;
 
@@ -37,13 +48,13 @@ const getStyleGuides = async (req, res) => {
     };
 
     // 스타일 가이드 조회
-    const styleGuides = await Styleguide.find(query, null, options);
+    const styleguides = await Styleguide.find(query, null, options);
     const total = await Styleguide.countDocuments(query);
 
     res.status(200).json({
       success: true,
       data: {
-        styleGuides,
+        styleguides,
         pagination: {
           total,
           page: parseInt(page, 10),
@@ -63,14 +74,21 @@ const getStyleGuides = async (req, res) => {
 
 /**
  * 특정 스타일 가이드를 조회합니다.
- * @route GET /api/style-guides/:id
+ * @async
+ * @function getStyleguideById
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 조회할 스타일 가이드 ID
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 스타일 가이드 상세 정보
+ * @throws {Error} 스타일 가이드 조회 중 발생한 오류
  */
-const getStyleGuide = async (req, res) => {
+const getStyleguideById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const styleGuide = await Styleguide.findById(id);
-    if (!styleGuide) {
+    const styleguide = await Styleguide.findById(id);
+    if (!styleguide) {
       return res.status(404).json({
         success: false,
         message: "스타일 가이드를 찾을 수 없습니다.",
@@ -79,7 +97,7 @@ const getStyleGuide = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: styleGuide,
+      data: styleguide,
     });
   } catch (error) {
     logger.error(`스타일 가이드 조회 오류: ${error.message}`);
@@ -91,44 +109,63 @@ const getStyleGuide = async (req, res) => {
 };
 
 /**
- * 텍스트와 관련된 스타일 가이드를 검색합니다.
- * @route POST /api/style-guides/search
+ * 특정 스타일 가이드와 관련된 스타일 가이드를 조회합니다.
+ * @async
+ * @function getRelatedStyleguides
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 스타일 가이드 ID
+ * @param {Object} req.query - 쿼리 매개변수
+ * @param {number} [req.query.limit=5] - 결과 제한 수
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 관련 스타일 가이드 목록
+ * @throws {Error} 관련 스타일 가이드 조회 중 발생한 오류
  */
-const searchRelatedStyleGuides = async (req, res) => {
+const getRelatedStyleguides = async (req, res) => {
   try {
-    const { text, limit = 5 } = req.body;
+    const { id } = req.params;
+    const { limit = 5 } = req.query;
 
-    if (!text) {
-      return res.status(400).json({
+    // 기준 스타일 가이드 조회
+    const styleguide = await Styleguide.findById(id);
+    if (!styleguide) {
+      return res.status(404).json({
         success: false,
-        message: "검색할 텍스트가 제공되지 않았습니다.",
+        message: "스타일 가이드를 찾을 수 없습니다.",
       });
     }
 
-    // 관련 스타일 가이드 검색
-    const relatedStyleGuides = await styleGuideService.findRelatedStyleGuides(
-      text,
-      limit
+    // 벡터 기반 유사 스타일 가이드 검색
+    const relatedStyleguides = await styleGuideService.findRelatedStyleguides(
+      styleguide.content,
+      parseInt(limit, 10),
+      id // 자기 자신 제외
     );
 
     res.status(200).json({
       success: true,
       data: {
-        relatedStyleGuides,
+        styleguideId: id,
+        relatedStyleguides,
       },
     });
   } catch (error) {
-    logger.error(`관련 스타일 가이드 검색 오류: ${error.message}`);
+    logger.error(`관련 스타일 가이드 조회 오류: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: `관련 스타일 가이드 검색 중 오류가 발생했습니다: ${error.message}`,
+      message: `관련 스타일 가이드 조회 중 오류가 발생했습니다: ${error.message}`,
     });
   }
 };
 
 /**
  * 모든 카테고리 목록을 조회합니다.
- * @route GET /api/style-guides/categories
+ * @async
+ * @function getCategories
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 카테고리 목록
+ * @throws {Error} 카테고리 목록 조회 중 발생한 오류
  */
 const getCategories = async (req, res) => {
   try {
@@ -151,7 +188,12 @@ const getCategories = async (req, res) => {
 
 /**
  * 모든 태그 목록을 조회합니다.
- * @route GET /api/style-guides/tags
+ * @async
+ * @function getTags
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 태그 목록
+ * @throws {Error} 태그 목록 조회 중 발생한 오류
  */
 const getTags = async (req, res) => {
   try {
@@ -173,12 +215,25 @@ const getTags = async (req, res) => {
 };
 
 /**
- * 스타일 가이드를 생성합니다.
- * @route POST /api/style-guides
+ * 새 스타일 가이드를 생성합니다.
+ * @async
+ * @function createStyleguide
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.section - 스타일 가이드 섹션
+ * @param {string} req.body.content - 스타일 가이드 내용
+ * @param {string} req.body.category - 스타일 가이드 카테고리
+ * @param {Array<string>} [req.body.tags] - 스타일 가이드 태그
+ * @param {number} [req.body.priority] - 스타일 가이드 우선순위
+ * @param {Object} [req.body.metadata] - 스타일 가이드 메타데이터
+ * @param {string} [req.body.version="1.0"] - 스타일 가이드 버전
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 생성된 스타일 가이드 정보
+ * @throws {Error} 스타일 가이드 생성 중 발생한 오류
  */
-const createStyleGuide = async (req, res) => {
+const createStyleguide = async (req, res) => {
   try {
-    const styleGuideData = {
+    const styleguideData = {
       section: req.body.section,
       content: req.body.content,
       category: req.body.category,
@@ -190,9 +245,9 @@ const createStyleGuide = async (req, res) => {
 
     // 필수 필드 검증
     if (
-      !styleGuideData.section ||
-      !styleGuideData.content ||
-      !styleGuideData.category
+      !styleguideData.section ||
+      !styleguideData.content ||
+      !styleguideData.category
     ) {
       return res.status(400).json({
         success: false,
@@ -201,18 +256,18 @@ const createStyleGuide = async (req, res) => {
     }
 
     // 스타일 가이드 생성
-    const styleGuide = new Styleguide(styleGuideData);
-    const savedStyleGuide = await styleGuide.save();
+    const styleguide = new Styleguide(styleguideData);
+    const savedStyleguide = await styleguide.save();
 
     // 벡터 임베딩 생성 (비동기적으로 처리)
     styleGuideService
-      .generateEmbedding(savedStyleGuide._id)
+      .generateEmbedding(savedStyleguide._id)
       .catch((err) => logger.error(`벡터 임베딩 생성 오류: ${err.message}`));
 
     res.status(201).json({
       success: true,
       message: "스타일 가이드가 성공적으로 생성되었습니다",
-      data: savedStyleGuide,
+      data: savedStyleguide,
     });
   } catch (error) {
     logger.error(`스타일 가이드 생성 오류: ${error.message}`);
@@ -225,16 +280,31 @@ const createStyleGuide = async (req, res) => {
 
 /**
  * 스타일 가이드를 업데이트합니다.
- * @route PUT /api/style-guides/:id
+ * @async
+ * @function updateStyleguide
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 업데이트할 스타일 가이드 ID
+ * @param {Object} req.body - 요청 바디
+ * @param {string} [req.body.section] - 스타일 가이드 섹션
+ * @param {string} [req.body.content] - 스타일 가이드 내용
+ * @param {string} [req.body.category] - 스타일 가이드 카테고리
+ * @param {Array<string>} [req.body.tags] - 스타일 가이드 태그
+ * @param {number} [req.body.priority] - 스타일 가이드 우선순위
+ * @param {Object} [req.body.metadata] - 스타일 가이드 메타데이터
+ * @param {string} [req.body.version] - 스타일 가이드 버전
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 업데이트된 스타일 가이드 정보
+ * @throws {Error} 스타일 가이드 업데이트 중 발생한 오류
  */
-const updateStyleGuide = async (req, res) => {
+const updateStyleguide = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
 
     // ID로 스타일 가이드 조회
-    const styleGuide = await Styleguide.findById(id);
-    if (!styleGuide) {
+    const styleguide = await Styleguide.findById(id);
+    if (!styleguide) {
       return res.status(404).json({
         success: false,
         message: "스타일 가이드를 찾을 수 없습니다.",
@@ -243,16 +313,16 @@ const updateStyleGuide = async (req, res) => {
 
     // 업데이트 데이터 적용
     Object.keys(updateData).forEach((key) => {
-      styleGuide[key] = updateData[key];
+      styleguide[key] = updateData[key];
     });
 
     // 업데이트된 스타일 가이드 저장
-    const updatedStyleGuide = await styleGuide.save();
+    const updatedStyleguide = await styleguide.save();
 
     // 컨텐츠가 변경되었다면 벡터 임베딩 재생성
     if (updateData.content) {
       styleGuideService
-        .generateEmbedding(updatedStyleGuide._id)
+        .generateEmbedding(updatedStyleguide._id)
         .catch((err) =>
           logger.error(`벡터 임베딩 재생성 오류: ${err.message}`)
         );
@@ -261,7 +331,7 @@ const updateStyleGuide = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "스타일 가이드가 성공적으로 업데이트되었습니다",
-      data: updatedStyleGuide,
+      data: updatedStyleguide,
     });
   } catch (error) {
     logger.error(`스타일 가이드 업데이트 오류: ${error.message}`);
@@ -274,9 +344,16 @@ const updateStyleGuide = async (req, res) => {
 
 /**
  * 스타일 가이드를 삭제합니다.
- * @route DELETE /api/style-guides/:id
+ * @async
+ * @function deleteStyleguide
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 삭제할 스타일 가이드 ID
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 삭제 결과
+ * @throws {Error} 스타일 가이드 삭제 중 발생한 오류
  */
-const deleteStyleGuide = async (req, res) => {
+const deleteStyleguide = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -306,9 +383,16 @@ const deleteStyleGuide = async (req, res) => {
 
 /**
  * 스타일북 파일을 가져옵니다.
- * @route POST /api/style-guides/import
+ * @async
+ * @function importStylebook
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} [req.body.filePath] - 스타일북 파일 경로
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 가져오기 결과
+ * @throws {Error} 스타일북 가져오기 중 발생한 오류
  */
-const importStyleBook = async (req, res) => {
+const importStylebook = async (req, res) => {
   try {
     const { filePath } = req.body;
     const targetPath =
@@ -326,10 +410,10 @@ const importStyleBook = async (req, res) => {
 
     // 파일 읽기
     const fileContent = await fs.readFile(targetPath, "utf8");
-    let styleBookData;
+    let stylebookData;
 
     try {
-      styleBookData = JSON.parse(fileContent);
+      stylebookData = JSON.parse(fileContent);
     } catch (error) {
       return res.status(400).json({
         success: false,
@@ -338,7 +422,7 @@ const importStyleBook = async (req, res) => {
     }
 
     // 스타일북 데이터 가져오기
-    const result = await styleGuideService.importStyleBook(styleBookData);
+    const result = await styleGuideService.importStylebook(stylebookData);
 
     res.status(200).json({
       success: true,
@@ -356,7 +440,14 @@ const importStyleBook = async (req, res) => {
 
 /**
  * 벡터 임베딩을 생성합니다.
- * @route POST /api/style-guides/generate-embeddings
+ * @async
+ * @function generateEmbeddings
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {boolean} [req.body.all=false] - 모든 스타일 가이드의 임베딩을 재생성할지 여부
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 임베딩 생성 결과
+ * @throws {Error} 임베딩 생성 중 발생한 오류
  */
 const generateEmbeddings = async (req, res) => {
   try {
@@ -381,21 +472,29 @@ const generateEmbeddings = async (req, res) => {
 
 /**
  * 벡터 검색 기능을 테스트합니다.
- * @route POST /api/style-guides/vector-search
+ * @async
+ * @function testVectorSearch
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.query - 검색 쿼리
+ * @param {number} [req.body.limit=5] - 결과 제한 수
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 검색 결과
+ * @throws {Error} 벡터 검색 중 발생한 오류
  */
 const testVectorSearch = async (req, res) => {
   try {
-    const { text, limit = 5 } = req.body;
+    const { query, limit = 5 } = req.body;
 
-    if (!text) {
+    if (!query) {
       return res.status(400).json({
         success: false,
-        message: "검색할 텍스트가 제공되지 않았습니다.",
+        message: "검색할 쿼리가 제공되지 않았습니다.",
       });
     }
 
     // 벡터 검색 테스트
-    const result = await styleGuideService.vectorSearch(text, limit);
+    const result = await styleGuideService.vectorSearch(query, limit);
 
     res.status(200).json({
       success: true,
@@ -413,15 +512,15 @@ const testVectorSearch = async (req, res) => {
 };
 
 module.exports = {
-  getStyleGuides,
-  getStyleGuide,
-  searchRelatedStyleGuides,
+  getStyleguides,
+  getStyleguideById,
+  getRelatedStyleguides,
   getCategories,
   getTags,
-  createStyleGuide,
-  updateStyleGuide,
-  deleteStyleGuide,
-  importStyleBook,
+  createStyleguide,
+  updateStyleguide,
+  deleteStyleguide,
+  importStylebook,
   generateEmbeddings,
   testVectorSearch,
 };

@@ -1,123 +1,84 @@
+// src/services/vectorSearch.js
+//--------------------------------------------------
 /**
- * 벡터 검색 서비스
- * - 스타일북 규칙을 벡터로 변환하고 검색하는 기능 제공
+ * Styleguide 벡터 검색 서비스
+ *  - Anthropic 임베딩(getEmbedding)
+ *  - MongoDB Atlas VectorSearch 또는 Pinecone 지원
+ *  - Redis TTL 캐싱으로 비용 및 지연 최소화
  */
 
-const { OpenAI } = require("openai");
-const Styleguide = require("../../models/styleguide.model");
+const { getEmbedding } = require("./embeddingProvider");
+const { mongoSearch } = require("../adapters/vector/mongodb");
+const { pineconeSearch } = require("../adapters/vector/pinecone");
+const redis = require("../../utils/redisClient");
 const logger = require("../../utils/logger");
 
-// OpenAI 클라이언트 초기화
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const VECTOR_DB = process.env.VECTOR_DB_TYPE || "mongodb"; // mongodb | pinecone
+const CACHE_TTL = Number(process.env.VECTOR_CACHE_TTL) || 600; // seconds
 
 /**
- * 텍스트를 벡터로 변환
- * @param {string} text - 임베딩할 텍스트
- * @returns {Promise<number[]>} - 벡터 배열
+ * 기사 텍스트에서 관련 스타일북 규칙 검색
+ * @param {string} articleText
+ * @param {{limit?:number, threshold?:number, cacheKey?:string}} [options]
+ * @returns {Promise<Array>}
  */
-async function createEmbedding(text) {
+async function findRelevantStyleguides(
+  articleText,
+  { limit = 10, threshold = 0.75, cacheKey } = {}
+) {
   try {
-    const response = await openai.embeddings.create({
-      model: "text-embedding-ada-002",
-      input: text,
-    });
-
-    return response.data[0].embedding;
-  } catch (error) {
-    logger.error("임베딩 생성 오류:", error);
-    throw new Error("텍스트 임베딩 생성 중 오류가 발생했습니다.");
-  }
-}
-
-/**
- * 문장 단위로 텍스트 분할
- * @param {string} text
- * @returns {string[]} 문장 배열
- */
-function splitIntoSentences(text) {
-  return text
-    .replace(/([.!?])\s*(?=[A-Z])/g, "$1|")
-    .split("|")
-    .map((sentence) => sentence.trim())
-    .filter((sentence) => sentence.length > 0);
-}
-
-/**
- * 기사 관련 스타일북 규칙 검색
- * @param {string} articleText - 기사 텍스트
- * @param {Object} options - 검색 옵션
- * @param {number} options.limit - 반환할 최대 규칙 수 (기본값: 5)
- * @param {number} options.threshold - 최소 유사도 점수 (기본값: 0.75)
- * @returns {Promise<Array>} - 관련 스타일북 규칙 배열
- */
-async function findRelevantStyleguides(articleText, options = {}) {
-  const { limit = 10, threshold = 0.75 } = options;
-
-  try {
-    // 벡터 DB 유형에 따라 검색 방식 결정
-    const vectorDbType = process.env.VECTOR_DB_TYPE || "pinecone";
-
-    if (vectorDbType === "mongodb") {
-      // MongoDB Atlas Vector Search 사용
-      // 1. 기사 텍스트 임베딩 생성
-      const articleEmbedding = await createEmbedding(articleText);
-
-      // 2. 벡터 검색 수행
-      return await Styleguide.vectorSearch(articleEmbedding, limit);
-    } else {
-      // Pinecone 또는 다른 외부 벡터 DB 사용 시 구현 필요
-      // (여기서는 간단한 키워드 기반 검색으로 대체)
-      logger.warn(
-        "Pinecone 벡터 검색이 아직 구현되지 않았습니다. 키워드 기반 검색을 사용합니다."
-      );
-
-      // 간단한 키워드 매칭 검색 (임시)
-      const sentences = splitIntoSentences(articleText);
-      const keywords = sentences
-        .flatMap((sentence) => sentence.split(/\s+/))
-        .filter((word) => word.length > 1)
-        .slice(0, 20);
-
-      const query = {
-        $or: [
-          { tags: { $in: keywords } },
-          { content: { $regex: keywords.join("|"), $options: "i" } },
-        ],
-      };
-
-      return await Styleguide.find(query).limit(limit);
+    /* 0. Redis 캐시 확인 */
+    if (cacheKey) {
+      const hit = await redis.get(cacheKey);
+      if (hit) {
+        logger.debug(`vectorSearch cache HIT (${cacheKey})`);
+        return JSON.parse(hit);
+      }
     }
-  } catch (error) {
-    logger.error("스타일북 검색 오류:", error);
+
+    /* 1. 기사 임베딩 (앞 15k 문자 한정) */
+    const embedding = await getEmbedding(articleText.slice(0, 15000));
+
+    /* 2. Vector DB 검색 */
+    let results;
+    if (VECTOR_DB === "mongodb") {
+      results = await mongoSearch(embedding, { limit, threshold });
+    } else if (VECTOR_DB === "pinecone") {
+      results = await pineconeSearch(embedding, { limit, threshold });
+    } else {
+      throw new Error(`지원되지 않는 VECTOR_DB_TYPE: ${VECTOR_DB}`);
+    }
+
+    /* 3. 캐시 저장 */
+    if (cacheKey) {
+      await redis.set(cacheKey, JSON.stringify(results), "EX", CACHE_TTL);
+    }
+
+    return results;
+  } catch (err) {
+    logger.error(`스타일북 검색 오류: ${err.message}`);
     throw new Error("관련 스타일북 규칙 검색 중 오류가 발생했습니다.");
   }
 }
 
 /**
- * 스타일북을 벡터 DB에 인덱싱
- * @param {Object} styleguide - 저장할 스타일북 객체
- * @returns {Promise<Object>} - 임베딩이 추가된 스타일북 객체
+ * 스타일북 문서(단일) 임베딩 생성 + 필드 주입
+ *  - 호출 측에서 save() 필요
+ * @param {import('mongoose').Document} styleguideDoc
+ * @returns {Promise<import('mongoose').Document>}
  */
-async function indexStyleguide(styleguide) {
+async function indexStyleguide(styleguideDoc) {
   try {
-    // 임베딩 생성
-    const textToEmbed = `${styleguide.section}: ${styleguide.content}`;
-    const embedding = await createEmbedding(textToEmbed);
-
-    // 임베딩 저장
-    styleguide.vector = embedding;
-    return styleguide;
-  } catch (error) {
-    logger.error("스타일북 인덱싱 오류:", error);
+    const text = `${styleguideDoc.section}: ${styleguideDoc.content}`;
+    styleguideDoc.vector = await getEmbedding(text);
+    return styleguideDoc;
+  } catch (err) {
+    logger.error(`스타일북 인덱싱 오류: ${err.message}`);
     throw new Error("스타일북 벡터 인덱싱 중 오류가 발생했습니다.");
   }
 }
 
 module.exports = {
-  createEmbedding,
   findRelevantStyleguides,
   indexStyleguide,
-  splitIntoSentences,
 };

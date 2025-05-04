@@ -1,16 +1,32 @@
-// src/utils/logger.js
+/**
+ * 로깅 유틸리티 설정
+ * 애플리케이션의 로깅 관련 기능을 제공합니다.
+ * @module utils/logger
+ */
+
 const winston = require("winston");
 require("winston-daily-rotate-file");
 const path = require("path");
 const fs = require("fs");
 
-// 로그 디렉토리 생성
-const logDir = path.join(process.cwd(), "logs");
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir, { recursive: true });
-}
+/**
+ * 로그 디렉토리 초기화
+ * 로그를 저장할 디렉토리가 없는 경우 생성합니다.
+ */
+const initLogDirectory = () => {
+  const logDir = path.join(process.cwd(), "logs");
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+  return logDir;
+};
 
-// 로그 포맷 정의
+const logDir = initLogDirectory();
+
+/**
+ * 로그 포맷 정의
+ * 로그 메시지에 타임스탬프와 레벨, 추가 메타데이터를 포함합니다.
+ */
 const logFormat = winston.format.printf(
   ({ level, message, timestamp, ...meta }) => {
     let metaStr = "";
@@ -21,7 +37,11 @@ const logFormat = winston.format.printf(
   }
 );
 
-// 로거 설정
+/**
+ * 로거 설정 및 생성
+ * 콘솔, 일별 로그 파일, 에러 로그 파일에 대한 설정을 포함합니다.
+ * @type {winston.Logger}
+ */
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || "info",
   format: winston.format.combine(

@@ -3,11 +3,23 @@ const mongoose = require("mongoose");
 const proofreadingService = require("../services/proofreadingService");
 const Article = require("../models/article.model");
 const Correction = require("../models/correction.model");
+const UserChoice = require("../models/userChoice.model");
 const logger = require("../utils/logger");
 
 /**
  * 새 기사를 생성합니다.
- * @route POST /api/articles
+ * @async
+ * @function createArticle
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.originalText - 원본 기사 텍스트
+ * @param {string} [req.body.userId="anonymous"] - 사용자 ID
+ * @param {string} [req.body.topic] - 기사 주제
+ * @param {string} [req.body.category] - 기사 카테고리
+ * @param {Object} [req.body.metadata] - 기사 메타데이터
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 생성된 기사 정보
+ * @throws {Error} 기사 생성 중 발생한 오류
  */
 const createArticle = async (req, res) => {
   try {
@@ -48,9 +60,16 @@ const createArticle = async (req, res) => {
 
 /**
  * 특정 기사의 상세 정보를 조회합니다.
- * @route GET /api/articles/:id
+ * @async
+ * @function getArticleById
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 조회할 기사 ID
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 기사 상세 정보
+ * @throws {Error} 기사 조회 중 발생한 오류
  */
-const getArticle = async (req, res) => {
+const getArticleById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -77,7 +96,16 @@ const getArticle = async (req, res) => {
 
 /**
  * 사용자별 기사 목록을 조회합니다.
- * @route GET /api/articles
+ * @async
+ * @function getUserArticles
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.query - 쿼리 매개변수
+ * @param {string} req.query.userId - 사용자 ID
+ * @param {number} [req.query.page=1] - 페이지 번호
+ * @param {number} [req.query.limit=10] - 페이지당 항목 수
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 기사 목록 및 페이지네이션 정보
+ * @throws {Error} 기사 목록 조회 중 발생한 오류
  */
 const getUserArticles = async (req, res) => {
   try {
@@ -123,7 +151,16 @@ const getUserArticles = async (req, res) => {
 
 /**
  * 빠른 교정을 수행합니다.
- * @route POST /api/articles/quick-proofread
+ * @async
+ * @function quickProofread
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.text - 교정할 텍스트
+ * @param {string} [req.body.userId="anonymous"] - 사용자 ID
+ * @param {Object} [req.body.metadata={}] - 교정 메타데이터
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 교정 결과
+ * @throws {Error} 교정 중 발생한 오류
  */
 const quickProofread = async (req, res) => {
   try {
@@ -167,11 +204,20 @@ const quickProofread = async (req, res) => {
 
 /**
  * 특정 기사를 교정합니다.
- * @route POST /api/articles/:id/proofread
+ * @async
+ * @function proofreadArticle
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 교정할 기사 ID
+ * @param {Object} [req.body.preferences] - 교정 환경설정
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 교정 결과
+ * @throws {Error} 교정 중 발생한 오류
  */
 const proofreadArticle = async (req, res) => {
   try {
     const { id } = req.params;
+    const { preferences = {} } = req.body;
 
     // 기사 존재 여부 확인
     const article = await Article.findById(id);
@@ -183,7 +229,10 @@ const proofreadArticle = async (req, res) => {
     }
 
     // 교정 수행
-    const corrections = await proofreadingService.proofreadArticle(id);
+    const corrections = await proofreadingService.proofreadArticle(
+      id,
+      preferences
+    );
 
     res.status(200).json({
       success: true,
@@ -208,9 +257,16 @@ const proofreadArticle = async (req, res) => {
 
 /**
  * 특정 기사의 교정 결과를 조회합니다.
- * @route GET /api/articles/:id/corrections
+ * @async
+ * @function getArticleCorrections
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 기사 ID
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 기사 교정 결과 목록
+ * @throws {Error} 교정 결과 조회 중 발생한 오류
  */
-const getCorrections = async (req, res) => {
+const getArticleCorrections = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -242,7 +298,19 @@ const getCorrections = async (req, res) => {
 
 /**
  * 사용자 선택을 저장합니다.
- * @route POST /api/articles/:id/choose
+ * @async
+ * @function saveUserChoice
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 기사 ID
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.correctionId - 선택한 교정 결과 ID
+ * @param {number} [req.body.rating] - 평가 점수 (1-5)
+ * @param {string} [req.body.comment] - 사용자 의견
+ * @param {Object} [req.body.metadata] - 추가 메타데이터
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 저장된 사용자 선택 정보
+ * @throws {Error} 사용자 선택 저장 중 발생한 오류
  */
 const saveUserChoice = async (req, res) => {
   try {
@@ -278,12 +346,49 @@ const saveUserChoice = async (req, res) => {
   }
 };
 
+/**
+ * 특정 기사에 대한 사용자 선택을 조회합니다.
+ * @async
+ * @function getArticleUserChoices
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.params - URL 매개변수
+ * @param {string} req.params.id - 기사 ID
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 사용자 선택 목록
+ * @throws {Error} 사용자 선택 조회 중 발생한 오류
+ */
+const getArticleUserChoices = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 사용자 선택 조회
+    const userChoices = await UserChoice.find({ articleId: id }).populate(
+      "correctionId"
+    );
+
+    res.status(200).json({
+      success: true,
+      data: {
+        articleId: id,
+        userChoices,
+      },
+    });
+  } catch (error) {
+    logger.error(`사용자 선택 조회 오류: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      message: `사용자 선택 조회 중 오류가 발생했습니다: ${error.message}`,
+    });
+  }
+};
+
 module.exports = {
   createArticle,
-  getArticle,
+  getArticleById,
   getUserArticles,
   quickProofread,
   proofreadArticle,
-  getCorrections,
+  getArticleCorrections,
   saveUserChoice,
+  getArticleUserChoices,
 };

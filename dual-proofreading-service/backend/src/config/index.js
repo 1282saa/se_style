@@ -1,6 +1,6 @@
 // src/controllers/article.controller.js
 const mongoose = require("mongoose");
-const proofreadingService = require("../services/proofreadingService");
+const proofreadingService = require("../services/_proofreadingService");
 const Article = require("../models/article.model");
 const Correction = require("../models/correction.model");
 const logger = require("../utils/logger");

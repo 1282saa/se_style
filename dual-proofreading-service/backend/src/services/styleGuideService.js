@@ -1,8 +1,13 @@
 // src/services/styleGuideService.js
 const Styleguide = require("../models/styleguide.model");
-const llmService = require("./llm/llm.service");
+const claudeService = require("./llm/claudeService"); // 통합된 LLM 서비스
 const logger = require("../utils/logger");
 
+/**
+ * 스타일 가이드 서비스
+ * - RAG(Retrieval Augmented Generation) 구현
+ * - 스타일북 데이터 관리 및 검색
+ */
 class StyleGuideService {
   /**
    * 텍스트와 관련된 스타일 가이드를 검색합니다.
@@ -12,40 +17,49 @@ class StyleGuideService {
    */
   async findRelatedStyleGuides(text, limit = 5) {
     try {
-      // 텍스트 분석을 위한 키워드 추출 (간단한 구현)
-      const keywords = this.extractKeywords(text);
-      logger.debug(`추출된 키워드: ${keywords.join(", ")}`);
+      if (!text) {
+        logger.warn("빈 텍스트로 스타일 가이드 검색 시도");
+        return [];
+      }
 
-      // 벡터 검색 사용 가능 여부 확인
-      const hasVectorSearch = await this.checkVectorSearchAvailability();
+      // 텍스트 길이 제한
+      const maxTextLength = 1000;
+      const searchText =
+        text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
 
-      if (hasVectorSearch) {
+      // 벡터 검색 가능 여부 확인
+      const hasVectors = await this.hasVectorEmbeddings();
+
+      if (hasVectors) {
         // 벡터 검색 사용
-        return this.vectorSearch(text, limit);
+        logger.info("벡터 검색 사용하여 스타일 가이드 검색");
+        return this.vectorSearch(searchText, limit);
       } else {
         // 키워드 기반 검색 사용
+        logger.info("키워드 검색 사용하여 스타일 가이드 검색");
+        const keywords = this.extractKeywords(searchText);
         return this.keywordSearch(keywords, limit);
       }
     } catch (error) {
       logger.error(`관련 스타일 가이드 검색 오류: ${error.message}`);
-      throw new Error(`관련 스타일 가이드 검색 중 오류 발생: ${error.message}`);
+
+      // 오류 발생 시 빈 배열 반환 (서비스 중단 방지)
+      return [];
     }
   }
 
   /**
-   * 벡터 검색을 사용할 수 있는지 확인합니다.
-   * @returns {Promise<boolean>} - 벡터 검색 사용 가능 여부
+   * 벡터 임베딩이 있는 스타일 가이드가 존재하는지 확인합니다.
+   * @returns {Promise<boolean>} - 벡터 임베딩 존재 여부
    */
-  async checkVectorSearchAvailability() {
+  async hasVectorEmbeddings() {
     try {
-      // 벡터가 있는 스타일 가이드 개수 확인
       const count = await Styleguide.countDocuments({
         vector: { $exists: true, $ne: null },
       });
-
       return count > 0;
     } catch (error) {
-      logger.error(`벡터 검색 가용성 확인 오류: ${error.message}`);
+      logger.error(`벡터 임베딩 확인 오류: ${error.message}`);
       return false;
     }
   }
@@ -56,33 +70,47 @@ class StyleGuideService {
    * @param {number} limit - 최대 결과 수
    * @returns {Promise<Array>} - 검색 결과 배열
    */
-  async keywordSearch(keywords, limit) {
-    if (!keywords || keywords.length === 0) {
-      return [];
-    }
-
+  async keywordSearch(keywords, limit = 5) {
     try {
-      // 키워드 기반 쿼리 구성
-      const keywordQueries = keywords.map((keyword) => ({
-        $or: [
-          { section: { $regex: keyword, $options: "i" } },
-          { content: { $regex: keyword, $options: "i" } },
-          { tags: { $regex: keyword, $options: "i" } },
-        ],
-      }));
+      if (!keywords || keywords.length === 0) {
+        return [];
+      }
 
-      // 검색 실행
-      const results = await Styleguide.find({
-        $or: keywordQueries,
-      })
+      // 키워드 정규식 패턴 생성
+      const keywordPatterns = keywords.map(
+        (keyword) => new RegExp(this.escapeRegExp(keyword), "i")
+      );
+
+      // 검색 쿼리 생성
+      const query = {
+        $or: [
+          { section: { $in: keywordPatterns } },
+          { content: { $in: keywordPatterns } },
+          { tags: { $in: keywordPatterns } },
+        ],
+      };
+
+      // 결과 검색
+      const guides = await Styleguide.find(query)
         .sort({ priority: -1 })
         .limit(limit);
 
-      return results;
+      logger.info(`키워드 검색 결과: ${guides.length}개`);
+
+      return guides;
     } catch (error) {
       logger.error(`키워드 검색 오류: ${error.message}`);
       return [];
     }
+  }
+
+  /**
+   * 정규식 특수문자를 이스케이프합니다.
+   * @param {string} text - 이스케이프할 텍스트
+   * @returns {string} - 이스케이프된 텍스트
+   */
+  escapeRegExp(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   /**
@@ -94,7 +122,7 @@ class StyleGuideService {
     if (!text) return [];
 
     try {
-      // 불용어 정의 (한국어)
+      // 한국어 불용어 (예시)
       const stopwords = [
         "은",
         "는",
@@ -135,7 +163,7 @@ class StyleGuideService {
 
       const words = normalizedText.split(" ");
 
-      // 불용어 제거 및 최소 길이 필터링
+      // 불용어와 짧은 단어 제거
       const filteredWords = words.filter(
         (word) => word.length > 1 && !stopwords.includes(word)
       );
@@ -152,6 +180,8 @@ class StyleGuideService {
         .slice(0, 10)
         .map((entry) => entry[0]);
 
+      logger.debug(`추출된 키워드: ${keywords.join(", ")}`);
+
       return keywords;
     } catch (error) {
       logger.error(`키워드 추출 오류: ${error.message}`);
@@ -167,37 +197,86 @@ class StyleGuideService {
    */
   async vectorSearch(text, limit) {
     try {
-      // 텍스트 임베딩 생성
-      const embedding = await llmService.createEmbedding(text);
+      // 텍스트 길이 제한
+      const maxTextLength = 1000;
+      const searchText =
+        text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
 
-      // MongoDB Atlas 벡터 검색 사용 시
       try {
-        const results = await Styleguide.vectorSearch(embedding, limit);
-        if (results && results.length > 0) {
-          return results;
+        // 텍스트 임베딩 생성
+        const embedding = await claudeService.createEmbedding(searchText);
+
+        // MongoDB Atlas Vector Search 가능 여부 확인
+        let vectorSearchResults = [];
+
+        try {
+          // MongoDB Atlas Vector Search 시도
+          if (typeof Styleguide.vectorSearch === "function") {
+            vectorSearchResults = await Styleguide.vectorSearch(
+              embedding,
+              limit
+            );
+
+            if (vectorSearchResults && vectorSearchResults.length > 0) {
+              logger.info(
+                `벡터 검색 성공: ${vectorSearchResults.length}개 결과`
+              );
+              return vectorSearchResults;
+            }
+          }
+        } catch (vectorSearchError) {
+          logger.warn(
+            `MongoDB 벡터 검색 오류: ${vectorSearchError.message}. 대체 방식으로 전환합니다.`
+          );
         }
-      } catch (error) {
-        logger.warn(`MongoDB 벡터 검색 오류, 대체 방법 사용: ${error.message}`);
+
+        // 대체 방법: 메모리 내 코사인 유사도 계산
+        logger.info("메모리 내 코사인 유사도 계산 사용");
+
+        // 벡터가 있는 스타일 가이드 조회
+        const allGuides = await Styleguide.find({
+          vector: { $exists: true, $ne: null },
+        }).select("+vector"); // vector 필드는 기본적으로 제외되므로 명시적으로 포함
+
+        if (!allGuides || allGuides.length === 0) {
+          logger.warn(
+            "벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다."
+          );
+          const keywords = this.extractKeywords(text);
+          return this.keywordSearch(keywords, limit);
+        }
+
+        // 코사인 유사도 계산
+        const scoredGuides = allGuides
+          .map((guide) => {
+            const similarity = this.calculateCosineSimilarity(
+              embedding,
+              guide.vector
+            );
+            return {
+              ...guide.toObject(),
+              score: similarity,
+            };
+          })
+          .filter((guide) => guide.score > 0.5) // 유사도가 일정 수준 이상인 것만 필터링
+          .sort((a, b) => b.score - a.score) // 유사도 기준 내림차순 정렬
+          .slice(0, limit); // 상위 N개만 선택
+
+        logger.info(`코사인 유사도 계산 결과: ${scoredGuides.length}개`);
+
+        return scoredGuides;
+      } catch (embeddingError) {
+        logger.error(
+          `임베딩 생성 오류: ${embeddingError.message}. 키워드 검색으로 전환합니다.`
+        );
+        const keywords = this.extractKeywords(text);
+        return this.keywordSearch(keywords, limit);
       }
-
-      // 대체 방법: 코사인 유사도 계산
-      const guides = await Styleguide.find({
-        vector: { $exists: true, $ne: null },
-      }).select("+vector");
-
-      // 유사도 계산 및 정렬
-      const scoredGuides = guides
-        .map((guide) => ({
-          ...guide.toObject(),
-          score: this.cosineSimilarity(embedding, guide.vector),
-        }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, limit);
-
-      return scoredGuides;
     } catch (error) {
       logger.error(`벡터 검색 오류: ${error.message}`);
-      // 오류 발생 시 키워드 검색으로 폴백
+
+      // 오류 발생 시 키워드 검색으로 대체
+      logger.info("벡터 검색 오류로 키워드 검색으로 전환");
       const keywords = this.extractKeywords(text);
       return this.keywordSearch(keywords, limit);
     }
@@ -209,29 +288,45 @@ class StyleGuideService {
    * @param {Array} vecB - 두 번째 벡터
    * @returns {number} - 코사인 유사도 (-1 ~ 1)
    */
-  cosineSimilarity(vecA, vecB) {
+  calculateCosineSimilarity(vecA, vecB) {
     if (!vecA || !vecB || vecA.length !== vecB.length) {
       return 0;
     }
 
-    let dotProduct = 0;
-    let normA = 0;
-    let normB = 0;
+    try {
+      // Float32Array로 변환하여 성능 향상
+      const vecATyped = new Float32Array(vecA);
+      const vecBTyped = new Float32Array(vecB);
 
-    for (let i = 0; i < vecA.length; i++) {
-      dotProduct += vecA[i] * vecB[i];
-      normA += vecA[i] * vecA[i];
-      normB += vecB[i] * vecB[i];
-    }
+      let dotProduct = 0;
+      let normA = 0;
+      let normB = 0;
 
-    normA = Math.sqrt(normA);
-    normB = Math.sqrt(normB);
+      // 벡터 길이가 길 경우 청크 단위로 처리
+      const chunkSize = 1000;
 
-    if (normA === 0 || normB === 0) {
+      for (let i = 0; i < vecATyped.length; i += chunkSize) {
+        const end = Math.min(i + chunkSize, vecATyped.length);
+
+        for (let j = i; j < end; j++) {
+          dotProduct += vecATyped[j] * vecBTyped[j];
+          normA += vecATyped[j] * vecATyped[j];
+          normB += vecBTyped[j] * vecBTyped[j];
+        }
+      }
+
+      normA = Math.sqrt(normA);
+      normB = Math.sqrt(normB);
+
+      if (normA === 0 || normB === 0) {
+        return 0;
+      }
+
+      return dotProduct / (normA * normB);
+    } catch (error) {
+      logger.error(`코사인 유사도 계산 오류: ${error.message}`);
       return 0;
     }
-
-    return dotProduct / (normA * normB);
   }
 
   /**
@@ -251,10 +346,19 @@ class StyleGuideService {
       }
 
       // 임베딩용 텍스트 생성
-      const embeddingText = `${styleGuide.section}: ${styleGuide.content}`;
+      const embeddingText = `
+제목: ${styleGuide.section}
+내용: ${styleGuide.content}
+카테고리: ${styleGuide.category}
+${
+  styleGuide.tags && styleGuide.tags.length > 0
+    ? `태그: ${styleGuide.tags.join(", ")}`
+    : ""
+}
+`.trim();
 
       // 임베딩 생성
-      const embedding = await llmService.createEmbedding(embeddingText);
+      const embedding = await claudeService.createEmbedding(embeddingText);
 
       // 임베딩 저장
       styleGuide.vector = embedding;
@@ -288,15 +392,48 @@ class StyleGuideService {
       }
 
       // 임베딩 생성 결과 통계
-      const stats = { total: styleGuides.length, success: 0, failed: 0 };
+      const stats = {
+        total: styleGuides.length,
+        success: 0,
+        failed: 0,
+        failedIds: [],
+      };
 
-      // 임베딩 생성 (순차 처리)
-      for (const guide of styleGuides) {
-        const success = await this.generateEmbedding(guide._id);
-        if (success) {
-          stats.success++;
-        } else {
-          stats.failed++;
+      // 병렬 처리를 위한 청크 분할
+      const chunkSize = 5; // API 속도 제한 고려
+      const chunks = [];
+
+      for (let i = 0; i < styleGuides.length; i += chunkSize) {
+        chunks.push(styleGuides.slice(i, i + chunkSize));
+      }
+
+      // 청크별 병렬 처리
+      for (const [chunkIndex, chunk] of chunks.entries()) {
+        logger.info(`청크 ${chunkIndex + 1}/${chunks.length} 처리 중...`);
+
+        // 청크 내 병렬 처리
+        const results = await Promise.allSettled(
+          chunk.map((guide) => this.generateEmbedding(guide._id))
+        );
+
+        // 결과 분석
+        results.forEach((result, index) => {
+          if (result.status === "fulfilled" && result.value) {
+            stats.success++;
+          } else {
+            stats.failed++;
+            stats.failedIds.push(chunk[index]._id);
+            logger.warn(
+              `임베딩 생성 실패 (ID: ${chunk[index]._id}): ${
+                result.reason?.message || "알 수 없는 오류"
+              }`
+            );
+          }
+        });
+
+        // API 속도 제한을 피하기 위한 지연
+        if (chunkIndex < chunks.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 
@@ -333,6 +470,7 @@ class StyleGuideService {
       // 스타일북 항목 처리
       for (const item of styleBookData) {
         try {
+          // 필수 필드 검증
           if (!item.section || !item.content || !item.category) {
             throw new Error(
               "필수 필드(section, content, category)가 누락되었습니다."
@@ -348,8 +486,12 @@ class StyleGuideService {
           if (existingGuide) {
             // 기존 항목 업데이트
             Object.keys(item).forEach((key) => {
-              existingGuide[key] = item[key];
+              if (key !== "_id") {
+                // _id는 변경 불가
+                existingGuide[key] = item[key];
+              }
             });
+
             await existingGuide.save();
             stats.updated++;
           } else {
@@ -370,6 +512,8 @@ class StyleGuideService {
 
       // 임베딩 생성 필요 여부 확인
       if (stats.created > 0 || stats.updated > 0) {
+        logger.info("신규 및 업데이트된 스타일북 항목에 대한 임베딩 생성 시작");
+        // 비동기적으로 임베딩 생성 (완료를 기다리지 않음)
         this.generateAllEmbeddings(false).catch((err) =>
           logger.error(`임베딩 생성 오류: ${err.message}`)
         );

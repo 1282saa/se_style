@@ -4,11 +4,16 @@ const Article = require("../models/article.model");
 const Correction = require("../models/correction.model");
 const UserChoice = require("../models/userChoice.model");
 const styleGuideService = require("./styleGuideService");
-const llmService = require("./llm/llm.service");
-const promptGenerator = require("./llm/promptGenerator");
+const claudeService = require("./llm/claudeService"); // anthropicService를 claudeService로 통합
+const promptService = require("./llm/promptService");
 const logger = require("../utils/logger");
 const config = require("../config");
 
+/**
+ * 교정 서비스
+ * - 사용자 기사 교정 및 결과 관리
+ * - 다양한 교정 스타일 제공 (최소, 적극적, 맞춤형)
+ */
 class ProofreadingService {
   /**
    * 새 기사를 생성합니다.
@@ -17,6 +22,18 @@ class ProofreadingService {
    */
   async createArticle(articleData) {
     try {
+      // 기본값 설정 및 유효성 검사
+      if (!articleData.originalText) {
+        throw new Error("원문 텍스트가 제공되지 않았습니다");
+      }
+
+      // 텍스트 길이 제한 검사
+      if (articleData.originalText.length > config.MAX_TEXT_LENGTH) {
+        throw new Error(
+          `텍스트 길이가 너무 깁니다. ${config.MAX_TEXT_LENGTH}자 이하로 입력해주세요.`
+        );
+      }
+
       const article = new Article({
         userId: articleData.userId || "anonymous",
         originalText: articleData.originalText,
@@ -44,17 +61,12 @@ class ProofreadingService {
   async proofreadArticle(articleId) {
     try {
       // 기사 조회
-      const article = await Article.findById(articleId);
-      if (!article) {
-        throw new Error(`기사를 찾을 수 없습니다 (ID: ${articleId})`);
-      }
+      const article = await this.findArticleById(articleId);
 
       // 관련 스타일 가이드 검색
-      const styleGuides = await styleGuideService.findRelatedStyleGuides(
-        article.originalText,
-        5
+      const styleGuides = await this.findRelatedStyleGuides(
+        article.originalText
       );
-      logger.debug(`관련 스타일 가이드 ${styleGuides.length}개 발견`);
 
       // 두 가지 교정 결과 생성 (병렬 처리)
       const [correction1, correction2] = await Promise.all([
@@ -70,195 +82,238 @@ class ProofreadingService {
   }
 
   /**
+   * ID로 기사를 조회합니다.
+   * @param {string} articleId - 기사 ID
+   * @returns {Promise<Object>} - 찾은 기사 객체
+   * @private
+   */
+  async findArticleById(articleId) {
+    const article = await Article.findById(articleId);
+    if (!article) {
+      throw new Error(`기사를 찾을 수 없습니다 (ID: ${articleId})`);
+    }
+    return article;
+  }
+
+  /**
+   * 텍스트와 관련된 스타일 가이드를 검색합니다.
+   * @param {string} text - 검색할 텍스트
+   * @returns {Promise<Array>} - 관련 스타일 가이드 배열
+   * @private
+   */
+  async findRelatedStyleGuides(text) {
+    const styleGuides = await styleGuideService.findRelatedStyleGuides(text);
+    logger.info(`관련 스타일 가이드 ${styleGuides.length}개 발견`);
+    return styleGuides;
+  }
+
+  /**
    * 지정된 프롬프트 유형으로 교정 결과를 생성합니다.
    * @param {Object} article - 기사 객체
    * @param {Array} styleGuides - 관련 스타일 가이드
-   * @param {number} promptType - 프롬프트 유형 (1: 최소, 2: 적극적)
+   * @param {number} promptType - 프롬프트 유형 (1: 최소, 2: 적극적, 3: 맞춤형)
+   * @param {Object} preferences - 사용자 선호도 설정 (맞춤형 교정 시 사용)
    * @returns {Promise<Object>} - 교정 결과 객체
    */
-  async generateCorrection(article, styleGuides, promptType) {
+  async generateCorrection(article, styleGuides, promptType, preferences = {}) {
     try {
-      // 교정 결과가 이미 존재하는지 확인
-      const existingCorrection = await Correction.findOne({
-        articleId: article._id,
+      // 1. 교정 결과가 이미 존재하는지 확인
+      const existingCorrection = await this.findExistingCorrection(
+        article._id,
         promptType,
-      });
-
+        preferences
+      );
       if (existingCorrection) {
-        logger.info(`기존 교정 결과 반환 (ID: ${existingCorrection._id})`);
         return existingCorrection;
       }
 
-      // 프롬프트 생성
-      const prompt = promptGenerator.generatePrompt(
-        promptType,
+      // 2. 프롬프트 생성
+      const prompt = this.createPrompt(
         article.originalText,
-        styleGuides
+        styleGuides,
+        promptType,
+        preferences
       );
 
-      // 텍스트 생성을 위한 캐시 키 구성
-      const cacheKey = `correction:${article._id}:${promptType}:${styleGuides.length}`;
-
-      // LLM 호출
-      const result = await llmService.generateWithClaude(prompt, {
-        cacheKey,
-        model: config.CLAUDE_MODEL,
-      });
-
-      // 교정 결과 저장
-      const correction = new Correction({
-        articleId: article._id,
+      // 3. 캐시 키 생성
+      const cacheKey = this.generateCacheKey(
+        article._id,
         promptType,
-        correctedText: result.text,
-        llmInfo: {
-          model: result.metadata.model,
-          promptTokens: result.metadata.promptTokens,
-          completionTokens: result.metadata.completionTokens,
-          totalTokens: result.metadata.totalTokens,
-        },
-      });
-
-      // 교정 결과에서 변경 사항 분석
-      const changes = this.analyzeChanges(
-        article.originalText,
-        result.text,
-        styleGuides
+        styleGuides,
+        preferences
       );
-      if (changes && changes.length > 0) {
-        correction.changes = changes;
-      }
 
-      // 저장
-      const savedCorrection = await correction.save();
-      logger.info(`교정 결과 저장 완료 (ID: ${savedCorrection._id})`);
+      // 4. Claude API 호출
+      const result = await this.callClaudeAPI(prompt, cacheKey);
 
-      return savedCorrection;
+      // 5. 교정 결과 저장
+      return await this.saveCorrection(article._id, promptType, result);
     } catch (error) {
       logger.error(
         `교정 생성 오류 (프롬프트 유형: ${promptType}): ${error.message}`
       );
-      throw new Error(`교정 생성 중 오류 발생: ${error.message}`);
+
+      // 오류 발생 시 대체 교정 생성
+      return this.createFallbackCorrection(article, promptType);
     }
   }
 
   /**
-   * 원문과 교정본의 차이를 분석합니다.
-   * @param {string} original - 원문 텍스트
-   * @param {string} corrected - 교정 텍스트
-   * @param {Array} styleGuides - 관련 스타일 가이드
-   * @returns {Array} - 변경 사항 배열
+   * 기존 교정 결과를 찾습니다.
+   * @param {string} articleId - 기사 ID
+   * @param {number} promptType - 프롬프트 유형
+   * @param {Object} preferences - 사용자 선호도 설정 (맞춤형 교정 시 사용)
+   * @returns {Promise<Object|null>} - 기존 교정 결과 또는 null
+   * @private
    */
-  analyzeChanges(original, corrected, styleGuides = []) {
-    try {
-      // 간단한 구현: 공백으로 구분된 단어 수준에서 비교
-      const originalWords = original.split(/\s+/);
-      const correctedWords = corrected.split(/\s+/);
+  async findExistingCorrection(articleId, promptType, preferences = {}) {
+    // 기본 쿼리
+    const query = { articleId, promptType };
 
-      const changes = [];
-      let i = 0,
-        j = 0;
-
-      while (i < originalWords.length && j < correctedWords.length) {
-        if (originalWords[i] !== correctedWords[j]) {
-          // 변경 사항 발견
-          let originalChunk = originalWords[i];
-          let correctedChunk = correctedWords[j];
-
-          // 다음 몇 개 단어까지 덩어리로 검사
-          let nextMatchOriginal = -1;
-          let nextMatchCorrected = -1;
-          const lookAhead = 5; // 최대 탐색 범위
-
-          // 원문의 다음 단어가 교정본에 있는지 확인
-          for (
-            let k = i + 1;
-            k < Math.min(i + lookAhead, originalWords.length);
-            k++
-          ) {
-            const searchIndex = correctedWords.indexOf(originalWords[k], j);
-            if (searchIndex !== -1) {
-              nextMatchOriginal = k;
-              nextMatchCorrected = searchIndex;
-              break;
-            }
-          }
-
-          // 교정본의 다음 단어가 원문에 있는지 확인
-          if (nextMatchOriginal === -1) {
-            for (
-              let k = j + 1;
-              k < Math.min(j + lookAhead, correctedWords.length);
-              k++
-            ) {
-              const searchIndex = originalWords.indexOf(correctedWords[k], i);
-              if (searchIndex !== -1) {
-                nextMatchCorrected = k;
-                nextMatchOriginal = searchIndex;
-                break;
-              }
-            }
-          }
-
-          // 변경 덩어리 구성
-          if (nextMatchOriginal !== -1 && nextMatchCorrected !== -1) {
-            // 다음 일치 지점까지의 덩어리 추출
-            originalChunk = originalWords.slice(i, nextMatchOriginal).join(" ");
-            correctedChunk = correctedWords
-              .slice(j, nextMatchCorrected)
-              .join(" ");
-            i = nextMatchOriginal;
-            j = nextMatchCorrected;
-          } else {
-            // 일치 지점을 찾지 못한 경우 현재 단어만 처리
-            i++;
-            j++;
-          }
-
-          // 관련 스타일 가이드 규칙 찾기
-          const relatedRule = this.findRelatedRule(originalChunk, styleGuides);
-
-          // 변경 사항 추가
-          changes.push({
-            original: originalChunk,
-            suggestion: correctedChunk,
-            ruleId: relatedRule ? relatedRule._id : null,
-            explanation: relatedRule ? relatedRule.content : "표현 개선",
-            priority: relatedRule ? relatedRule.priority : 3,
-            confidence: 0.8, // 간단한 구현에서는 고정 값 사용
-          });
-        } else {
-          // 일치하는 경우 다음 단어로 이동
-          i++;
-          j++;
-        }
-      }
-
-      return changes;
-    } catch (error) {
-      logger.error(`변경 사항 분석 오류: ${error.message}`);
-      return [];
-    }
-  }
-
-  /**
-   * 원문 표현과 관련된 스타일 가이드 규칙을 찾습니다.
-   * @param {string} text - 원문 표현
-   * @param {Array} styleGuides - 스타일 가이드 배열
-   * @returns {Object|null} - 관련 규칙 또는 null
-   */
-  findRelatedRule(text, styleGuides) {
-    if (!styleGuides || styleGuides.length === 0) {
-      return null;
+    // 맞춤형 교정인 경우 (promptType === 3) 추가 필터링 고려
+    if (promptType === 3 && Object.keys(preferences).length > 0) {
+      // 선호도 설정을 메타데이터에 저장했다면 해당 필드로 추가 필터링
+      // 이 부분은 데이터 모델에 따라 조정 필요
     }
 
-    // 간단한 구현: 텍스트 포함 여부로 관련 규칙 검색
-    for (const guide of styleGuides) {
-      if (guide.content && guide.content.includes(text)) {
-        return guide;
-      }
+    const existingCorrection = await Correction.findOne(query);
+
+    if (existingCorrection) {
+      logger.info(`기존 교정 결과 반환 (ID: ${existingCorrection._id})`);
+      return existingCorrection;
     }
 
     return null;
+  }
+
+  /**
+   * 적절한 프롬프트를 생성합니다.
+   * @param {string} text - 원문 텍스트
+   * @param {Array} styleGuides - 관련 스타일 가이드
+   * @param {number} promptType - 프롬프트 유형
+   * @param {Object} preferences - 사용자 선호도 설정
+   * @returns {string} - 생성된 프롬프트
+   * @private
+   */
+  createPrompt(text, styleGuides, promptType, preferences = {}) {
+    if (promptType === 3) {
+      return promptService.generateCustomPrompt(text, styleGuides, preferences);
+    } else {
+      return promptService.generatePrompt(promptType, text, styleGuides);
+    }
+  }
+
+  /**
+   * 캐시 키를 생성합니다.
+   * @param {string} articleId - 기사 ID
+   * @param {number} promptType - 프롬프트 유형
+   * @param {Array} styleGuides - 관련 스타일 가이드
+   * @param {Object} preferences - 사용자 선호도 설정
+   * @returns {string} - 생성된 캐시 키
+   * @private
+   */
+  generateCacheKey(articleId, promptType, styleGuides, preferences = {}) {
+    if (promptType === 3 && Object.keys(preferences).length > 0) {
+      // 맞춤형 교정일 경우 선호도 정보 포함
+      const preferencesKey = JSON.stringify(preferences).substring(0, 50);
+      return `custom:${articleId}:${preferencesKey}`;
+    } else {
+      // 기본 교정일 경우
+      return `correction:${articleId}:${promptType}:${styleGuides.length}`;
+    }
+  }
+
+  /**
+   * Claude API를 호출합니다.
+   * @param {string} prompt - 프롬프트
+   * @param {string} cacheKey - 캐시 키
+   * @returns {Promise<Object>} - API 응답 결과
+   * @private
+   */
+  async callClaudeAPI(prompt, cacheKey) {
+    return await claudeService.proofread(prompt, {
+      cacheKey,
+      model: config.CLAUDE_MODEL,
+    });
+  }
+
+  /**
+   * 교정 결과를 저장합니다.
+   * @param {string} articleId - 기사 ID
+   * @param {number} promptType - 프롬프트 유형
+   * @param {Object} result - API 응답 결과
+   * @returns {Promise<Object>} - 저장된 교정 결과
+   * @private
+   */
+  async saveCorrection(articleId, promptType, result) {
+    // 결과에서 필요한 데이터 추출
+    const correctedText = result.correctedText || "";
+    const corrections = result.corrections || [];
+    const metadata = result.metadata || {};
+
+    // 교정 결과 객체 생성
+    const correction = new Correction({
+      articleId,
+      promptType,
+      correctedText,
+      changes: corrections.map((c) => ({
+        ruleId: c.ruleId,
+        original: c.originalText,
+        suggestion: c.correctedText,
+        explanation: c.explanation,
+        priority: c.priority || 3,
+        confidence: c.confidence || 0.8,
+      })),
+      llmInfo: {
+        model: metadata.model || config.CLAUDE_MODEL,
+        promptTokens: metadata.promptTokens || 0,
+        completionTokens: metadata.completionTokens || 0,
+        totalTokens: metadata.totalTokens || 0,
+      },
+    });
+
+    // 저장 및 반환
+    const savedCorrection = await correction.save();
+    logger.info(`교정 결과 저장 완료 (ID: ${savedCorrection._id})`);
+
+    return savedCorrection;
+  }
+
+  /**
+   * 오류 발생 시 대체 교정 결과를 생성합니다.
+   * @param {Object} article - 기사 객체
+   * @param {number} promptType - 프롬프트 유형
+   * @returns {Promise<Object>} - 대체 교정 결과
+   * @private
+   */
+  async createFallbackCorrection(article, promptType) {
+    try {
+      logger.info("대체 교정 결과 생성 시도");
+
+      // 기본 교정 객체 생성
+      const fallbackCorrection = new Correction({
+        articleId: article._id,
+        promptType,
+        correctedText: article.originalText, // 오류 시 원문 그대로 반환
+        changes: [],
+        llmInfo: {
+          model: "fallback",
+          promptTokens: 0,
+          completionTokens: 0,
+          totalTokens: 0,
+        },
+      });
+
+      // 저장 및 반환
+      const savedFallback = await fallbackCorrection.save();
+      logger.info(`대체 교정 결과 저장 완료 (ID: ${savedFallback._id})`);
+
+      return savedFallback;
+    } catch (fallbackError) {
+      // 대체 교정 생성마저 실패한 경우
+      logger.error(`대체 교정 생성 실패: ${fallbackError.message}`);
+      throw new Error(`교정 생성 중 오류 발생: ${fallbackError.message}`);
+    }
   }
 
   /**
@@ -272,59 +327,108 @@ class ProofreadingService {
     try {
       // 기사와 교정 결과 존재 여부 확인
       const [article, correction] = await Promise.all([
-        Article.findById(articleId),
-        Correction.findById(correctionId),
+        this.findArticleById(articleId),
+        this.findCorrectionById(correctionId),
       ]);
 
-      if (!article) {
-        throw new Error(`기사를 찾을 수 없습니다 (ID: ${articleId})`);
-      }
-
-      if (!correction) {
-        throw new Error(`교정 결과를 찾을 수 없습니다 (ID: ${correctionId})`);
-      }
-
-      if (!correction.articleId.equals(article._id)) {
-        throw new Error("교정 결과가 해당 기사와 연결되어 있지 않습니다");
-      }
+      // 교정 결과와 기사의 연결 확인
+      this.validateCorrectionArticleMatch(article, correction);
 
       // 이전 선택 여부 확인
       const existingChoice = await UserChoice.findOne({ articleId });
 
+      // 이전 선택이 있으면 업데이트, 없으면 새로 생성
       if (existingChoice) {
-        // 기존 선택 업데이트
-        existingChoice.selectedPromptType = correction.promptType;
-
-        if (feedbackData.rating) {
-          existingChoice.rating = feedbackData.rating;
-        }
-
-        if (feedbackData.comment) {
-          existingChoice.comment = feedbackData.comment;
-        }
-
-        const updatedChoice = await existingChoice.save();
-        logger.info(`사용자 선택 업데이트 완료 (ID: ${updatedChoice._id})`);
-
-        return updatedChoice;
+        return await this.updateUserChoice(
+          existingChoice,
+          correction,
+          feedbackData
+        );
       } else {
-        // 새 선택 생성
-        const userChoice = new UserChoice({
-          articleId,
-          selectedPromptType: correction.promptType,
-          rating: feedbackData.rating || null,
-          comment: feedbackData.comment || "",
-        });
-
-        const savedChoice = await userChoice.save();
-        logger.info(`새 사용자 선택 저장 완료 (ID: ${savedChoice._id})`);
-
-        return savedChoice;
+        return await this.createUserChoice(articleId, correction, feedbackData);
       }
     } catch (error) {
       logger.error(`사용자 선택 저장 오류: ${error.message}`);
       throw new Error(`사용자 선택 저장 중 오류 발생: ${error.message}`);
     }
+  }
+
+  /**
+   * ID로 교정 결과를 조회합니다.
+   * @param {string} correctionId - 교정 결과 ID
+   * @returns {Promise<Object>} - 찾은 교정 결과 객체
+   * @private
+   */
+  async findCorrectionById(correctionId) {
+    const correction = await Correction.findById(correctionId);
+    if (!correction) {
+      throw new Error(`교정 결과를 찾을 수 없습니다 (ID: ${correctionId})`);
+    }
+    return correction;
+  }
+
+  /**
+   * 교정 결과와 기사의 연결을 확인합니다.
+   * @param {Object} article - 기사 객체
+   * @param {Object} correction - 교정 결과 객체
+   * @private
+   */
+  validateCorrectionArticleMatch(article, correction) {
+    if (!correction.articleId.equals(article._id)) {
+      throw new Error("교정 결과가 해당 기사와 연결되어 있지 않습니다");
+    }
+  }
+
+  /**
+   * 기존 사용자 선택을 업데이트합니다.
+   * @param {Object} existingChoice - 기존 선택 객체
+   * @param {Object} correction - 교정 결과 객체
+   * @param {Object} feedbackData - 피드백 데이터
+   * @returns {Promise<Object>} - 업데이트된 선택 객체
+   * @private
+   */
+  async updateUserChoice(existingChoice, correction, feedbackData) {
+    // 선택된 프롬프트 유형 업데이트
+    existingChoice.selectedPromptType = correction.promptType;
+
+    // 피드백 데이터 업데이트
+    if (feedbackData.rating !== undefined) {
+      existingChoice.rating = feedbackData.rating;
+    }
+
+    if (feedbackData.comment) {
+      existingChoice.comment = feedbackData.comment;
+    }
+
+    // 저장 및 반환
+    const updatedChoice = await existingChoice.save();
+    logger.info(`사용자 선택 업데이트 완료 (ID: ${updatedChoice._id})`);
+
+    return updatedChoice;
+  }
+
+  /**
+   * 새 사용자 선택을 생성합니다.
+   * @param {string} articleId - 기사 ID
+   * @param {Object} correction - 교정 결과 객체
+   * @param {Object} feedbackData - 피드백 데이터
+   * @returns {Promise<Object>} - 새 선택 객체
+   * @private
+   */
+  async createUserChoice(articleId, correction, feedbackData) {
+    // 새 선택 객체 생성
+    const userChoice = new UserChoice({
+      articleId,
+      selectedPromptType: correction.promptType,
+      rating: feedbackData.rating !== undefined ? feedbackData.rating : null,
+      comment: feedbackData.comment || "",
+    });
+
+    // 저장 및 반환
+    const savedChoice = await userChoice.save();
+    logger.info(`새 사용자 선택 저장 완료 (ID: ${savedChoice._id})`);
+
+    return savedChoice;
   }
 
   /**
@@ -336,6 +440,8 @@ class ProofreadingService {
    */
   async quickProofread(text, userId = "anonymous", metadata = {}) {
     try {
+      // 텍스트 길이 제한 검사는 createArticle 내부에서 처리됨
+
       // 1. 새 기사 생성
       const article = await this.createArticle({
         userId,
@@ -344,11 +450,7 @@ class ProofreadingService {
       });
 
       // 2. 관련 스타일 가이드 검색
-      const styleGuides = await styleGuideService.findRelatedStyleGuides(
-        text,
-        5
-      );
-      logger.debug(`관련 스타일 가이드 ${styleGuides.length}개 발견`);
+      const styleGuides = await this.findRelatedStyleGuides(text);
 
       // 3. 두 가지 교정 결과 생성 (병렬 처리)
       const [correction1, correction2] = await Promise.all([
@@ -356,26 +458,12 @@ class ProofreadingService {
         this.generateCorrection(article, styleGuides, 2),
       ]);
 
-      // 4. 결과 반환
-      return {
-        articleId: article._id,
-        original: text,
-        correction1: {
-          id: correction1._id,
-          text: correction1.correctedText,
-          type: "minimal",
-        },
-        correction2: {
-          id: correction2._id,
-          text: correction2.correctedText,
-          type: "enhanced",
-        },
-        styleGuides: styleGuides.map((guide) => ({
-          id: guide._id,
-          section: guide.section,
-          category: guide.category,
-        })),
-      };
+      // 4. 결과 포맷팅하여 반환
+      return this.formatProofreadResult(
+        article,
+        [correction1, correction2],
+        styleGuides
+      );
     } catch (error) {
       logger.error(`간편 교정 오류: ${error.message}`);
       throw new Error(`간편 교정 중 오류 발생: ${error.message}`);
@@ -383,68 +471,87 @@ class ProofreadingService {
   }
 
   /**
-   * 사용자의 선호도에 맞는 맞춤형 교정을 수행합니다.
-   * @param {string} text - 교정할 텍스트
-   * @param {string} userId - 사용자 ID
-   * @param {Object} preferences - 사용자 선호도
-   * @returns {Promise<Object>} - 교정 결과
+   * 교정 결과를 포맷팅합니다.
+   * @param {Object} article - 기사 객체
+   * @param {Array} corrections - 교정 결과 배열
+   * @param {Array} styleGuides - 스타일 가이드 배열
+   * @returns {Object} - 포맷팅된 결과
+   * @private
    */
-  async customProofread(text, userId, preferences = {}) {
-    try {
-      // 1. 새 기사 생성
-      const article = await this.createArticle({
-        userId,
-        originalText: text,
-      });
+  formatProofreadResult(article, corrections, styleGuides) {
+    return {
+      articleId: article._id,
+      original: article.originalText,
+      corrections: corrections.map((c, index) => ({
+        id: c._id,
+        promptType: c.promptType,
+        text: c.correctedText,
+        type: index === 0 ? "minimal" : "enhanced",
+        changes: c.changes,
+      })),
+      styleGuides: styleGuides.map((guide) => ({
+        id: guide._id,
+        section: guide.section,
+        category: guide.category,
+      })),
+    };
+  }
 
-      // 2. 관련 스타일 가이드 검색
-      const styleGuides = await styleGuideService.findRelatedStyleGuides(
-        text,
-        5
+  /**
+   * 특정 기사의 교정 결과를 조회합니다.
+   * @param {string} articleId - 기사 ID
+   * @returns {Promise<Array>} - 교정 결과 배열
+   */
+  async getArticleCorrections(articleId) {
+    try {
+      // 기사 존재 여부 확인
+      await this.findArticleById(articleId);
+
+      // 교정 결과 조회
+      const corrections = await Correction.find({ articleId });
+
+      return corrections;
+    } catch (error) {
+      logger.error(`교정 결과 조회 오류: ${error.message}`);
+      throw new Error(`교정 결과 조회 중 오류 발생: ${error.message}`);
+    }
+  }
+
+  /**
+   * 이전 교정 결과 기반으로 사용자 맞춤형 교정을 수행합니다.
+   * @param {string} articleId - 기사 ID
+   * @param {Object} preferences - 사용자 선호도 설정
+   * @returns {Promise<Object>} - 맞춤형 교정 결과
+   */
+  async generateCustomCorrection(articleId, preferences = {}) {
+    try {
+      // 기사 조회
+      const article = await this.findArticleById(articleId);
+
+      // 관련 스타일 가이드 검색
+      const styleGuides = await this.findRelatedStyleGuides(
+        article.originalText
       );
 
-      // 3. 맞춤형 프롬프트 생성
-      const prompt = promptGenerator.generateCustomPrompt(
-        text,
+      // 맞춤형 교정 생성 (프롬프트 유형 3)
+      const correction = await this.generateCorrection(
+        article,
         styleGuides,
+        3,
         preferences
       );
 
-      // 4. LLM 호출
-      const cacheKey = `custom:${article._id}:${JSON.stringify(preferences)}`;
-      const result = await llmService.generateWithClaude(prompt, {
-        cacheKey,
-        model: config.CLAUDE_MODEL,
-      });
-
-      // 5. 교정 결과 저장
-      const correction = new Correction({
-        articleId: article._id,
-        promptType: 3, // 맞춤형은 3번으로 구분
-        correctedText: result.text,
-        llmInfo: {
-          model: result.metadata.model,
-          promptTokens: result.metadata.promptTokens,
-          completionTokens: result.metadata.completionTokens,
-          totalTokens: result.metadata.totalTokens,
-        },
-      });
-
-      const savedCorrection = await correction.save();
-
-      // 6. 결과 반환
+      // 결과 포맷팅하여 반환
       return {
+        id: correction._id,
         articleId: article._id,
-        original: text,
-        correction: {
-          id: savedCorrection._id,
-          text: savedCorrection.correctedText,
-          type: "custom",
-        },
+        text: correction.correctedText,
+        type: "custom",
+        changes: correction.changes,
       };
     } catch (error) {
-      logger.error(`맞춤형 교정 오류: ${error.message}`);
-      throw new Error(`맞춤형 교정 중 오류 발생: ${error.message}`);
+      logger.error(`맞춤형 교정 생성 오류: ${error.message}`);
+      throw new Error(`맞춤형 교정 생성 중 오류 발생: ${error.message}`);
     }
   }
 }
