@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<versionInfo>
+  <version>1.1</version>
+  <lastUpdated>2025-04-27</lastUpdated>
+  <lastEditor>교열팀</lastEditor>
+</versionInfo>
+
+<SeoulEconomicKnowledgeBase>
+  <KnowledgeCategory id="KB2" name="문장 구조 및 단어 규칙">
+    <Description>
+      서울경제신문 기사 교열을 위한 문장 구조 및 단어 규칙입니다. 
+      문장의 호응, 구조, 어휘 선택, 표현 등에 관한 규칙을 포함합니다.
+    </Description>
+    
+    <MetaInformation>
+       <principleReference>
+        핵심 원칙 및 우선순위 분류는 디스_교열.txt의 다음 섹션을 참조합니다:
+         • <corePrinciples id="master">
+         • <decisionTree id="priorityClassification">
+       </principleReference>
+
+      <Version>1.2</Version>
+      <LastUpdated>2024-04-27</LastUpdated>
+      <Source>02_단어_문장구조 규칙.txt</Source>
+      <MaintenanceOwner>서울경제신문 교열팀</MaintenanceOwner>
+    </MetaInformation>
+    
+    <SearchAlgorithm>
+      <Method>구문 분석 기반 검사</Method>
+      <Method>주어-서술어 호응 패턴 인식</Method>
+      <Method>문장 구조 패턴 매칭</Method>
+      <Method>문맥 기반 의미 분석</Method>
+    </SearchAlgorithm>
+    
+    <GeneralPrinciples>
+      <Principle id="SS-001">
+        <n>명료성 우선 원칙</n>
+        <Description>문장은 가능한 명료하고 이해하기 쉽게 구성되어야 합니다.</Description>
+        <Application>불필요한 중복, 장황한 표현, 모호한 지시어 사용을 지양합니다.</Application>
+        <Priority>2</Priority>
+      </Principle>
+      
+      <Principle id="SS-002">
+        <n>문법적 일관성 원칙</n>
+        <Description>문장 내 문법 요소들(주어-서술어, 시제 등)은 일관되게 사용되어야 합니다.</Description>
+        <Application>특히 경제 기사에서는 시제와 주체 간의 일관성이 중요합니다.</Application>
+        <Priority>1</Priority>
+      </Principle>
+      
+      <Principle id="SS-003">
+        <n>간결성 원칙</n>
+        <Description>경제 기사는 정보 전달이 목적이므로 간결한 문장 구조를 지향합니다.</Description>
+        <Application>불필요한 수식어, 군더더기 표현 등을 제거합니다.</Application>
+        <Priority>3</Priority>
+      </Principle>
+    </GeneralPrinciples>
+
+    <RuleCategories>
+      <Category name="문장 구조 및 호응">
+        <Rule id="SE-AG-SV-001" priority="5" confidenceThreshold="99.9">
+          <Title>주어-서술어 호응 일치</Title>
+          <Description>
+            문장의 주어와 서술어는 수, 높임, 시제 등에서 일치해야 하며, 
+            문법적·의미적으로 호응되어야 합니다.
+          </Description>
+          <Principle>의미적 일치가 없는 소유격 주어는 피해야 합니다.</Principle>
+          <Examples>
+            <Example>
+              <Wrong>삼성전자의 올해 1분기 영업이익이… 발표했다.</Wrong>
+              <Correct>삼성전자는 올해 1분기 영업이익이… 발표했다.</Correct>
+              <Explanation>소유격 주어('삼성전자의')는 서술어('발표했다')와 호응되지 않음</Explanation>
+            </Example>
+            <Example>
+              <Wrong>정부와 국회는 법안을 통과시켰다.</Wrong>
+              <Correct>정부와 국회는 법안을 통과시켰다.</Correct>
+              <Explanation>복수 주어와 서술어 일치</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <PatternType>의미 불일치 소유격 주어</PatternType>
+            <Structure>
+              <Subject type="possessive" />
+              <ActionVerb />
+            </Structure>
+            <Examples>
+              <Example>기업의...발표했다</Example>
+              <Example>은행의...제출했다</Example>
+            </Examples>
+          </Pattern>
+          <ConfidenceFactors>
+            <Factor name="주어-서술어 거리">
+              <Description>주어와 서술어 사이 거리가 멀수록 확신도 감소</Description>
+              <Weight>0.3</Weight>
+            </Factor>
+            <Factor name="의미적 연관성">
+              <Description>주어와 서술어의 의미적 연관성이 낮을수록 확신도 증가</Description>
+              <Weight>0.5</Weight>
+            </Factor>
+            <Factor name="문장 길이">
+              <Description>문장이 길수록 호응 오류 확신도 증가</Description>
+              <Weight>0.2</Weight>
+            </Factor>
+          </ConfidenceFactors>
+        </Rule>
+
+        <Rule id="SE-AG-SV-002" priority="4" confidenceThreshold="99">
+          <Title>따옴표와 종결 표현 호응</Title>
+          <Description>
+            인용문이 끝난 뒤에는 "~라고", "~고" 등의 종결 표현을 반드시 사용해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>…것"라고 말했다.</Wrong>
+              <Correct>…것"이라고 말했다.</Correct>
+              <Explanation>인용조사 '이라고' 사용</Explanation>
+            </Example>
+            <Example>
+              <Wrong>…증가했다"고 전망했다.</Wrong>
+              <Correct>…증가했다"고 전망했다.</Correct>
+              <Explanation>올바른 인용 형식</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <RegexPattern>"([^"]*)"([^라이며아어]고|[^이]라고)</RegexPattern>
+            <RegexPattern>"([^"]*)"\s*했다</RegexPattern>
+          </Pattern>
+          <CommonMistakes>
+            <Item wrong=""라고" correct=""이라고" />
+            <Item wrong=""며" correct=""이라며" />
+            <Item wrong=""다고" correct=""이라고" context="명사 뒤" />
+          </CommonMistakes>
+        </Rule>
+
+        <Rule id="SE-AG-SV-003" priority="4" confidenceThreshold="98">
+          <Title>열거 항목과 종결 표현의 일치</Title>
+          <Description>
+            열거된 요소가 있으면 종결 표현은 그에 맞춰 복수 형태 등으로 처리해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>정부는 부동산과 금융시장과 노동시장도 개편하겠다고 밝혔다.</Wrong>
+              <Correct>정부는 부동산·금융시장·노동시장 등을 개편하겠다고 밝혔다.</Correct>
+              <Explanation>중간점(·)을 사용한 열거, '등'을 사용한 포괄 표현</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <PatternType>과/와 중복 열거</PatternType>
+            <Structure>
+              <Element>명사1</Element>
+              <Connector>과/와</Connector>
+              <Element>명사2</Element>
+              <Connector>과/와</Connector>
+              <Element>명사3</Element>
+            </Structure>
+          </Pattern>
+          <SEStylePreference>
+            <Preference>
+              열거 항목이 3개 이상인 경우 중간점(·)을 사용하는 것을 권장합니다.
+              마지막 항목 뒤에는 '등'을 붙여 포괄성을 나타냅니다.
+            </Preference>
+          </SEStylePreference>
+          <Priority>3</Priority>
+        </Rule>
+      </Category>
+
+      <Category name="문장 패턴 및 스타일">
+        <Rule id="SE-ST-001" priority="4" confidenceThreshold="97">
+          <Title>수치 정보를 포함한 문장 구조화</Title>
+          <Description>
+            숫자와 단위를 함께 제시하고 비교 구문을 명확히 구성해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>전년 대비 3.5% 증가, 1조 원을 기록했다.</Wrong>
+              <Correct>전년 대비 3.5% 증가한 1조 원의 매출을 기록했다.</Correct>
+              <Explanation>수치 정보와 결과의 명확한 연결</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <PatternType>단절된 수치 정보</PatternType>
+            <Structure>
+              <Comparison>비교 표현</Comparison>
+              <Value>수치</Value>
+              <Connector>쉼표(,)</Connector>
+              <Result>결과</Result>
+            </Structure>
+          </Pattern>
+          <SEStylePreference>
+            <Preference>
+              경제 기사에서 수치 정보는 맥락과 명확히 연결되어야 합니다.
+              특히 증감률과 실제 수치를 함께 제시할 때는 인과관계나 수식 관계를 명확히 합니다.
+            </Preference>
+          </SEStylePreference>
+        </Rule>
+
+        <Rule id="SE-ST-002" priority="3" confidenceThreshold="95">
+          <Title>비교 표현의 명확한 구조화</Title>
+          <Description>
+            비교 대상은 "보다" 앞에, 결과는 뒤에 위치시켜 혼동을 방지합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>삼성전자의 영업이익은 LG전자보다 2배 더 높았다.</Wrong>
+              <Correct>삼성전자의 영업이익은 LG전자보다 2배 높았다.</Correct>
+              <Explanation>'더'는 불필요한 중복</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <PatternType>중복 비교 표현</PatternType>
+            <Structure>
+              <Subject>주체</Subject>
+              <ComparisonTarget>비교 대상</ComparisonTarget>
+              <ComparisonWord>보다</ComparisonWord>
+              <Multiplier>배수</Multiplier>
+              <Redundant>더</Redundant>
+              <Result>결과</Result>
+            </Structure>
+          </Pattern>
+          <CommonMistakes>
+            <Item wrong="보다 더" correct="보다" />
+            <Item wrong="보다도 더" correct="보다" />
+          </CommonMistakes>
+        </Rule>
+
+        <Rule id="SE-ST-003" priority="3" confidenceThreshold="93">
+          <Title>인과 관계의 명확한 표현</Title>
+          <Description>
+            "때문에", "으로 인해" 등의 인과 접속어 사용을 권장합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>금리가 인상되면서 주택 시장이 침체되었다.</Wrong>
+              <Correct>금리 인상으로 인해 주택 시장이 침체되었다.</Correct>
+              <Explanation>인과 관계를 명확히 표현</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <PatternType>모호한 인과 연결</PatternType>
+            <Structure>
+              <Cause>원인</Cause>
+              <Connector>-면서, -고</Connector>
+              <Effect>결과</Effect>
+            </Structure>
+          </Pattern>
+          <SEStylePreference>
+            <Preference>
+              경제 기사에서는 인과 관계를 명확히 하는 것이 중요합니다.
+              '때문에', '덕분에', '으로 인해' 등 명확한 인과 접속어를 사용하세요.
+            </Preference>
+          </SEStylePreference>
+          <Priority>3</Priority>
+        </Rule>
+      </Category>
+
+      <Category name="어휘 선택 및 표현">
+        <Rule id="SE-WD-001" priority="4" confidenceThreshold="98">
+          <Title>중복 단어 및 의미 반복 제거</Title>
+          <Description>
+            '완전한 마무리', '계획을 계획하다' 같은 중복 표현은 제거해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>계획을 계획했다.</Wrong>
+              <Correct>계획을 세웠다.</Correct>
+              <Explanation>의미 중복 제거</Explanation>
+            </Example>
+            <Example>
+              <Wrong>가장 최고의 성과</Wrong>
+              <Correct>최고의 성과</Correct>
+              <Explanation>'가장'과 '최고'는 의미 중복</Explanation>
+            </Example>
+          </Examples>
+          <CommonMistakes>
+            <Item wrong="가장 최고" correct="최고" />
+            <Item wrong="더 개선" correct="개선" />
+            <Item wrong="그 결과 결과적으로" correct="그 결과" />
+            <Item wrong="완전히 완성" correct="완성" />
+          </CommonMistakes>
+        </Rule>
+
+        <Rule id="SE-WD-002" priority="3" confidenceThreshold="95">
+          <Title>'등'과 '같은', '이상'과 '초과' 등의 혼용 주의</Title>
+          <Description>
+            포괄 표현은 한 번만 사용해야 하며, 중복 사용은 피합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>사과, 배 등과 같은 과일</Wrong>
+              <Correct>사과, 배 등 과일</Correct>
+              <Explanation>'등'과 '같은'은 같은 기능</Explanation>
+            </Example>
+            <Example>
+              <Wrong>5% 이상 초과</Wrong>
+              <Correct>5% 초과</Correct>
+              <Explanation>'이상'과 '초과'는 유사 의미</Explanation>
+            </Example>
+          </Examples>
+          <Pattern>
+            <RegexPattern>등과\s+같은</RegexPattern>
+            <RegexPattern>이상\s+초과</RegexPattern>
+            <RegexPattern>이하\s+미만</RegexPattern>
+          </Pattern>
+          <CommonMistakes>
+            <Item wrong="등과 같은" correct="등" />
+            <Item wrong="등과 같이" correct="등" />
+            <Item wrong="이상 초과" correct="이상" or "초과" />
+            <Item wrong="이하 미만" correct="이하" or "미만" />
+          </CommonMistakes>
+        </Rule>
+
+        <Rule id="SE-WD-003" priority="4" confidenceThreshold="97">
+          <Title>잘못된 높임 표현 바로잡기</Title>
+          <Description>
+            '드리다'와 '주시다' 같은 높임말은 상황에 맞게 사용해야 합니다.
+          </Description>
+          <Examples>
+            <Example>
+              <Wrong>선물을 주셨다. (청자가 아닌 대상에 사용)</Wrong>
+              <Correct>선물을 드렸다.</Correct>
+              <Explanation>화자가 높임의 대상에게 행동할 때는 '드리다'</Explanation>
+            </Example>
+          </Examples>
+          <UsageGuide>
+            <Usage word="드리다">화자가 높임의 대상에게 행하는 동작</Usage>
+            <Usage word="주시다">높임의 대상이 화자에게 행하는 동작</Usage>
+            <Usage word="말씀하시다">높임의 대상의 말하는 행위</Usage>
+            <Usage word="말씀드리다">화자가 높임의 대상에게 말하는 행위</Usage>
+          </UsageGuide>
+          <CommonMistakes>
+            <Item wrong="말씀해 드리겠습니다" correct="말씀드리겠습니다" />
+            <Item wrong="전해드립니다" correct="전달해 드립니다" />
+          </CommonMistakes>
+        </Rule>
+      </Category>
+    </RuleCategories>
+
+    <ThematicPatterns>
+      <Pattern id="TP-001">
+        <n>긴 주어부 문장 개선</n>
+        <Description>
+          경제 기사에서 주어부가 너무 길면 이해도가 떨어집니다.
+          주어와 서술어 사이의 거리를 최소화하고, 필요시 문장을 나누는 것이 좋습니다.
+        </Description>
+        <Example>
+          <Original>
+            지난해 글로벌 경기침체 영향으로 감소세를 보였던 국내 주요 기업들의 해외 매출이 올해 들어 다시 회복세를 보이고 있는 것으로 나타났다.
+          </Original>
+          <Improved>
+            국내 주요 기업들의 해외 매출이 올해 들어 회복세를 보이고 있다. 지난해에는 글로벌 경기침체 영향으로 감소세를 보였다.
+          </Improved>
+        </Example>
+        <ImprovementMethod>
+          <Step>주요 정보를 담은 간결한 문장으로 시작</Step>
+          <Step>부가 정보는 후속 문장으로 분리</Step>
+          <Step>시간 순서대로 정보 재구성 고려</Step>
+        </ImprovementMethod>
+        <Priority>3</Priority>
+      </Pattern>
+
+      <Pattern id="TP-002">
+        <n>피동 표현 남용 주의</n>
+        <Description>
+          경제 기사에서는 행위 주체가 명확해야 합니다.
+          불필요한 피동 표현은 지양하고 능동 표현을 권장합니다.
+        </Description>
+        <Example>
+          <Original>
+            기업들에 의해 신규 투자가 확대되고 있다.
+          </Original>
+          <Improved>
+            기업들이 신규 투자를 확대하고 있다.
+          </Improved>
+        </Example>
+        <ExceptionCases>
+          <Case>
+            주체가 불분명하거나 중요하지 않을 때는 피동 표현 허용
+            (예: "이번 조치로 인해 시장이 안정될 것으로 전망된다.")
+          </Case>
+        </ExceptionCases>
+        <Priority>3</Priority>
+      </Pattern>
+    </ThematicPatterns>
+
+    <EconomicExpressionPatterns>
+      <Pattern id="EEP-001">
+        <n>경제 지표 증감 표현</n>
+        <Description>
+          경제 지표의 증감을 표현할 때는 정확한 용어를 사용해야 합니다.
+        </Description>
+        <Recommended>
+          <Term subject="주가, 지수">상승/하락</Term>
+          <Term subject="금리">인상/인하</Term>
+          <Term subject="환율">상승(원화 약세)/하락(원화 강세)</Term>
+          <Term subject="물가">상승/하락</Term>
+          <Term subject="경제성장률">높아짐/낮아짐</Term>
+          <Term subject="수출입">증가/감소</Term>
+        </Recommended>
+        <Examples>
+          <Example>
+            <Wrong>코스피는 20포인트 증가했다.</Wrong>
+            <Correct>코스피는 20포인트 상승했다.</Correct>
+          </Example>
+          <Example>
+            <Wrong>한국은행이 기준금리를 상승시켰다.</Wrong>
+            <Correct>한국은행이 기준금리를 인상했다.</Correct>
+          </Example>
+        </Examples>
+        <Priority>4</Priority>
+      </Pattern>
+
+      <Pattern id="EEP-002">
+        <n>경제 주체 표현 일관성</n>
+        <Description>
+          경제 주체(정부, 기업, 기관 등)를 지칭할 때는 일관된 표현을 사용해야 합니다.
+        </Description>
+        <Guidelines>
+          <Guideline>
+            특정 기업을 한 기사 내에서 지칭할 때는 일관된 명칭 사용
+            (예: '삼성전자'로 시작했다면 계속 '삼성전자'로 통일)
+          </Guideline>
+          <Guideline>
+            정부 부처는 첫 언급 시 전체 명칭, 이후 약칭 가능
+            (예: '기획재정부(기재부)'로 첫 언급 후 '기재부'로 통일)
+          </Guideline>
+        </Guidelines>
+        <Examples>
+          <Example>
+            <Wrong>
+              금융위원회는 가계부채 관리방안을 발표했다. 금융당국은 이번 조치로...
+            </Wrong>
+            <Correct>
+              금융위원회(금융위)는 가계부채 관리방안을 발표했다. 금융위는 이번 조치로...
+            </Correct>
+          </Example>
+        </Examples>
+        <Priority>3</Priority>
+      </Pattern>
+    </EconomicExpressionPatterns>
+
+    <ConfidenceCalculation>
+      <Formula>
+        <Description>
+          문장 구조 및 단어 규칙의 확신도는 다음 요소의 가중 평균으로 계산됩니다:
+          1. 구조적 명확성: 문법 구조상 오류가 명확한 정도 (가중치: 0.4)
+          2. 맥락 일관성: 문맥 속에서 표현이 일관되지 않은 정도 (가중치: 0.3)
+          3. 의미 영향: 오류가 문장 의미에 미치는 영향 정도 (가중치: 0.3)
+        </Description>
+        <Calculation>
+          확신도 = (구조적 명확성 × 0.4) + (맥락 일관성 × 0.3) + (의미 영향 × 0.3)
+        </Calculation>
+      </Formula>
+      <ContextualFactors>
+        <Factor name="문장 길이">
+          <Effect>문장이 길수록 구조적 오류 가능성 증가</Effect>
+          <Adjustment>+0.05 * (문장 단어 수 / 10)</Adjustment>
+        </Factor>
+        <Factor name="전문 용어 밀도">
+          <Effect>전문 용어가 많을수록 의미 오류 가능성 증가</Effect>
+          <Adjustment>+0.03 * (전문 용어 수)</Adjustment>
+        </Factor>
+      </ContextualFactors>
+      <ThresholdApplication>
+        <Threshold level="[5·필수]" value="99.9" />
+        <Threshold level="[4·권고]" value="98.0" />
+        <Threshold level="[3·제안]" value="95.0" />
+        <Threshold level="[2·참고]" value="90.0" />
+      </ThresholdApplication>
+    </ConfidenceCalculation>
+  </KnowledgeCategory>
+</SeoulEconomicKnowledgeBase>
+
+## 문장 구조 및 단어 규칙 요약
+
+### 핵심 원칙
+1. **명료성 우선**: 문장은 명료하고 이해하기 쉽게 구성
+2. **문법적 일관성**: 주어-서술어, 시제 등 문법 요소의 일관된 사용
+3. **간결성**: 경제 기사는 불필요한 수식어 없이 간결하게 작성
+
+### 주요 규칙 카테고리
+1. **문장 구조 및 호응**
+   - 주어-서술어 호응 일치 (소유격 주어 주의)
+   - 따옴표와 종결 표현 호응 ("이라고" 사용)
+   - 열거 항목과 종결 표현 일치 (중간점 활용)
+
+2. **문장 패턴 및 스타일**
+   - 수치 정보를 포함한 문장 명확히 구조화
+   - 비교 표현의 명확한 구조화 ("보다 더" 중복 지양)
+   - 인과 관계의 명확한 표현 ("때문에", "으로 인해" 사용)
+
+3. **어휘 선택 및 표현**
+   - 중복 단어 및 의미 반복 제거 ("가장 최고" 지양)
+   - 포괄 표현 중복 사용 주의 ("등과 같은" 지양)
+   - 높임 표현 올바르게 사용 ("드리다"와 "주시다" 구분)
+
+4. **주제별 패턴**
+   - 긴 주어부 문장 개선 (주요 정보 중심 간결화)
+   - 피동 표현 남용 주의 (행위 주체 명확화)
+   
+5. **경제 표현 패턴**
+   - 경제 지표 증감 표현 정확히 사용 (지표별 적합한 동사)
+   - 경제 주체 표현 일관성 유지 (기관명 통일)
+
+### 우선순위에 따른 규칙 구분
+- **[5·필수]**: 주어-서술어 심각한 불일치 (확신도 99.9% 이상)
+- **[4·권고]**: 따옴표 종결 표현 오류, 중복 표현 (확신도 98% 이상)
+- **[3·제안]**: 문장 구조 개선, 경제 표현 정확화 (확신도 95% 이상)
+- **[2·참고]**: 스타일 개선 제안 (확신도 90% 이상)
+
+### 판단 기준
+구조적 명확성(0.4) + 맥락 일관성(0.3) + 의미 영향(0.3) = 확신도  
+문장 길이, 전문 용어 밀도 등 맥락 요소도 고려

@@ -39,6 +39,12 @@ const Header = () => {
           >
             교정 내역
           </Link>
+          <Link
+            to="/styleguide-search"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            스타일 검색
+          </Link>
         </div>
       </nav>
     </header>

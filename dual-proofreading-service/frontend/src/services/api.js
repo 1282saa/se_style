@@ -1,8 +1,7 @@
 import axios from "axios";
 
 // API 기본 설정
-const API_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:3003/api";
+const API_URL = "http://localhost:3003/api"; // 하드코딩으로 3003 포트 지정
 
 // axios 인스턴스 생성
 const api = axios.create({
@@ -69,6 +68,13 @@ export const styleGuideApi = {
 
   // 스타일 가이드 항목 삭제
   deleteStyleGuide: (id) => api.delete(`/styleguides/${id}`),
+
+  // 시맨틱 검색 - 텍스트 내용 기반 유사 스타일 가이드 검색
+  searchSemantic: (query, limit = 5, category = null) => {
+    const data = { query, limit };
+    if (category) data.category = category;
+    return api.post("/styleguides/search-semantic", data);
+  },
 };
 
 // 분석 관련 API 함수

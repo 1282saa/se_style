@@ -1,6 +1,6 @@
 // src/services/llm/anthropicService.js
 //--------------------------------------------------
-/* Claude 3 교열 + 임베딩 래퍼 (30 s 타임아웃·Redis TTL 캐시) */
+/* Claude 3 교열 + 임베딩 래퍼 (120 s 타임아웃·Redis TTL 캐시) */
 
 const Anthropic = require("@anthropic-ai/sdk");
 const { AppError } = require("../../utils/error");
@@ -61,7 +61,7 @@ class AnthropicService {
     }
 
     // 타임아웃 설정 (별도의 AbortController는 제거)
-    const timeoutMs = 30000; // 30초
+    const timeoutMs = 120000; // 120초 (2분)로 증가
 
     let res;
     try {
@@ -124,22 +124,7 @@ class AnthropicService {
   }
 
   /* ---------- 2. 임베딩 ---------- */
-  async createEmbedding(text) {
-    try {
-      // 임베딩 제공자 서비스 사용
-      return await embeddingProvider.createEmbedding(text);
-    } catch (error) {
-      logger.error(`임베딩 생성 중 오류: ${error.message}`);
-
-      // 오류 발생 시 개발 환경에서는 목업 임베딩 반환
-      if (config.NODE_ENV === "development") {
-        logger.warn("개발 환경에서 목업 임베딩을 생성합니다.");
-        return embeddingProvider.createMockEmbedding();
-      }
-
-      throw error;
-    }
-  }
+  // createEmbedding 메소드 제거
 
   /* ---------- private ---------- */
   #parse(r, origin) {

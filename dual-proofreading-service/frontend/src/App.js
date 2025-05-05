@@ -9,6 +9,7 @@ import ResultPage from "./pages/ResultPage";
 import HistoryPage from "./pages/HistoryPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProofreadPage from "./pages/ProofreadPage";
+import StyleGuideSearchPage from "./pages/StyleGuideSearchPage";
 
 // 공통 컴포넌트 임포트
 import Header from "./components/Header";
@@ -25,6 +26,10 @@ const App = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/corrections/:articleId" element={<ResultPage />} />
             <Route path="/history" element={<HistoryPage />} />
+            <Route
+              path="/styleguide-search"
+              element={<StyleGuideSearchPage />}
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const Styleguide = require("../models/styleguide.model");
 const anthropicService = require("./llm/anthropicService");
+const embeddingProvider = require("./rag/embeddingProvider");
 const logger = require("../utils/logger");
 const cache = require("../utils/cache");
 
@@ -105,8 +106,8 @@ class StyleGuideService {
       const searchText =
         text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
 
-      // 텍스트 임베딩 생성
-      const embedding = await anthropicService.createEmbedding(searchText);
+      // 텍스트 임베딩 생성 (anthropicService -> embeddingProvider)
+      const embedding = await embeddingProvider.createEmbedding(searchText);
       if (!embedding || embedding.length === 0) {
         throw new Error("임베딩 생성 실패");
       }
@@ -169,8 +170,8 @@ class StyleGuideService {
       logger.info("메모리 내 코사인 유사도 계산 사용");
 
       try {
-        // 임베딩 생성
-        const embedding = await anthropicService.createEmbedding(text);
+        // 임베딩 생성 (anthropicService -> embeddingProvider)
+        const embedding = await embeddingProvider.createEmbedding(text);
 
         // 벡터가 있는 스타일 가이드 조회
         const allGuides = await Styleguide.find({
@@ -407,8 +408,8 @@ ${
 }
 `.trim();
 
-      // 임베딩 생성
-      const embedding = await anthropicService.createEmbedding(embeddingText);
+      // 임베딩 생성 (anthropicService -> embeddingProvider)
+      const embedding = await embeddingProvider.createEmbedding(embeddingText);
 
       // 임베딩 저장
       styleGuide.vector = embedding;

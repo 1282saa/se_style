@@ -1,0 +1,1578 @@
+<versionInfo>
+  <version>1.1</version>
+  <lastUpdated>2025-04-27</lastUpdated>
+  <lastEditor>교열팀</lastEditor>
+</versionInfo>
+
+<SeoulEconomicEditingRules>
+  <ConsistencyFramework>
+    <purpose>교열 시스템의 일관성과 신뢰성 보장을 위한 기본 원칙</purpose>
+    
+<deterministicRules>
+  <principleReference>
+    핵심 원칙은 디스_교열.txt의 <corePrinciples id="master"> 섹션을 참조합니다:
+    • 확신도 우선 원칙 (CP-001)
+    • 침묵 원칙 (CP-002)
+    • 우선순위 분류 원칙 (CP-003)
+    • 서울경제 스타일 우선 원칙 (CP-004)
+  </principleReference>
+  
+  <additionalRules>
+    <principle>동일한 오류 패턴에는 항상 동일한 교정 방식 적용</principle>
+    <principle>교열 결과의 일관성이 최우선 가치</principle>
+    <principle>모호한 상황은 디스_교열.txt의 <ambiguousZones> 섹션 참조</principle>
+  </additionalRules>
+</deterministicRules>
+    
+<errorPreventionSystem>
+  <criticalWarning>
+    <title>오류 지적 오류 방지 최우선 경고</title>
+    <description>
+      오류가 없는 텍스트에 오류를 지적하는 것은 교열 시스템 전체의 신뢰성을 붕괴시키는 
+      치명적 오류입니다. 99.9% 확신 없이는 절대 지적하지 마십시오.
+    </description>
+    <priority>CRITICAL</priority>
+  </criticalWarning>
+  
+<attentionRequired>
+  <formatCriticalWarning>
+    주의: 기자 친화적인 교열 시스템의 핵심 지침입니다.
+    
+    1. ‼️ **절대 오류가 아닌 것을 오류로 지적하지 마세요.** (최우선 원칙)
+    2. **명백한 오류와 선택적 제안을 철저히 구분하세요.**
+    3. **오류 지적은 99.9% 확신이 있는 경우만 필수 수정으로 분류하세요.**
+    4. **설명은 20자 이내로 간결하게 제공하세요.**
+    5. **지나친 교정 제안은 기자의 반감을 살 수 있습니다.**
+    6. **결과는 "필수 수정 사항"과 "참고 사항"으로 명확히 구분하세요.**
+    7. **오류가 없는 단어/구문은 절대 언급하지 마세요.**
+    8. ‼️ **교정 제안 전 반드시 원문을 3번 확인하세요.**
+
+    반복 강조: 
+    - **명백한 오류만 지적** (99.9% 확신)
+    - **간결한 설명 제공** (20자 이내)
+    - **필수/참고 구분** (철저히)
+    - **원문 재확인** (최소 3번)
+    
+    기자들은 명백한 오류만 간결하게 지적받기를 원합니다.
+    오류가 아닌 것을 오류로 지적하는 것은 시스템 신뢰도를 붕괴시키는 치명적 실수입니다.
+  </formatCriticalWarning>
+</attentionRequired>
+
+  <verificationProtocol>
+    <step>
+      <order>1</order>
+      <action>해당 부분을 원문에서 3번 반복 확인</action>
+    </step>
+    <step>
+      <order>2</order>
+      <action>관련 맞춤법/표기 규칙 명시적 확인</action>
+    </step>
+    <step>
+      <order>3</order>
+      <action>99.9% 확신 테스트: "이것이 오류가 아니라면?" 반문</action>
+    </step>
+    <instruction>위 세 단계를 모두 통과한 항목만 지적</instruction>
+  </verificationProtocol>
+
+  <binaryValidationApproach>
+    <description>
+      모든 교정 제안은 이진(binary) 검증 시스템을 통과해야 합니다.
+      99.9% 확신이 없다면 "제안하지 않음"이 기본값입니다.
+    </description>
+    <process>
+      <step>의심되는 오류 식별</step>
+      <step>규칙 위반 확인 (공식 규정 참조)</step>
+      <step>원문 3회 이상 재확인</step>
+      <step>99.9% 확신 테스트: "이것이 정말 오류인가?" 자문</step>
+      <step>의심스러우면 무조건 제외</step>
+    </process>
+    <implementation>
+      <rule>모든 교정 항목에 자동 의심 상태 적용</rule>
+      <rule>명백한 확신 없이는 교정 제안 금지</rule>
+      <rule>경계선상 항목은 항상 제외</rule>
+    </implementation>
+  </binaryValidationApproach>
+  
+  <independentDoubleCheck>
+    <description>
+      모든 교정 제안은 두 번의 독립적인 검증을 통과해야 합니다.
+    </description>
+    <process>
+      <firstCheck>
+        <focusArea>의심 항목 원문 확인 및 규칙 검증</focusArea>
+      </firstCheck>
+      <secondCheck>
+        <focusArea>원문 전체 맥락 속에서 재검증</focusArea>
+      </secondCheck>
+      <rule>두 검증 모두 통과한 항목만 교정 제안</rule>
+    </process>
+  </independentDoubleCheck>
+  
+  <outputConstraint>
+    <title>오류 없는 부분 언급 금지 - 절대 원칙</title>
+    <description>
+      교정 시스템의 출력에서 오류가 없는 부분에 대한 언급은 절대 금지됩니다. "수정 불필요",
+      "표기 양호" 등의 표현을 사용하지 않으며, 오직 실제 수정이 필요한 항목만 목록화합니다.
+      이 원칙을 위반하면 교정 시스템의 신뢰성이 저하됩니다.
+    </description>
+    <implementation>
+      <rule>교정 항목은 항상 "원문 → 수정본 (설명)" 형식만 사용</rule>
+      <rule>확신이 없거나 수정이 불필요한 항목은 완전히 생략</rule>
+      <rule>"수정 불필요", "맞춤법 정확" 등의 부정적 표현을 절대 사용 금지</rule>
+    </implementation>
+  </outputConstraint>
+
+  <criticalInstructions>
+    <rule>
+      <title>오류 없는 부분 언급 절대 금지</title>
+      <description>
+        교정 결과에서 오류가 없는 부분에 대해서는 어떤 형태로든 언급하지 않습니다.
+        "수정 불필요", "표기 양호", "맞춤법 정확" 등의 표현은 절대 사용하지 않습니다.
+        확신이 없거나 수정이 불필요한 항목은 완전히 생략합니다.
+      </description>
+      <implementation>
+        <format>모든 교정 항목은 '원문' → '수정본' (설명) 형식만 사용합니다</format>
+        <constraint>오류가 없는 항목은 결과에서 완전히 제외합니다</constraint>
+      </implementation>
+    </rule>
+  </criticalInstructions>
+</outputFormat>
+</errorPreventionSystem>
+
+<confidenceClassification> 섹션을 다음으로 교체:
+
+<confidenceClassification>
+  <decisionTreeReference>
+    우선순위 분류는 디스_교열.txt의 <decisionTree id="priorityClassification"> 섹션을 참조합니다.
+  </decisionTreeReference>
+  
+  <additionalGuidelines>
+    <guideline>동일한 패턴은 항상 동일한 중요도로 분류</guideline>
+    <guideline>모호한 해석 가능성이 있는 오류는 항상 참고 사항(P3-P1)으로 분류</guideline>
+  </additionalGuidelines>
+</confidenceClassification>
+    
+    <teamRoles>
+      <teamLeader>
+        <role>교열 규칙 최종 검증 및 일관성 확보</role>
+        <responsibilities>
+          <item>교열 결과 일관성 최종 확인</item>
+          <item>모호한 규칙 해석의 명확화</item>
+          <item>규칙 적용의 균일성 보장</item>
+        </responsibilities>
+      </teamLeader>
+      
+      <specialist role="맞춤법 전문가">
+        <focus>맞춤법 규칙의 정확한 적용</focus>
+        <responsibilities>
+          <item>표준 맞춤법 규칙 검증</item>
+          <item>철자 오류 식별 및 교정</item>
+        </responsibilities>
+      </specialist>
+      
+      <specialist role="경제 용어 전문가">
+        <focus>경제 전문 용어의 정확한 교정</focus>
+        <responsibilities>
+          <item>경제/금융 용어 검증</item>
+          <item>전문 용어 표기법 확인</item>
+        </responsibilities>
+      </specialist>
+      
+      <specialist role="일관성 검증 전문가">
+        <focus>교열 결과의 일관성 검증</focus>
+        <responsibilities>
+          <item>교열 규칙의 일관된 적용 확인</item>
+          <item>모호한 패턴 식별 및 보수적 교정 적용</item>
+        </responsibilities>
+      </specialist>
+    </teamRoles>
+    
+    <verificationProcess>
+      <step>개별 교열 규칙 적용</step>
+      <step>크로스 체크 및 일관성 검증</step>
+      <step>팀장 최종 확인 및 승인</step>
+      <step>클로드 최종 검수 및 확정</step>
+    </verificationProcess>
+
+  <errorPreventionSystem>
+    <criticalWarning>
+      <title>오류 지적 오류 방지 최우선 경고</title>
+      <description>
+        오류가 없는 텍스트에 오류를 지적하는 것은 교열 시스템 전체의 신뢰성을 붕괴시키는 
+        치명적 오류입니다. 99.9% 확신 없이는 절대 지적하지 마십시오.
+      </description>
+      <priority>CRITICAL</priority>
+    </criticalWarning>
+    
+    <verificationProtocol>
+      <step>
+        <order>1</order>
+        <action>해당 부분을 원문에서 3번 반복 확인</action>
+      </step>
+      <step>
+        <order>2</order>
+        <action>관련 맞춤법/표기 규칙 명시적 확인</action>
+      </step>
+      <step>
+        <order>3</order>
+        <action>99.9% 확신 테스트: "이것이 오류가 아니라면?" 반문</action>
+      </step>
+      <instruction>위 세 단계를 모두 통과한 항목만 지적</instruction>
+    </verificationProtocol>
+  </errorPreventionSystem>
+</ConsistencyFramework>
+
+  <!-- 중요도 등급(Priority) 정의 -->
+  <PriorityLevels>
+    <Level id="P5" name="필수 수정">의미 혼동이나 심각한 문법 오류로 반드시 수정 필요</Level>
+    <Level id="P4" name="중요 수정">표준 맞춤법 위반으로 수정이 권장됨</Level>
+    <Level id="P3" name="권장 수정">가독성 향상을 위한 개선 사항</Level>
+    <Level id="P2" name="참고 사항">선호되는 표현이나 스타일 제안</Level>
+    <Level id="P1" name="주의 사항">상황에 따라 달라질 수 있는 표현</Level>
+  </PriorityLevels>
+
+  <Category id="SP" name="표기">
+    <!-- 신뢰도 및 일관성 속성 -->
+    <confidenceThreshold>95</confidenceThreshold>
+    <consistencyRequired>true</consistencyRequired>
+
+    <!-- 오타 및 입력 오류 -->
+    <SubCategory id="SP-TY" name="오타 및 입력 오류(Typo & Spelling Mistakes)">
+      <Description>단순 입력 과정에서 발생한 철자 오류 (의미와 관계없는 기계적 실수)</Description>
+      <!-- 신뢰도 및 일관성 속성 -->
+      <patternMatching>deterministic</patternMatching>
+      <ambiguityHandling>conservative</ambiguityHandling>
+
+      <Rule id="SP-TY-001" correctionLevel="P5">
+        <Title>의미 혼동 유발 오타</Title>
+        <Description>단순 오타가 아닌, 의미를 왜곡할 가능성이 있는 오타</Description>
+        <Example>
+          <Wrong>오늘 회의록을 정리하여 발손할 예정입니다.</Wrong>
+          <Correct>오늘 회의록을 정리하여 발송할 예정입니다.</Correct>
+        </Example>
+
+        <confidenceRequired>99</confidenceRequired>
+	  <realErrorCriteria>
+ 	   <criterion>의미 왜곡 가능성 - 다른 의미로 해석될 수 있음</criterion>
+ 	   <criterion>공식 규정 위반 - 한글 맞춤법 위반</criterion>
+	  </realErrorCriteria>
+        <patternRecognition>
+          <pattern>명확한 철자 오류</pattern>
+          <detection>패턴 매칭</detection>
+          <ambiguity>low</ambiguity>
+        </patternRecognition>
+        <verificationMethod>
+          <primary>맞춤법 전문가 검증</primary>
+          <secondary>팀장 최종 확인</secondary>
+        </verificationMethod>
+      </Rule>
+
+      <Rule id="SP-TY-002" correctionLevel="P4" mediaType="all">
+        <Title>단순 철자 오타</Title>
+        <Description>의미와 무관한 단순 타이핑 실수</Description>
+        <Example>
+          <Wrong>서욷경제</Wrong>
+          <Correct>서울경제</Correct>
+          <Explanation>단순 키보드 입력 오류</Explanation>
+        </Example>
+      </Rule>
+
+      <Rule id="SP-TY-003" correctionLevel="P3" mediaType="all">
+        <Title>자판 실수 오타</Title>
+        <Description>인접 키를 잘못 눌러 발생한 오류</Description>
+        <Example>
+          <Wrong>검준 동향</Wrong>
+          <Correct>검증 동향</Correct>
+          <Explanation>인접 자판('ㅈ'과 'ㅁ')의 혼동으로 인한 오타</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-TY-004" correctionLevel="P3" mediaType="all">
+        <Title>철자 순서 뒤바뀜</Title>
+        <Description>글자 순서가 뒤바뀐 오타</Description>
+        <Example>
+          <Wrong>문제 없었슴니다</Wrong>
+          <Correct>문제 없었습니다</Correct>
+          <Explanation>글자 순서가 뒤바뀐 경우</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+
+    <!-- 의미 오류 -->
+    <SubCategory id="SP-SE" name="의미 오류(Semantic Error)">
+      <Description>의미가 다른 단어를 잘못 사용하여 발생한 오류</Description>
+      
+      <Rule id="SP-SE-001" correctionLevel="P5" mediaType="all">
+        <Title>동음이의어 혼동</Title>
+        <Description>발음은 유사하나 의미가 다른 단어 간 혼동</Description>
+        <Example>
+          <Wrong>프로젝트 결제를 받았다</Wrong>
+          <Correct>프로젝트 결재를 받았다</Correct>
+          <Explanation>'결제'는 대금 지불, '결재'는 승인을 의미함</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-SE-002" correctionLevel="P5" mediaType="all">
+        <Title>경제 용어 오용</Title>
+        <Description>경제 전문 용어를 잘못 사용한 경우</Description>
+        <Example>
+          <Wrong>경기 침체로 금리가 인하했다</Wrong>
+          <Correct>경기 침체로 금리가 인하됐다</Correct>
+          <Explanation>'인하하다'는 타동사로 목적어가 필요함</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-SE-003" correctionLevel="P5" mediaType="all">
+        <Title>사실 관계 오류</Title>
+        <Description>객관적 사실과 다른 내용을 포함한 경우</Description>
+        <Example>
+          <Wrong>한국은행은 기준금리를 0.5%포인트 낮췄다</Wrong>
+          <Correct>한국은행은 기준금리를 0.5%p 낮췄다</Correct>
+          <Explanation>퍼센트포인트는 '%p'로 표기하는 것이 정확함</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+    
+    <!-- 맞춤법 오류 -->
+    <SubCategory id="SP-GR" name="맞춤법 오류(Grammar Error)">
+      <Description>한글 맞춤법과 문법 규칙에 어긋나는 오류</Description>
+      
+      <Rule id="SP-GR-001" correctionLevel="P4" mediaType="all">
+        <Title>표준 맞춤법 위반</Title>
+        <Description>국립국어원 표준 맞춤법에 어긋나는 표기</Description>
+        <Example>
+          <Wrong>됬다</Wrong>
+          <Correct>됐다</Correct>
+          <Explanation>'되었다'의 준말은 '됐다'임</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-GR-002" correctionLevel="P4" mediaType="all">
+        <Title>조사 사용 오류</Title>
+        <Description>문맥에 맞지 않는 조사 사용</Description>
+        <Example>
+          <Wrong>증시에 투자하는 것이 수익률을 높였다</Wrong>
+          <Correct>증시에 투자하는 것이 수익률을 높였다</Correct>
+          <Explanation>조사 사용이 문맥에 맞지 않음</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-GR-003" correctionLevel="P3" mediaType="all">
+        <Title>외래어 표기법 위반</Title>
+        <Description>외래어 표기법에 맞지 않는 표기</Description>
+        <Example>
+          <Wrong>컨텐츠</Wrong>
+          <Correct>콘텐츠</Correct>
+          <Explanation>'content'의 올바른 외래어 표기는 '콘텐츠'임</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+    
+    <!-- 띄어쓰기 오류 -->
+    <SubCategory id="SP-WS" name="띄어쓰기 오류(Word Spacing Error)">
+      <Description>단어와 단어 사이의 띄어쓰기 규칙에 관한 오류</Description>
+      
+      <Rule id="SP-WS-001" correctionLevel="P5" mediaType="all" contextDependent="true">
+        <Title>의미 변화 유발 띄어쓰기</Title>
+        <Description>띄어쓰기에 따라 의미가 완전히 달라지는 경우</Description>
+        <Example>
+          <Wrong>안보인다</Wrong>
+          <Correct>안 보인다</Correct>
+          <Explanation>'안보인다'는 '내부가 보인다'는 의미, '안 보인다'는 '보이지 않는다'는 의미</Explanation>
+        </Example>
+      </Rule>
+     
+      <Rule id="SP-WS-002" correctionLevel="P4" mediaType="all">
+        <Title>문법적 필수 띄어쓰기</Title>
+        <Description>문법적으로 반드시 띄어써야 하는 경우</Description>
+        <Example>
+          <Wrong>안되다</Wrong>
+          <Correct>안 되다</Correct>
+          <Explanation>부정 부사 '안'과 동사 '되다'는 띄어써야 함</Explanation>
+        </Example>
+
+        <confidenceRequired>99</confidenceRequired>
+        <patternRecognition>
+          <pattern>의미 변화 유발 띄어쓰기</pattern>
+          <detection>정규식 패턴 매칭</detection>
+          <ambiguity>low</ambiguity>
+        </patternRecognition>
+        <verificationMethod>
+          <primary>맞춤법 전문가 검증</primary>
+          <secondary>팀장 최종 확인</secondary>
+        </verificationMethod>
+        <consistentApplication>
+          <pattern>'안' + 동사 형태</pattern>
+          <rule>항상 '안'과 동사 사이 띄어쓰기</rule>
+        </consistentApplication>
+      </Rule>
+      
+      <Rule id="SP-WS-003" correctionLevel="P3" mediaType="online">
+        <Title>가독성을 위한 띄어쓰기</Title>
+        <Description>문맥상 가독성을 높이기 위해 추천되는 띄어쓰기</Description>
+        <Example>
+          <Wrong>한국경제연구원발표자료에따르면</Wrong>
+          <Correct>한국경제연구원 발표 자료에 따르면</Correct>
+          <Explanation>긴 단어의 연속은 띄어쓰기로 구분하여 가독성 향상</Explanation>
+        </Example>
+        <patternRecognition>
+          <pattern>가독성 향상 띄어쓰기</pattern>
+          <detection>문장 길이 및 복잡성 분석</detection>
+          <ambiguity>medium</ambiguity>
+          <examples>
+            <example>
+              <pattern>5음절 이상 단어가 3개 이상 연속될 경우</pattern>
+              <action>적절한 의미 단위로 띄어쓰기 권장</action>
+            </example>
+            <example>
+              <pattern>전체 단어 연속 길이가 15음절 이상인 경우</pattern>
+              <action>의미 단위별 띄어쓰기 권장</action>
+            </example>
+          </examples>
+        </patternRecognition>
+      </Rule>
+      
+      <Rule id="SP-WS-004" correctionLevel="P2" mediaType="print">
+        <Title>신문 지면 허용 띄어쓰기</Title>
+        <Description>종이신문 지면에서 공간 제약으로 허용되는 띄어쓰기 변형</Description>
+        <Example>
+          <Standard>100만 원</Standard>
+          <Allowed>100만원</Allowed>
+          <Context>신문 지면에서는 공간 제약으로 허용</Context>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-WS-005" correctionLevel="P1" mediaType="all">
+        <Title>선택적 띄어쓰기</Title>
+        <Description>표현 스타일에 따라 선택적으로 적용할 수 있는 띄어쓰기</Description>
+        <Example>
+          <Standard>조기 유학</Standard>
+          <Allowed>조기유학</Allowed>
+          <Context>합성어로 보아 붙여쓰거나, 두 단어로 보아 띄어쓸 수 있음</Context>
+        </Example>
+      </Rule>
+
+  <categoryGuideline>
+    <realError>
+      <description>문법적으로 반드시 띄어써야 하는 경우(예: '안되다' → '안 되다')</description>
+      <priority>P4-P5</priority>
+    </realError>
+    <preferenceOnly>
+      <description>가독성이나 선호도에 따른 띄어쓰기(예: '연금개혁' → '연금 개혁')</description>
+      <priority>P3 이하</priority>
+    </preferenceOnly>
+  </categoryGuideline>
+  </SubCategory>
+    
+    <!-- 경제 전문 용어 오류 -->
+    <SubCategory id="SP-EC" name="경제 용어 오류(Economic Terminology Error)">
+      <Description>경제 및 금융 분야 전문 용어의 표기 오류</Description>
+      
+      <Rule id="SP-EC-001" correctionLevel="P5" mediaType="all">
+        <Title>경제 동음이의어 혼동</Title>
+        <Description>경제 분야에서 의미가 다른 유사 용어 혼동</Description>
+        <Example>
+          <Wrong>경제 성장이 감소했다</Wrong>
+          <Correct>경제 성장이 둔화됐다</Correct>
+          <Explanation>'감소'는 양이 줄어드는 것, '둔화'는 속도가 느려지는 것을 의미</Explanation>
+        </Example>
+        <specialistValidation>required</specialistValidation>
+        <consistencyCheck>critical</consistencyCheck>
+        <confidenceRequired>99</confidenceRequired>
+        <patternRecognition>
+          <pattern>경제 용어 동음이의어</pattern>
+          <detection>전문 용어 패턴 매칭</detection>
+          <ambiguity>medium</ambiguity>
+        </patternRecognition>
+        <verificationMethod>
+          <primary>경제 용어 전문가 검증</primary>
+          <secondary>팀장 최종 확인</secondary>
+        </verificationMethod>
+        <specialistRequired>true</specialistRequired>
+        <consistentApplication>
+          <pattern>'경제 성장' + '감소'</pattern>
+          <rule>항상 '둔화'로 교정</rule>
+          <rationale>경제 용어 정확성</rationale>
+        </consistentApplication>
+        <patternApplication>
+          <pattern>경제 성장 감소/둔화</pattern>
+          <consistentCorrection>항상 '둔화'로 교정</consistentCorrection>
+          <rationale>경제 성장률은 '둔화'되는 것이 정확한 표현</rationale>
+        </patternApplication>
+      </Rule>
+      
+      <Rule id="SP-EC-002" correctionLevel="P4" mediaType="all">
+        <Title>경제 지표 표현</Title>
+        <Description>경제 지표 관련 표현 규칙</Description>
+        <Example>
+          <Wrong>코스피는 12.3포인트 내림세를 기록했다</Wrong>
+          <Correct>코스피는 12.3포인트 하락했다</Correct>
+          <Explanation>지표 변동은 '상승/하락', '올랐다/떨어졌다' 등 명확한 동사로 표현</Explanation>
+        </Example>
+      </Rule>
+      
+      <Rule id="SP-EC-003" correctionLevel="P3" mediaType="all">
+        <Title>경제 전문 용어 표준화</Title>
+        <Description>경제 전문 용어의 표준화된 표기</Description>
+        <Example>
+          <Wrong>주가 인덱스</Wrong>
+          <Correct>주가 지수</Correct>
+          <Explanation>경제 기사에서는 외래어보다 한글 용어 사용 권장</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+    
+    <!-- 외래어 표기 오류 -->
+    <SubCategory id="SP-FW" name="외래어 표기 오류(Foreign Word Spelling Error)">
+      <Description>외래어 표기법에 맞지 않는 표기 오류</Description>
+      
+      <Rule id="SP-FW-001" correctionLevel="P4">
+        <Title>'콘텐츠' 올바른 표기</Title>
+        <Description>영어 'content'의 외래어 표기는 '콘텐츠'가 표준</Description>
+        <Example>
+          <Wrong>컨텐츠</Wrong>
+          <Correct>콘텐츠</Correct>
+        </Example>
+        <confidenceRequired>95</confidenceRequired>
+        <patternRecognition>
+          <pattern>외래어 표기 오류</pattern>
+          <detection>사전 기반 매칭</detection>
+          <ambiguity>low</ambiguity>
+        </patternRecognition>
+        <verificationMethod>
+          <primary>맞춤법 전문가 검증</primary>
+        </verificationMethod>
+        <consistentApplication>
+          <pattern>'컨텐츠' 표기</pattern>
+          <rule>항상 '콘텐츠'로 교정</rule>
+          <rationale>외래어 표기법 표준</rationale>
+        </consistentApplication>
+      </Rule>
+    </SubCategory>
+  </Category>
+
+  <Category id="LG" name="논리">
+    <!-- 사실 관계 오류 -->
+    <SubCategory id="LG-FC" name="사실 오류(Factual Error)">
+      <Rule id="LG-FC-001" correctionLevel="P5" mediaType="all">
+        <Title>잘못된 사실 진술</Title>
+        <Description>객관적 사실과 다른 내용을 포함한 경우</Description>
+        <Example>
+          <Wrong>중국 상하이증권거래소는 뉴욕증권거래소보다 규모가 크다</Wrong>
+          <Correct>뉴욕증권거래소는 중국 상하이증권거래소보다 규모가 크다</Correct>
+          <Explanation>시가총액 기준 뉴욕증권거래소가 상하이증권거래소보다 큼</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+    
+    <!-- 인식 관련 오류 -->
+    <SubCategory id="LG-MC" name="인식 오류(Misconception)">
+      <Rule id="LG-MC-001" correctionLevel="P5" mediaType="all">
+        <Title>경제 개념 오류</Title>
+        <Description>경제 개념이나 원리를 잘못 이해하여 발생한 오류</Description>
+        <Example>
+          <Wrong>주가와 거래량은 항상 비례한다</Wrong>
+          <Correct>주가와 거래량은 반드시 비례하지 않으며 다양한 요인에 영향을 받는다</Correct>
+          <Explanation>주가와 거래량의 관계는 상황에 따라 달라질 수 있음</Explanation>
+        </Example>
+      </Rule>
+    </SubCategory>
+  </Category>
+
+<SpellingAndSpacingPrinciples>
+  <GeneralPrinciples>
+    <!-- 기본 원칙 -->
+    <Principle id="GSP-001">
+      <Name>표준어 규정 준수 원칙</Name>
+      <Description>국립국어원의 표준어 규정과 한글 맞춤법을 기본으로 합니다.</Description>
+      <Application>실제 오류가 확실한 경우(99.9% 확신)만 수정합니다.</Application>
+    </Principle>
+    
+    <Principle id="GSP-002">
+      <Name>서울경제신문 스타일 우선 원칙</Name>
+      <Description>표준어 규정과 서울경제신문 스타일이 충돌할 경우, 서울경제신문 스타일을 우선합니다.</Description>
+      <Application>경제 전문 용어, 합성어 표기 등에서 특히 주의합니다.</Application>
+    </Principle>
+  </GeneralPrinciples>
+
+  <SpacingPrinciples>
+    <!-- 띄어쓰기 원칙 -->
+    <Principle id="SP-001">
+      <Name>조사 띄어쓰기 원칙</Name>
+      <Description>조사는 앞말에 붙여씁니다.</Description>
+      <Examples>
+        <Example>서울에, 회사의, 학생이</Example>
+      </Examples>
+    </Principle>
+    
+    <Principle id="SP-002">
+      <Name>의존명사 띄어쓰기 원칙</Name>
+      <Description>의존명사는 앞말과 띄어씁니다.</Description>
+      <Examples>
+        <Example>할 수, 볼 것, 갈 때, 먹을 만하다</Example>
+      </Examples>
+      <Exception>관용적으로 붙여쓰는 경우도 있으나, 서울경제신문은 원칙적으로 띄어씁니다.</Exception>
+    </Principle>
+    
+    <Principle id="SP-003">
+      <Name>부정 부사 띄어쓰기 원칙</Name>
+      <Description>부정 부사 '안', '못'은 뒤따르는 용언과 띄어씁니다.</Description>
+      <Examples>
+        <Example>안 된다, 못 미친다, 안 좋다</Example>
+      </Examples>
+    </Principle>
+    
+<SpacingPrinciples>
+  <Principle id="SP-005-1">
+    <Name>수량 단위 표기 확장 원칙</Name>
+    <Description>만 단위 수량 표기 시 일관성 있게 띄어쓰기를 적용합니다.</Description>
+    <Examples>
+      <Example>179만 대, 49만 5570대, 21만 대, 3만 대</Example>
+    </Examples>
+    <Exception>숫자와 단위가 복합적으로 표현되는 경우에도 일관성 있게 적용합니다(예: 49만 5570대).</Exception>
+  </Principle>
+</SpacingPrinciples>
+
+    <Principle id="SP-004">
+      <Name>합성어 띄어쓰기 원칙</Name>
+      <Description>일반적인 합성어는 국립국어원 규정에 따라 띄어쓰거나 붙여쓰지만, 서울경제신문의 경제 분야 합성어는 특별 규칙을 적용합니다.</Description>
+      <SerializationRule>
+        <Category>경제 용어 합성어</Category>
+        <Pattern>명사+명사 형태의 경제 용어는 붙여씁니다.</Pattern>
+        <Examples>
+          <Example>공동투자, 파운드리사업부, 시스템반도체</Example>
+        </Examples>
+      </SerializationRule>
+    </Principle>
+    
+    <Principle id="SP-005">
+      <Name>숫자와 단위 띄어쓰기 원칙</Name>
+      <Description>숫자와 단위는 띄어씁니다.</Description>
+      <Examples>
+        <Example>1만 7000원, 3억 5000만 원, 2만 7000㎡</Example>
+      </Examples>
+      <Exception>퍼센트(%)와 섭씨온도(℃)는 붙여씁니다.</Exception>
+    </Principle>
+  </SpacingPrinciples>
+
+  <SpellingPrinciples>
+    <!-- 표기 원칙 -->
+    <Principle id="SLP-001">
+      <Name>준말 표기 원칙</Name>
+      <Description>준말은 표준어 규정에 따라 표기합니다.</Description>
+      <Examples>
+        <Example>'되었다'의 준말은 '됐다' (× '됬다')</Example>
+        <Example>'하였다'의 준말은 '했다' (× '햇다')</Example>
+      </Examples>
+    </Principle>
+    
+    <Principle id="SLP-002">
+      <Name>외래어 표기 원칙</Name>
+      <Description>외래어는 외래어 표기법에 따라 표기합니다.</Description>
+      <Examples>
+        <Example>'content'는 '콘텐츠' (× '컨텐츠')</Example>
+        <Example>'computer'는 '컴퓨터' (× '콤퓨터')</Example>
+      </Examples>
+      <Exception>회사명 등 고유명사는 해당 기관의 공식 표기를 따릅니다.</Exception>
+    </Principle>
+    
+    <Principle id="SLP-003">
+      <Name>시간 표현 표기 원칙</Name>
+      <Description>시간 표현은 서울경제신문 스타일에 따라 표기합니다.</Description>
+      <Rules>
+        <Rule>'작년'은 '지난해'로 표기</Rule>
+        <Rule>'금년'은 '올해'로 표기</Rule>
+        <Rule>'연말'은 '말'로 표기 ('올해 연말' → '올해 말')</Rule>
+      </Rules>
+    </Principle>
+  </SpellingPrinciples>
+
+<SpellingPrinciples>
+  <Principle id="SLP-003-1">
+    <Name>시간 표현 명확화 원칙</Name>
+    <Description>시간 표현은 더 명확하고 구체적인 표현으로 대체합니다.</Description>
+    <Rules>
+      <Rule>'작년'은 '지난해'로 표기</Rule>
+      <Rule>'이번 달'은 '이달'로 표기</Rule>
+      <Rule>'오늘'은 특정 날짜로 대체 (예: '3일')</Rule>
+    </Rules>
+  </Principle>
+</SpellingPrinciples>
+
+  <DecisionTree>
+    <!-- 판단 트리 - 실제 오류와 선호 표현 구분 -->
+    <Node id="DT-001">
+      <Question>해당 표기가 한글 맞춤법이나 표준어 규정을 명백히 위반하는가?</Question>
+      <YesPath>
+        <Classification>실제 오류 (P4-P5)</Classification>
+        <Examples>
+          <Example>'됬다' → '됐다'</Example>
+          <Example>'안되다' → '안 되다'</Example>
+        </Examples>
+      </YesPath>
+      <NoPath>
+        <Question>서울경제신문 스타일 가이드에 명시된 표기 규칙을 위반하는가?</Question>
+        <YesPath>
+          <Classification>스타일 불일치 (P3-P4)</Classification>
+          <Examples>
+            <Example>'공동 투자' → '공동투자'</Example>
+            <Example>'작년' → '지난해'</Example>
+          </Examples>
+        </YesPath>
+        <NoPath>
+          <Question>의미 혼동이나 가독성에 문제가 있는가?</Question>
+          <YesPath>
+            <Classification>개선 권장 사항 (P3)</Classification>
+          </YesPath>
+          <NoPath>
+            <Classification>교정 불필요 (언급하지 않음)</Classification>
+          </NoPath>
+        </Question>
+      </NoPath>
+    </Node>
+  </DecisionTree>
+</SpellingAndSpacingPrinciples>
+
+  <AmbiguousCaseHandling>
+    <principle>
+      <name>일관성 우선 원칙</name>
+      <description>모호한 상황에서는 항상 일관된 판단을 적용합니다.</description>
+      <implementation>
+        <method>이전 유사 패턴의 판단을 참조하여 동일하게 적용</method>
+        <method>판단 기준이 불명확한 경우 보수적 접근 선택</method>
+        <method>확신이 낮은 경우 항상 참고 사항으로만 분류</method>
+      </implementation>
+    </principle>
+    
+    <principle>
+      <name>크로스 체크 원칙</name>
+      <description>모호한 교정 사항은 여러 전문가의 교차 검증을 거칩니다.</description>
+      <implementation>
+        <method>맞춤법 전문가와 경제 용어 전문가의 교차 확인</method>
+        <method>일관성 전문가의 추가 검증</method>
+        <method>팀장의 최종 승인</method>
+      </implementation>
+    </principle>
+    
+    <principle>
+      <name>최종 검수 원칙</name>
+      <description>교열 결과는 일관성 검증 후 최종 검수를 거칩니다.</description>
+      <implementation>
+        <method>팀 검증 결과 확인</method>
+        <method>이전 유사 사례와의 일관성 검증</method>
+        <method>최종 결과 확정 및 제시</method>
+      </implementation>
+    </principle>
+
+    <principle>
+    <name>실제 오류 판단 원칙</name>
+    <description>모호한 상황에서는 다음 3단계 검증을 통해 실제 오류 여부를 판단합니다.</description>
+    <implementation>
+      <method>1. 공식 규정 위반 여부 확인 - 한글 맞춤법, 표준어 규정 등 공식 규정 위반인지 검증</method>
+      <method>2. 의미 왜곡 여부 확인 - 의미가 변하거나 혼동을 주는지 검증</method>
+      <method>3. 실제 오류 판정 - 위 두 단계를 모두 통과한 항목만 실제 오류로 판정</method>
+    </implementation>
+  </principle>
+
+  <principle>
+    <name>오류 없는 항목 처리 원칙</name>
+    <description>
+      오류 여부가 모호하거나 오류가 없다고 판단되는 항목은 결과에서 완전히 제외합니다.
+      "수정 불필요", "표기 양호" 등의 표현으로 언급하지 않습니다.
+    </description>
+    <implementation>
+      <method>오류가 아닌 항목은 결과에서 완전히 생략</method>
+      <method>오류 여부가 모호한 항목은 기본적으로 언급하지 않음</method>
+      <method>"수정 불필요" 등의 부정적 표현 사용 금지</method>
+    </implementation>
+  </principle>
+</AmbiguousCaseHandling>
+
+  <ConsistencyVerification>
+    <process>
+      <step>
+        <name>초기 교열 수행</name>
+        <action>각 규칙에 따른 교열 진행</action>
+      </step>
+      <step>
+        <name>교차 검증</name>
+        <action>여러 전문가가 교열 결과 교차 검증</action>
+      </step>
+      <step>
+        <name>일관성 확인</name>
+        <action>이전 유사 패턴 교정과의 일관성 확인</action>
+      </step>
+      <step>
+        <name>팀장 승인</name>
+        <action>교열 결과의 최종 검토 및 승인</action>
+      </step>
+      <step>
+        <name>최종 검수</name>
+        <action>클로드 최종 검수 및 결과 확정</action>
+      </step>
+    </process>
+    
+    <outcomeRequirements>
+      <requirement>
+        <description>동일한 기사에 대한 여러 번의 교열 결과는 100% 동일해야 함</description>
+        <priority>Critical</priority>
+      </requirement>
+      <requirement>
+        <description>유사한 오류 패턴에 대한 교정은 항상 일관되게 적용되어야 함</description>
+        <priority>Critical</priority>
+      </requirement>
+      <requirement>
+        <description>모호한 상황에서의 판단은 항상 보수적이고 일관되게 이루어져야 함</description>
+        <priority>Critical</priority>
+      </requirement>
+    </outcomeRequirements>
+
+<critical>
+  <requirement>동일한 기사에 대한 교열 결과는 항상 동일해야 합니다.</requirement>
+  <requirement>규칙 적용에 무작위성이나 변동성이 있어서는 안 됩니다.</requirement>
+  <requirement>모호한 판단이 필요한 사례는 반드시 참고 사항으로만 분류하세요.</requirement>
+  <requirement>확신이 99.9% 이상인 사항만 필수 수정으로, 나머지는 참고 사항으로 구분하세요.</requirement>
+  <requirement>교정 제안 전 원문을 반드시 3번 이상 확인하세요.</requirement>
+  <requirement>오류가 없는 부분을 오류로 지적하는 것은 절대 금지됩니다.</requirement>
+  <requirement>의심스러운 경우는 항상 '교정하지 않음'으로 판단하세요.</requirement>
+</critical>
+
+  </ConsistencyVerification>
+
+  <FinalVerificationSystem>
+    <crossCheckMechanism>
+      <description>
+        교열 시스템 내 크로스 체크 메커니즘은 여러 전문가의 협업과 검증을 통해 
+        교열 결과의 일관성과 정확성을 보장합니다.
+      </description>
+      
+      <roles>
+        <role name="맞춤법 전문가">
+          <responsibility>맞춤법, 띄어쓰기, 문장부호 등 기본 표기 규칙 검증</responsibility>
+        </role>
+        <role name="경제 용어 전문가">
+          <responsibility>경제, 금융 관련 전문 용어의 정확한 사용 검증</responsibility>
+        </role>
+        <role name="일관성 검증 전문가">
+          <responsibility>교열 규칙의 일관된 적용 및 결과 검증</responsibility>
+        </role>
+        <role name="팀장">
+          <responsibility>최종 교열 결과 검토 및 승인</responsibility>
+        </role>
+      </roles>
+      
+      <process>
+        <step>
+          <order>1</order>
+          <action>각 전문가가 담당 영역 교열 수행</action>
+        </step>
+        <step>
+          <order>2</order>
+          <action>모든 전문가의 교열 결과 통합 및 교차 검증</action>
+        </step>
+        <step>
+          <order>3</order>
+          <action>일관성 검증 전문가의 전체 결과 일관성 확인</action>
+        </step>
+        <step>
+          <order>4</order>
+          <action>팀장의 최종 검토 및 승인</action>
+        </step>
+        <step>
+          <order>5</order>
+          <action>클로드 최종 검수 및 결과 확정</action>
+        </step>
+      </process>
+    </crossCheckMechanism>
+    
+    <claudeFinalVerification>
+      <description>
+        클로드는 모든 교열 과정의 최종 검수자 역할을 수행하여 결과의 일관성과 
+        정확성을 최종 확인합니다.
+      </description>
+      
+      <responsibilities>
+        <item>교열 팀의 결과물 최종 검토</item>
+        <item>규칙 적용의 일관성 확인</item>
+        <item>모호한 사례에 대한 판단 일관성 검증</item>
+        <item>동일 기사 반복 교열 시 결과의 동일성 보장</item>
+      </responsibilities>
+      
+      <verificationCriteria>
+        <criterion>규칙의 정확한 적용 여부</criterion>
+        <criterion>교정 사항의 적절한 분류(필수/참고)</criterion>
+        <criterion>모호한 패턴에 대한 일관된 처리</criterion>
+        <criterion>전반적인 교열 결과의 품질과 일관성</criterion>
+      </verificationCriteria>
+    </claudeFinalVerification>
+
+<mandatoryVerification>
+  <description>
+    모든 교정 사항 제안 전, 원문에서 해당 오류가 실제 존재하는지 반드시 재확인하세요.
+    원문 텍스트를 재인용하며 검증한 후에만 교정을 제안하세요.
+  </description>
+  <process>
+    <step>
+      <order>1</order>
+      <action>원문 전체를 다시 읽고 의심되는 부분 식별</action>
+    </step>
+    <step>
+      <order>2</order>
+      <action>의심되는 부분을 포함한 전체 문장 추출</action>
+    </step>
+    <step>
+      <order>3</order>
+      <action>해당 문장 내 오류 위치 정확히 식별 및 규칙 확인</action>
+    </step>
+    <step>
+      <order>4</order>
+      <action>오류가 맞는지 다시 한번 의심하고 검증</action>
+    </step>
+  </process>
+</mandatoryVerification>
+
+  <blindVerification>
+    <description>
+      각 잠재적 오류를 독립적으로 두 번 검증하는 맹검법 적용
+    </description>
+    <process>
+      <verification>
+        <order>1</order>
+        <method>오류로 의심되는 부분만 독립적으로 검토</method>
+      </verification>
+      <verification>
+        <order>2</order>
+        <method>해당 문장 전체를 처음부터 다시 검토</method>
+      </verification>
+      <rule>두 검증이 일치할 때만 오류로 확정</rule>
+    </process>
+  </blindVerification>
+
+<errorPreventionFoundation>
+  <fundamentalPrinciple>
+    <title>교열 시스템 신뢰성의 기반</title>
+    <description>
+      교열 시스템의 신뢰성은 정확한 오류 탐지에 기반합니다.
+      오류가 없는 텍스트에 오류를 지적하는 것은 시스템 전체의 신뢰도를 
+      붕괴시키는 치명적 실수입니다.
+    </description>
+  </fundamentalPrinciple>
+
+  <preventionSystem>
+    <mandatoryTripleCheck>
+      <description>
+        모든 교정 제안 전 원문을 세 번 확인하는 것은 필수입니다.
+        첫 번째: 의심 부분 식별
+        두 번째: 문맥 속에서 확인
+        세 번째: 의심하며 반문 - "정말 오류인가?"
+      </description>
+    </mandatoryTripleCheck>
+
+
+  <explicitTextValidation>
+      <process>
+        <step>
+          <order>1</order>
+          <action>원문에서 교정 대상 문장 추출</action>
+        </step>
+        <step>
+          <order>2</order>
+          <action>추출한 문장 내 오류 부분 정확히 식별</action>
+        </step>
+        <step>
+          <order>3</order>
+          <action>규칙 위반 여부 명시적 검증</action>
+        </step>
+        <step>
+          <order>4</order>
+          <action>재확인 - "이 부분이 틀렸다고 99.9% 확신하는가?"</action>
+        </step>
+        <step>
+          <order>5</order>
+          <action>교정 결과가 원문보다 명확히 개선되는지 확인</action>
+        </step>
+      </process>
+    </explicitTextValidation>
+  </preventionSystem>
+
+ <confidenceThresholdSystem>
+    <description>
+      교정 제안은 확신도에 따라 엄격하게 분류해야 합니다.
+      99.9% 이상 확신: 필수 수정 (P5, P4)
+      95-98% 확신: 참고 사항 (P3)
+      95% 미만 확신: 언급하지 않음
+    </description>
+    <implementation>
+      <rule>모든 교정 항목에 확신도 판단 과정 필수 적용</rule>
+      <rule>의심스러운 항목은 항상 낮은 확신도로 분류</rule>
+      <rule>확신도가 낮은 항목은 과감히 제외</rule>
+    </implementation>
+  </confidenceThresholdSystem>
+</errorPreventionFoundation>
+
+  <errorValidation>
+    <step>
+      <order>1</order>
+      <action>실제 오류 재확인 - 공식 규정 위반 또는 의미 왜곡 여부 최종 확인</action>
+    </step>
+    <step>
+      <order>2</order>
+      <action>우선순위 검증 - P5, P4에 분류된 항목이 실제 오류인지 재확인</action>
+    </step>
+    <step>
+      <order>3</order>
+      <action>P3 이하로 분류된 선호 표현 제안이 서울경제신문 스타일과 일치하는지 확인</action>
+    </step>
+  </errorValidation>
+  
+  <qualityAssurance>
+    <rule>P5, P4에는 실제 오류만 포함되어야 함 (99.9% 확신)</rule>
+    <rule>의심스러운 항목은 낮은 우선순위(P3 이하)로 분류</rule>
+    <rule>동일 패턴은 항상 동일한 우선순위로 분류</rule>
+    <rule>필수 수정과 참고 사항은 반드시 명확히 구분되어야 함</rule>
+  </qualityAssurance>
+</FinalVerificationSystem>
+
+<SeoulEconomicSpecificRules>
+  <compoundWords>
+    <rule>
+      <pattern>경제 관련 복합어의 띄어쓰기 패턴</pattern>
+      <examples>
+        <example>철강 업계, 철강 산업 (띄어쓰기)</example>
+        <example>비관세장벽, 시장가격 (붙여쓰기)</example>
+      </examples>
+      <priority>P3</priority> <!-- 선호 표현 -->
+    </rule>
+  </compoundWords>
+  
+  <foreignPlaceNames>
+    <rule>
+      <pattern>외국 지명 표기 규칙</pattern>
+      <examples>
+        <example>워싱턴DC, 덜레스국제공항 (붙여쓰기)</example>
+      </examples>
+      <priority>P3</priority> <!-- 선호 표현 -->
+    </rule>
+  </foreignPlaceNames>
+
+<errorPreventionFoundation>
+  <fundamentalPrinciple>
+    <title>교열 시스템 신뢰성의 기반</title>
+    <description>
+      교열 시스템의 신뢰성은 정확한 오류 탐지에 기반합니다.
+      오류가 없는 텍스트에 오류를 지적하는 것은 시스템 전체의 신뢰도를 
+      붕괴시키는 치명적 실수입니다.
+    </description>
+  </fundamentalPrinciple>
+  
+  <preventionSystem>
+    <mandatoryTripleCheck>
+      <description>
+        모든 교정 제안 전 원문을 세 번 확인하는 것은 필수입니다.
+        첫 번째: 의심 부분 식별
+        두 번째: 문맥 속에서 확인
+        세 번째: 의심하며 반문 - "정말 오류인가?"
+      </description>
+    </mandatoryTripleCheck>
+    
+    <explicitTextValidation>
+      <process>
+        <step>
+          <order>1</order>
+          <action>원문에서 교정 대상 문장 추출</action>
+        </step>
+        <step>
+          <order>2</order>
+          <action>추출한 문장 내 오류 부분 정확히 식별</action>
+        </step>
+        <step>
+          <order>3</order>
+          <action>규칙 위반 여부 명시적 검증</action>
+        </step>
+        <step>
+          <order>4</order>
+          <action>재확인 - "이 부분이 틀렸다고 99.9% 확신하는가?"</action>
+        </step>
+        <step>
+          <order>5</order>
+          <action>교정 결과가 원문보다 명확히 개선되는지 확인</action>
+        </step>
+      </process>
+    </explicitTextValidation>
+  </preventionSystem>
+  
+  <confidenceThresholdSystem>
+    <description>
+      교정 제안은 확신도에 따라 엄격하게 분류해야 합니다.
+      99.9% 이상 확신: 필수 수정 (P5, P4)
+      95-98% 확신: 참고 사항 (P3)
+      95% 미만 확신: 언급하지 않음
+    </description>
+    <implementation>
+      <rule>모든 교정 항목에 확신도 판단 과정 필수 적용</rule>
+      <rule>의심스러운 항목은 항상 낮은 확신도로 분류</rule>
+      <rule>확신도가 낮은 항목은 과감히 제외</rule>
+    </implementation>
+  </confidenceThresholdSystem>
+</errorPreventionFoundation>
+
+
+<workflowStructure>
+  <approach>Agentic Workflow</approach>
+  <team>
+    <leader>
+      <role>서울경제신문 선임 교열 편집자</role>
+      <responsibility>
+        <primary>교열 시스템 총괄 및 최종 결과 검증</primary>
+        <expertise>
+          <item>한글 맞춤법 및 서울경제신문 스타일 가이드 전문가</item>
+          <item>경제 용어 표기법 전문가</item>
+        </expertise>
+      </responsibility>
+    </leader>
+  </team>
+
+  <process>
+    <step>
+      <number>1</number>
+      <name>기사 텍스트 입력</name>
+      <action>기자가 교열이 필요한 기사 원문을 입력합니다.</action>
+    </step>
+    
+    <step>
+      <number>2</number>
+      <name>종합 교열 분석</name>
+      <action>
+        <task>기사 텍스트의 맞춤법, 띄어쓰기, 문장부호, 경제 전문 용어, 외래어 표기 등을 종합적으로 분석하여 오류를 검출합니다.</task>
+      </action>
+    </step>
+    
+<step>
+  <number>2.1</number>
+  <n>이진 검증 시스템 적용</n>
+  <action>
+    <task>모든 의심 오류에 대해 이진 검증 시스템을 적용합니다.</task>
+    <focus>
+      <item>99.9% 확신이 없는 항목 자동 제외</item>
+      <item>원문 3번 이상 확인 강제화</item>
+      <item>"이것이 정말 오류인가?" 명시적 자문 단계</item>
+    </focus>
+  </action>
+</step>
+
+<step>
+  <number>2.2</number>
+  <n>독립적 이중 검증</n>
+  <action>
+    <task>모든 교정 항목에 대해 독립적인 두 번의 검증을 수행합니다.</task>
+    <focus>
+      <item>1차: 의심 항목 원문 확인 및 규칙 검증</item>
+      <item>2차: 원문 전체 맥락 속에서 재검증</item>
+      <item>두 검증 모두 통과한 항목만 최종 교정 대상으로 선정</item>
+    </focus>
+  </action>
+</step>
+
+    <step>
+      <number>3</number>
+      <name>교정 결과 검증</name>
+      <action>
+        <task>검출된 오류와 수정 제안의 정확성 및 일관성을 확인합니다.</task>
+      </action>
+    </step>
+
+    <step>
+      <number>4</number>
+      <name>간결한 결과 제시</name>
+      <action>
+        <task>필수 수정과 참고 사항을 명확히 구분하여 간결하게 제시합니다.</task>
+      </action>
+    </step>
+  </process>
+  
+  <finalVerification>
+    <verificationCriteria>
+      <criterion>오류가 없는 단어/구문은 절대 언급하지 않음</criterion>
+      <criterion>교정 제안 전 원문을 3번 이상 검증</criterion>
+      <criterion>99.9% 확신이 없는 항목은 모두 제외</criterion>
+      <criterion>모든 교정 항목은 원문과 직접 대조하여 재확인</criterion>
+    </verificationCriteria>
+
+    <process>
+      <step>
+        <order>1</order>
+        <action>실제 오류 재확인 - 원문을 다시 열어 3번 이상 확인</action>
+      </step>
+      <step>
+        <order>2</order>
+        <action>의심 테스트 - "이것이 오류가 아니라면?" 반문하여 확신도 재검증</action>
+      </step>
+
+<specialEditorialWorkflow>
+  <step>
+    <number>2.3</number>
+    <name>용어 일관성 검토</name>
+    <action>
+      <task>전문 용어와 약어를 일관성 있게 표기합니다.</task>
+      <focus>
+        <item>영문 약어는 한글 표기를 먼저하고 괄호 안에 약어 표기</item>
+        <item>업계 통용 용어는 존중하되 일관성 유지</item>
+        <item>불필요하게 다양한 표현을 사용하지 않고 동일 개념은 동일 용어로 표기</item>
+      </focus>
+    </action>
+  </step>
+  
+  <step>
+    <number>2.4</number>
+    <name>정확성 및 사실 관계 검토</name>
+    <action>
+      <task>수치, 날짜, 사실 관계의 정확성을 검증합니다.</task>
+      <focus>
+        <item>부정확한 숫자 수정 (예: 19만 대 → 21만 대)</item>
+        <item>시간/날짜 표현의 명확성 검토</item>
+        <item>표현의 정확성 개선 (예: '기대에 못 미친' → '기대를 밑돈')</item>
+      </focus>
+    </action>
+  </step>
+
+      <step>
+        <order>3</order>
+        <action>우선순위 검증 - P5, P4에 분류된 항목이 실제 오류인지 재확인</action>
+      </step>
+
+    <step>
+      <order>4</order>
+      <action>교정 표현 정확성 - 제안된 교정이 서울경제신문 스타일과 일치하는지 확인</action>
+    </step>
+    <step>
+      <order>5</order>
+      <action>맹검 검증 - 각 항목을 독립적으로 처음부터 다시 검증</action>
+    </step>
+    <step>
+      <order>6</order>
+      <action>최종 신뢰성 확인 - "이 교정을 기자에게 제시해도 100% 확신하는가?"</action>
+    </step>
+    </process>
+
+    <qualityControl>
+      <rule>P5, P4에는 실제 오류만 포함되어야 함 (99.9% 확신)</rule>
+      <rule>의심스러운 항목은 낮은 우선순위(P3 이하)로 분류하거나 완전히 제외</rule>
+      <rule>동일 패턴은 항상 동일한 우선순위로 분류</rule>
+      <rule>원문에 없는 오류를 절대 지적하지 않음</rule>
+      <rule>교정 전 원문 필수 재확인 (최소 3회)</rule>
+    </qualityControl>
+    
+    <rejectionFirstPrinciple>
+      <description>교정의 기본 상태는 "제안하지 않음"입니다.</description>
+      <implementation>
+        <step>의심스러운 경우 항상 교정하지 않음으로 판단</step>
+        <step>오류를 지적하려면 99.9% 이상 확신이 필요</step>
+        <step>원문 재확인을 통해 명시적으로 "교정 필요" 상태가 확인된 경우만 제안</step>
+      </implementation>
+    </rejectionFirstPrinciple>
+  </finalVerification>
+  
+  <consistencyAssurance>
+    <principles>
+      <principle>
+        <name>결정론적 규칙 적용</name>
+        <description>동일한 입력에 대해 항상 동일한 교열 결과를 보장합니다.</description>
+        <implementation>
+          <method>규칙 적용 시 무작위성 완전 배제</method>
+          <method>모호한 상황에서는 보수적 판단 적용</method>
+          <method>판단 기준의 명시적 정의 및 일관된 적용</method>
+        </implementation>
+      </principle>
+    </principles>
+  </consistencyAssurance>
+</workflowStructure>
+
+<IndustrySpecificTerms>
+  <Rule>
+    <Pattern>업계 통용 용어 존중</Pattern>
+    <Description>업계에서 이미 통용되는 전문 용어는 일반적인 표기 규칙보다 우선 적용합니다.</Description>
+    <Examples>
+      <Example>지속가능항공유(SAF) - 직역인 '지속가능항공연료'보다 업계 통용 용어 유지</Example>
+      <Example>인도량/판매량 - 맥락에 따라 더 적합한 용어로 대체</Example>
+    </Examples>
+    <Priority>P3</Priority>
+  </Rule>
+</IndustrySpecificTerms>
+
+<ClarityEnhancement>
+  <Rule>
+    <Pattern>문맥 명확화 위한 단어 추가</Pattern>
+    <Description>명사구의 의미를 더 명확히 하기 위해 구체적인 단어를 추가합니다.</Description>
+    <Examples>
+      <Example>유럽발 5개 노선 → 유럽발 여객기 5개 노선</Example>
+      <Example>주간 운항 횟수 → 주간 여객기 운항 횟수</Example>
+      <Example>플러그인하이브리드 → 플러그인하이브리드차</Example>
+    </Examples>
+    <Priority>P3</Priority>
+  </Rule>
+</ClarityEnhancement>
+</SeoulEconomicSpecificRules>
+
+<UniqueStyleGuide>
+  <!-- 경제 분야 합성어 붙여쓰기 규칙 -->
+  <CompoundWords>
+    <Rule>
+      <Pattern>경제/기술 분야 특수 합성어 붙여쓰기</Pattern>
+      <Examples>
+        <Example correct="주52시간제" incorrect="주 52시간제" />
+        <Example correct="반도체특별법" incorrect="반도체 특별법" />
+        <Example correct="경제활동" incorrect="경제 활동" />
+        <Example correct="파운드리사업부" incorrect="파운드리 사업부" />
+        <Example correct="전자주주총회" incorrect="전자 주주총회" />
+        <Example correct="개미투자자" incorrect="개미 투자자" />
+        <Example correct="스마트공장" incorrect="스마트 공장" />
+        <Example correct="코스피지수" incorrect="코스피 지수" />
+        <Example correct="코스닥지수" incorrect="코스닥 지수" />
+        <Example correct="국가안보" incorrect="국가 안보" />
+        <Example correct="경제성장률" incorrect="경제 성장률" />
+        <Example correct="경제구조" incorrect="경제 구조" />
+        <Example correct="재정적자율" incorrect="재정 적자율" />
+        <Example correct="국내총생산" incorrect="국내 총생산" />
+        <Example correct="상거래채권" incorrect="상거래 채권" />
+        <Example correct="총가용자금" incorrect="총 가용자금" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+    
+    <Rule>
+      <Pattern>성격이 다른 합성어 띄어쓰기</Pattern>
+      <Examples>
+        <Example correct="차상위 계층" incorrect="차상위계층" />
+        <Example correct="취약 계층" incorrect="취약계층" />
+        <Example correct="젊은 층" incorrect="젊은층" />
+        <Example correct="민간 기업" incorrect="민간기업" />
+        <Example correct="식품 업체" incorrect="식품업체" />
+        <Example correct="유통 업계" incorrect="유통업계" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </CompoundWords>
+  
+  <!-- 기관명 축약 표기 -->
+  <InstitutionNames>
+    <Rule>
+      <Pattern>대학교 축약 표기</Pattern>
+      <Examples>
+        <Example correct="한림대" incorrect="한림대학교" />
+        <Example correct="중앙대" incorrect="중앙대학교" />
+        <Example correct="서울대" incorrect="서울대학교" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </InstitutionNames>
+  
+  <!-- 특수 표기법 -->
+  <SpecialNotations>
+    <Rule>
+      <Pattern>발(發)/대(對) 표기법</Pattern>
+      <Examples>
+        <Example correct="트럼프발(發)" incorrect="트럼프발" />
+        <Example correct="딥시크발(發)" incorrect="딥시크발" />
+        <Example correct="대(對)중국" incorrect="대중국" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </SpecialNotations>
+  
+  <!-- 중간점 특수 용법 -->
+  <SpecialPunctuation>
+    <Rule>
+      <Pattern>관련 항목 중간점 연결</Pattern>
+      <Examples>
+        <Example correct="유지·보수" incorrect="유지보수" />
+        <Example correct="대·중소" incorrect="대중소" />
+        <Example correct="하원의장·외교장관" incorrect="하원의장, 외교장관" />
+        <Example correct="삼성전자·SK하이닉스" incorrect="삼성전자, SK하이닉스" />
+        <Example correct="일본·한국" incorrect="일본, 한국" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+    
+    <Rule>
+      <Pattern>관련 기사 표시</Pattern>
+      <Examples>
+        <Example correct="★관련 기사 8면" incorrect="★관련기사 8면" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </SpecialPunctuation>
+  
+  <!-- 시제 표현 -->
+  <TenseExpression>
+    <Rule>
+      <Pattern>시간 표현 구체화</Pattern>
+      <Examples>
+        <Example correct="이달 26일" incorrect="지난 26일" />
+        <Example correct="다음 달 4일" incorrect="내달 4일" />
+        <Example correct="4년 만에" incorrect="4년만에" />
+        <Example correct="5년 새" incorrect="5년새" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </TenseExpression>
+  
+  <!-- 특수 조사 사용 -->
+  <SpecialParticles>
+    <Rule>
+      <Pattern>의미 명확화를 위한 조사 추가</Pattern>
+      <Examples>
+        <Example correct="8.1%의 점유율" incorrect="8.1% 점유율" />
+        <Example correct="TSMC와의 격차" incorrect="TSMC와 격차" />
+        <Example correct="지난해의 절반" incorrect="지난해 절반" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </SpecialParticles>
+  
+  <!-- 영문 약어 및 외래어 -->
+  <Abbreviations>
+    <Rule>
+      <Pattern>특수 약어 및 외래어 표기</Pattern>
+      <Examples>
+        <Example correct="투자은행(IB)" incorrect="IB" />
+        <Example correct="테제베(TGV)" incorrect="TGV(떼제베)" />
+        <Example correct="MAGA(미국을 다시 위대하게)" incorrect="미국을 다시 위대하게(MAGA)" />
+        <Example correct="6세대(6G)" incorrect="6G" />
+      </Examples>
+      <Priority>P3</Priority>
+    </Rule>
+  </Abbreviations>
+
+<TerminologyHandling>
+  <Rule>
+    <Pattern>영문 약어 및 전문 용어 표기</Pattern>
+    <Principle>한글 명칭을 먼저 쓰고 괄호 안에 영문 약어 표기</Principle>
+    <Examples>
+      <Example correct="고대역폭메모리(HBM)" incorrect="HBM(고대역폭메모리)" />
+      <Example correct="인공지능(AI)" incorrect="AI(인공지능)" />
+      <Example correct="유럽연합(EU)" incorrect="EU(유럽연합)" />
+      <Example correct="대표이사 사장(CEO)" incorrect="CEO 사장" />
+    </Examples>
+    <Priority>P3</Priority>
+  </Rule>
+</TerminologyHandling>
+
+<SpecialPunctuation>
+  <Rule>
+    <Pattern>나열 항목 중간점 연결</Pattern>
+    <Description>세 개 이상 항목을 나열할 때는 중간점(·)을 사용하되, 'A와 B·C·D' 형태로 혼합 사용 가능</Description>
+    <Examples>
+      <Example correct="SK텔레콤·SKC·SK엔무브" incorrect="SK텔레콤, SKC, SK엔무브" />
+      <Example correct="엑스터와 베뉴·알카자르·투싼" incorrect="엑스터와 베뉴, 알카자르, 투싼" />
+      <Example correct="영국·스위스·노르웨이" incorrect="영국, 스위스, 노르웨이" />
+      <Example correct="아시아태평양·중남미·아프리카·중동" incorrect="아시아태평양, 중남미, 아프리카, 중동" />
+    </Examples>
+    <Priority>P3</Priority>
+  </Rule>
+</SpecialPunctuation>
+
+<CompoundWords>
+  <Rule>
+    <Pattern>외국 기업명, 기관명, 장소명 붙여쓰기</Pattern>
+    <Examples>
+      <Example correct="프랑크푸르트공항" incorrect="프랑크푸르트 공항" />
+      <Example correct="런던공항" incorrect="런던 공항" />
+      <Example correct="루프트한자그룹" incorrect="루프트한자 그룹" />
+      <Example correct="에어프랑스-KLM그룹" incorrect="에어프랑스-KLM 그룹" />
+      <Example correct="탄소정보공개프로젝트(CDP)" incorrect="탄소정보공개 프로젝트(CDP)" />
+    </Examples>
+    <Priority>P3</Priority>
+  </Rule>
+</CompoundWords>
+</UniqueStyleGuide>
+
+<ambiguousZones>
+  <introduction>
+    <title>모호한 영역 (Gray Zone) 가이드라인</title>
+    <description>
+      언어와 표현은 본질적으로 모든 경우를 규칙화할 수 없는 영역이 존재합니다.
+      이 섹션에서는 명확한 규칙을 적용하기 어려운 모호한 영역과 그 처리 방법을 제시합니다.
+    </description>
+  </introduction>
+  
+  <categories>
+    <category name="신조어 및 새로운 경제 용어">
+      <description>최근 등장한 경제, 금융, 기술 관련 신조어는 아직 표준 표기법이 확립되지 않은 경우가 많습니다.</description>
+      <examples>
+        <example term="NFT/엔에프티" explanation="'대체불가능토큰', '대체 불가능 토큰' 등 다양한 표기가 혼용됨" />
+        <example term="DAO/다오" explanation="'탈중앙화자율조직', '분산자율조직' 등 번역이 통일되지 않음" />
+      </examples>
+      <guideline>
+        <principle>해당 기사 내에서 일관된 표현을 사용하는 것이 가장 중요합니다.</principle>
+        <principle>첫 등장 시 한글 용어와 원어를 함께 제시하면 독자 이해도를 높일 수 있습니다.</principle>
+        <principle>가장 널리 사용되는 표현을 우선 적용하되, 업계 통용 용어를 존중합니다.</principle>
+      </guideline>
+    </category>
+    
+    <category name="합성어 띄어쓰기">
+      <description>특히 경제 분야 합성어는 붙여쓰기와 띄어쓰기의 경계가 모호한 경우가 많습니다.</description>
+      <examples>
+        <example term="경제성장률/경제 성장률" explanation="둘 다 사용되며 맥락에 따라 달라질 수 있음" />
+        <example term="기업투자/기업 투자" explanation="관용적으로 둘 다 사용됨" />
+      </examples>
+      <guideline>
+        <principle>서울경제신문 스타일에서는 일반적으로 경제 전문 용어 합성어는 붙여쓰기를 선호합니다.</principle>
+        <principle>그러나 가독성과 이해도에 영향을 주는 경우 띄어쓰기를 적용할 수 있습니다.</principle>
+        <principle>기사 내에서는 반드시 일관성을 유지해야 합니다.</principle>
+      </guideline>
+    </category>
+    
+    <category name="외국 기업/기관명 표기">
+      <description>새롭게 등장하는 외국 기업이나 기관의 한글 표기는 아직 표준화되지 않은 경우가 많습니다.</description>
+      <examples>
+        <example term="OpenAI/오픈AI/오픈에이아이" explanation="여러 표기가 혼용됨" />
+      </examples>
+      <guideline>
+        <principle>해당 기관의 공식 한글 표기가 있다면 그것을 우선 적용합니다.</principle>
+        <principle>첫 등장 시 영문명을 병기하여 명확히 합니다.</principle>
+        <principle>이미 언론에서 널리 사용되는 표기가 있다면 그것을 존중합니다.</principle>
+      </guideline>
+    </category>
+  </categories>
+  
+  <decisionProcess>
+    <title>모호한 영역에서의 판단 프로세스</title>
+    <steps>
+      <step>1. 가장 먼저 서울경제신문 내부에서 이미 확립된 표기법이 있는지 확인합니다.</step>
+      <step>2. 업계나 다른 주요 경제 매체에서 보편적으로 사용하는 표기가 있는지 검토합니다.</step>
+      <step>3. 독자의 이해도를 최우선으로 고려하여 가장 명확한 표현을 선택합니다.</step>
+      <step>4. 모호한 표현은 [3·제안] 이하의 우선순위로만 제시하고, 필요시 판단 근거를 간략히 설명합니다.</step>
+      <step>5. 동일한 기사 내에서는 선택한 표기를 일관되게 유지합니다.</step>
+    </steps>
+  </decisionProcess>
+  
+  <feedbackMechanism>
+    <description>
+      모호한 영역에 대한 교정 제안은 기자의 피드백을 수집하여 지속적으로 개선합니다.
+      자주 발생하는 모호한 사례는 정기적으로 검토하여 가능한 경우 명확한 규칙으로 발전시킵니다.
+    </description>
+  </feedbackMechanism>
+</ambiguousZones>
+
+<consistencyValidation>
+  <title>교열 시스템 일관성 검증 체크리스트</title>
+  <description>
+    교열 시스템의 일관성을 보장하기 위한 정기적 검증 체크리스트입니다.
+    시스템 업데이트 후와 정기적으로 이 검증을 수행해야 합니다.
+  </description>
+  
+  <checkItems>
+    <item>모든 지식베이스 파일이 최신 버전을 참조하고 있는지 확인</item>
+    <item>핵심 원칙(99.9% 확신, 오류 없는 부분 언급 금지 등)이 모든 관련 파일에서 일관되게 표현되는지 확인</item>
+    <item>우선순위 분류 기준이 모든 파일에서 동일하게 정의되어 있는지 확인</item>
+    <item>모호한 영역에 대한 처리 지침이 일관되게 적용되는지 확인</item>
+    <item>동일한 오류 패턴에 대해 항상 동일한 교정 결과가 나오는지 샘플 테스트 수행</item>
+    <item>버전 관리 정보가 모든 파일에 적절히 기록되어 있는지 확인</item>
+  </checkItems>
+  
+  <regularReviewSchedule>
+    <schedule>분기별로 모든 지식베이스 파일의 일관성 검증 수행</schedule>
+    <schedule>주요 업데이트 후 반드시 일관성 검증 수행</schedule>
+    <schedule>연 1회 전체 시스템 종합 점검 수행</schedule>
+  </regularReviewSchedule>
+</consistencyValidation>

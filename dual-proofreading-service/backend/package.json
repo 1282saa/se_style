@@ -10,7 +10,10 @@
     "import-stylebook": "node scripts/import-stylebook.js",
     "generate-embeddings": "node scripts/generate-embeddings.js",
     "import-knowledge": "node scripts/import-knowledge.js",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "setup-knowledge": "node scripts/setup-knowledge.js",
+    "setup-prompts": "node scripts/setup-prompts.js",
+    "setup-all": "npm run setup-knowledge && npm run setup-prompts && npm run import-stylebook"
   },
   "keywords": [
     "korean",
@@ -23,7 +26,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@langchain/openai": "^0.5.10",
     "axios": "^1.9.0",
+    "chromadb": "^2.4.1",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -35,6 +40,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.1",
+    "openai": "^4.97.0",
     "uuid": "^11.1.0",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1",

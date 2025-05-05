@@ -228,4 +228,25 @@ router.post(
   asyncHandler(styleguideController.testVectorSearch)
 );
 
+/**
+ * @route POST /api/styleguides/search-semantic
+ * @description 의미 기반(시맨틱) 유사 스타일 가이드 검색
+ * @body {string} query - 검색할 텍스트
+ * @body {number} [limit=5] - 결과 수 제한
+ * @body {string} [category] - 카테고리 필터
+ * @returns {Array} 유사도 점수와 함께 정렬된 스타일 가이드 목록
+ * @access Public
+ */
+router.post(
+  "/search-semantic",
+  validateRequest({
+    body: {
+      query: { type: "string", required: true },
+      limit: { type: "number", min: 1, max: 50, required: false },
+      category: { type: "string", required: false },
+    },
+  }),
+  asyncHandler(styleguideController.searchSimilarStyleguidesSemantic)
+);
+
 module.exports = router;

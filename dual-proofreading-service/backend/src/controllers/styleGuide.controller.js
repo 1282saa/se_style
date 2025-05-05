@@ -5,6 +5,9 @@ const logger = require("../utils/logger");
 const fs = require("fs").promises;
 const path = require("path");
 const config = require("../config");
+const {
+  searchSimilarStyleguides,
+} = require("../services/rag/similaritySearchService");
 
 /**
  * 스타일 가이드 목록을 조회합니다.
@@ -511,6 +514,57 @@ const testVectorSearch = async (req, res) => {
   }
 };
 
+/**
+ * 시맨틱 검색을 사용하여 유사한 스타일 가이드를 검색합니다.
+ * @async
+ * @function searchSimilarStyleguidesSemantic
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} req.body - 요청 바디
+ * @param {string} req.body.query - 검색할 텍스트
+ * @param {number} [req.body.limit=5] - 결과 제한 수
+ * @param {string} [req.body.category] - 특정 카테고리로 제한
+ * @param {Object} res - Express 응답 객체
+ * @returns {Object} 검색 결과
+ * @throws {Error} 시맨틱 검색 중 발생한 오류
+ */
+const searchSimilarStyleguidesSemantic = async (req, res) => {
+  try {
+    const { query, limit = 5, category } = req.body;
+
+    if (!query) {
+      return res.status(400).json({
+        success: false,
+        message: "검색할 텍스트가 제공되지 않았습니다.",
+      });
+    }
+
+    // 필터 설정 (카테고리 필터링 등)
+    const filter = {};
+    if (category) {
+      filter.category = category;
+    }
+
+    // 시맨틱 검색 실행
+    const searchResults = await searchSimilarStyleguides(query, limit, filter);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        query: query,
+        results: searchResults,
+      },
+    });
+  } catch (error) {
+    logger.error(`시맨틱 검색 오류: ${error.message}`, {
+      stack: error.stack,
+    });
+    res.status(500).json({
+      success: false,
+      message: `시맨틱 검색 중 오류가 발생했습니다: ${error.message}`,
+    });
+  }
+};
+
 module.exports = {
   getStyleguides,
   getStyleguideById,
@@ -523,4 +577,5 @@ module.exports = {
   importStylebook,
   generateEmbeddings,
   testVectorSearch,
+  searchSimilarStyleguidesSemantic,
 };
