@@ -29,6 +29,7 @@
   - **기본 교정**: 맞춤법, 띄어쓰기, 문법 오류만 수정
   - **향상된 교정**: 문체와 표현까지 적극적으로 개선
 - **RAG 기반 스타일 가이드 적용**: 스타일북에서 관련 규칙을 검색하여 맥락에 맞는 교정 제공
+- **XML 날리지 규칙 활용**: 한국어 맞춤법, 문법, 표현 규칙을 XML 형식으로 구조화하여 교정에 활용
 - **사용자 피드백 시스템**: 사용자가 선호하는 교정 스타일 선택 및 평가 가능
 - **맞춤형 시스템**: 사용자의 선택 데이터를 학습하여 점차 개인화된 교정 제공
 
@@ -77,13 +78,19 @@ cp .env.example .env
 
 `.env` 파일을 열고 API 키 및 MongoDB 연결 정보 등을 입력합니다.
 
-4. 서버 실행
+4. 날리지 XML 데이터 가져오기
+
+```bash
+npm run import-knowledge
+```
+
+5. 서버 실행
 
 ```bash
 npm run dev
 ```
 
-서버가 기본적으로 http://localhost:3000 에서 실행됩니다.
+서버가 기본적으로 http://localhost:3003 에서 실행됩니다.
 
 ### 프론트엔드 설정
 
@@ -144,16 +151,17 @@ dual-proofreading-service/
 │   │   ├── services/                   # 비즈니스 로직
 │   │   │   ├── proofreadingService.js  # 교열 서비스 통합
 │   │   │   ├── styleGuideService.js    # 스타일 가이드 서비스
+│   │   │   ├── knowledgeService.js     # 날리지 규칙 서비스
 │   │   │   ├── analyticsService.js     # 분석 서비스
 │   │   │   ├── llm/                    # LLM 연동 관련
 │   │   │   │   ├── llm.service.js      # LLM 서비스 인터페이스
 │   │   │   │   ├── anthropicService.js # Anthropic Claude API 연동
 │   │   │   │   ├── promptService.js    # 프롬프트 처리 서비스
-│   │   │   │   ├── promptGenerator.js  # 프롬프트 생성 유틸리티
-│   │   │   │   └── promptGenerator.service.js  # 교정 프롬프트 생성 서비스
+│   │   │   │   ├── promptBuilder.js    # 프롬프트 생성 유틸리티
+│   │   │   │   └── promptSelector.js   # 프롬프트 템플릿 선택 서비스
 │   │   │   ├── rag/                    # RAG 구현
 │   │   │   │   ├── vectorSearch.js     # 벡터 검색 기능
-│   │   │   │   └── embeddings.service.js # 임베딩 생성 및 관리
+│   │   │   │   └── embeddingProvider.js # 임베딩 생성 및 관리
 │   │   │   │
 │   │   │   └── analytics/              # 사용자 선택 분석
 │   │   │
@@ -164,6 +172,7 @@ dual-proofreading-service/
 │   │
 │   ├── scripts/                        # 스크립트
 │   │   ├── import-stylebook.js         # 스타일북 가져오기 스크립트
+│   │   ├── import-knowledge.js         # 날리지 XML 가져오기 스크립트
 │   │   └── generate-embeddings.js      # 임베딩 생성 스크립트
 │   │
 │   ├── logs/                           # 로그 디렉토리
@@ -468,6 +477,12 @@ Config 파일은 src/config/index.js에 위치하며 환경 변수를 로드합�
 npm run import-stylebook
 ```
 
+날리지 XML 데이터는 `scripts/import-knowledge.js`를 사용하여 가져올 수 있습니다:
+
+```bash
+npm run import-knowledge
+```
+
 임베딩 생성은 다음 명령으로 수행합니다:
 
 ```bash
@@ -482,4 +497,52 @@ npm run generate-embeddings
 - 모든 로그는 `logs` 디렉토리에 일별로 저장됩니다.
 - 파일명 관련 주의사항:
   - `styleguide.model.js`와 같이 일부 파일명은 소문자를 사용하지만, 코드 내에서는 `styleGuide.controller.js`와 같이 카멜케이스로 참조되는 경우가 있으니 주의가 필요합니다.
-  - `embeddings.service.js` 파일에서는 모델명 참조 시 대소문자에 주의해야 합니다.
+  - `embeddingProvider.js` 파일에서는 모델명 참조 시 대소문자에 주의해야 합니다.
+
+## 날리지 XML 데이터 구조
+
+한국어 교열에 필요한 규칙 및 사례를 XML 파일로 구조화하여 관리합니다.
+
+### 날리지 XML 파일 목록
+
+| 파일명                                       | 내용                             | 항목 수  |
+| -------------------------------------------- | -------------------------------- | -------- |
+| 맞춤법 및 표기법 규칙 날리지.xml             | 한국어 맞춤법과 표기법 관련 규칙 | 약 200개 |
+| 문장 구조 및 단어 규칙 날리지.xml            | 문장 구조와 단어 사용 관련 규칙  | 약 180개 |
+| 논리적 일관성 및 사실 확인 규칙 날리지.xml   | 논리성과 사실 검증 관련 규칙     | 약 150개 |
+| 경제 전문용어 및 분야별 표현 규칙 날리지.xml | 경제 분야 전문 용어 표현 규칙    | 약 130개 |
+| 교열 사례 및 패턴 데이터베이스 날리지.xml    | 실제 교열 사례 기반 패턴 데이터  | 약 200개 |
+| 날리지\_교열.xml                             | 일반적인 교열 규칙 통합 데이터   | 약 500개 |
+
+### XML 날리지 규칙 예시
+
+```xml
+<knowledge>
+  <rule>
+    <category>맞춤법</category>
+    <type>띄어쓰기</type>
+    <content>의존명사는 앞말과 띄어 쓴다. (예: '것', '수', '바', '줄')</content>
+    <explanation>의존명사는 문법적으로 독립되어 사용할 수 없는 명사로, 반드시 다른 말에 의존하여 사용된다.</explanation>
+    <examples>
+      <example>
+        <incorrect>아는것이 힘이다.</incorrect>
+        <correct>아는 것이 힘이다.</correct>
+        <explanation>'것'은 의존명사이므로 앞말과 띄어 써야 한다.</explanation>
+      </example>
+    </examples>
+    <priority>4</priority>
+    <tags>
+      <tag>의존명사</tag>
+      <tag>띄어쓰기</tag>
+    </tags>
+  </rule>
+</knowledge>
+```
+
+### 날리지 규칙 활용 방식
+
+1. **XML 파싱 및 저장**: 날리지 XML 파일을 파싱하여 MongoDB에 저장합니다.
+2. **임베딩 생성**: 각 규칙에 대한 벡터 임베딩을 생성하여 의미 기반 검색이 가능하도록 합니다.
+3. **관련 규칙 검색**: 사용자 입력 텍스트와 의미적으로 관련된 규칙을 검색합니다.
+4. **프롬프트 강화**: 관련 규칙을 프롬프트에 추가하여 LLM이 더 정확한 교정을 수행하도록 합니다.
+5. **교정 적용**: 검색된 규칙을 기반으로 맞춤형 교정 결과를 생성합니다.

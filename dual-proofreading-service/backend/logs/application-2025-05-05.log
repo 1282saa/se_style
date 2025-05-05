@@ -272,3 +272,199 @@
 2025-05-05 09:28:08 [INFO] proofread 완료 (tokens=0) 
 2025-05-05 09:28:08 [INFO] 교정 결과 저장 완료 (ID: 68180618b24986030b60aacc) 
 2025-05-05 09:28:08 [INFO] [ae5a25ad-7727-4ef3-8d4d-466ec8bb6251] ::1 POST /api/proofread 200 19026ms 
+2025-05-05 12:28:04 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 12:28:04 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 12:28:04 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 12:28:04 [INFO] PromptService 초기화 완료 
+2025-05-05 12:28:04 [INFO] MongoDB 연결 완료 
+2025-05-05 12:28:04 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 12:28:52 [INFO] 새 기사 생성 완료 (ID: 681830741fe3fe65ff4c16dc) 
+2025-05-05 12:28:52 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:28:52 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:28:52 [INFO] [b99e9fe2-74b1-4ab2-b0b7-9197e1d19d9d] ::1 POST /api/proofread 500 23ms 
+2025-05-05 12:29:04 [INFO] 새 기사 생성 완료 (ID: 681830801fe3fe65ff4c16de) 
+2025-05-05 12:29:04 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:29:04 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:29:04 [INFO] [f3d5ad62-e166-42bc-9f91-7c4858e96e1b] ::1 POST /api/proofread 500 6ms 
+2025-05-05 12:29:08 [INFO] 새 기사 생성 완료 (ID: 681830841fe3fe65ff4c16e0) 
+2025-05-05 12:29:08 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:29:08 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:29:08 [INFO] [a2e713d7-ace6-42d2-b071-5a4833f2441a] ::1 POST /api/proofread 500 6ms 
+2025-05-05 12:33:59 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 12:35:31 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 12:35:31 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 12:35:31 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 12:35:31 [INFO] PromptService 초기화 완료 
+2025-05-05 12:35:31 [INFO] MongoDB 연결 완료 
+2025-05-05 12:35:31 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 12:35:43 [INFO] 빠른 교정 요청: 텍스트 길이 55자, 사용자 user123 
+2025-05-05 12:35:43 [ERROR] 기사 생성 오류: Article validation failed: originalText: Path `originalText` is required. 
+2025-05-05 12:35:43 [ERROR] 빠른 교정 오류: Article validation failed: originalText: Path `originalText` is required. 
+2025-05-05 12:35:43 [ERROR] ValidationError: Article validation failed: originalText: Path `originalText` is required.
+    at Document.invalidate (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/document.js:3343:32)
+    at /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/document.js:3104:17
+    at /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11) 
+2025-05-05 12:35:43 [INFO] [367bd07c-b8d7-46f9-b6d2-f1a726b95b38] ::1 POST /api/proofread 500 10ms 
+2025-05-05 12:38:54 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 12:39:01 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 12:39:02 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 12:39:02 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 12:39:02 [INFO] PromptService 초기화 완료 
+2025-05-05 12:39:02 [INFO] MongoDB 연결 완료 
+2025-05-05 12:39:02 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 12:39:13 [INFO] 빠른 교정 요청: 텍스트 길이 55자, 사용자 user123 
+2025-05-05 12:39:13 [INFO] 기사 생성 완료: 681832e1c5a78f85c3cae293 
+2025-05-05 12:39:13 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 12:39:13 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:13 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:13 [WARN] 개발 환경에서 목업 임베딩을 생성합니다. 
+2025-05-05 12:39:14 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 12:39:14 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 12:39:14 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:14 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:14 [WARN] 개발 환경에서 목업 임베딩을 생성합니다. 
+2025-05-05 12:39:14 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 12:39:14 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:39:14 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:39:14 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:39:14 [INFO] 관련 스타일가이드 0개 검색 완료 
+2025-05-05 12:39:14 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"minimal"} 
+2025-05-05 12:39:14 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"enhanced"} 
+2025-05-05 12:39:24 [WARN] JSON 파싱 실패 (코드 블록): Bad control character in string literal in JSON at position 56 (line 2 column 55) 
+2025-05-05 12:39:24 [WARN] JSON 파싱 실패 (일반 객체): Bad control character in string literal in JSON at position 56 (line 2 column 55) 
+2025-05-05 12:39:24 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 12:39:24 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:39:24 [INFO] 교정 결과 저장 완료 (ID: 681832ecc5a78f85c3cae29f) 
+2025-05-05 12:39:33 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:39:33 [INFO] 교정 결과 저장 완료 (ID: 681832f5c5a78f85c3cae2a1) 
+2025-05-05 12:39:33 [INFO] [4faba310-f165-4649-9861-47c7ab01c6c9] ::1 POST /api/proofread 200 19698ms 
+2025-05-05 12:43:32 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 12:43:37 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 12:43:37 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 12:43:37 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 12:43:37 [INFO] PromptService 초기화 완료 
+2025-05-05 12:43:37 [INFO] MongoDB 연결 완료 
+2025-05-05 12:43:37 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 12:43:54 [INFO] 빠른 교정 요청: 텍스트 길이 55자, 사용자 user123 
+2025-05-05 12:43:54 [INFO] 기사 생성 완료: 681833fa21e0d52b92d98e09 
+2025-05-05 12:43:54 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 12:43:54 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:43:54 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:43:54 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 12:43:54 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 12:43:54 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:43:54 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:43:54 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 12:43:54 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:43:54 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:43:54 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:43:54 [INFO] 관련 스타일가이드 0개 검색 완료 
+2025-05-05 12:43:54 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"minimal"} 
+2025-05-05 12:43:54 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"enhanced"} 
+2025-05-05 12:44:06 [WARN] JSON 파싱 실패 (코드 블록): Bad control character in string literal in JSON at position 56 (line 2 column 55) 
+2025-05-05 12:44:06 [WARN] JSON 파싱 실패 (일반 객체): Bad control character in string literal in JSON at position 56 (line 2 column 55) 
+2025-05-05 12:44:06 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 12:44:06 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:44:06 [INFO] 교정 결과 저장 완료 (ID: 6818340621e0d52b92d98e15) 
+2025-05-05 12:44:10 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:44:10 [INFO] 교정 결과 저장 완료 (ID: 6818340a21e0d52b92d98e17) 
+2025-05-05 12:44:10 [INFO] [9c0a4ca6-e53d-413f-a3f9-68b5921fd1f4] ::1 POST /api/proofread 200 16414ms 
+2025-05-05 12:54:18 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 12:57:41 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 12:57:42 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 12:57:42 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 12:57:42 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 12:57:42 [INFO] PromptService 초기화 완료 
+2025-05-05 12:57:42 [INFO] MongoDB 연결 완료 
+2025-05-05 12:57:42 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 12:57:57 [INFO] 빠른 교정 요청: 텍스트 길이 55자, 사용자 user123 
+2025-05-05 12:57:57 [INFO] 기사 생성 완료: 6818374537783362c8d37c7f 
+2025-05-05 12:57:57 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 12:57:57 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:57 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:57 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 12:57:57 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 12:57:57 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:57 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:57 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 12:57:57 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:57:58 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:57:58 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 12:57:58 [INFO] 관련 스타일가이드 0개 검색 완료 
+2025-05-05 12:57:58 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"enhanced"} 
+2025-05-05 12:57:58 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"minimal"} 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:58 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 12:57:58 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 12:57:58 [INFO] 텍스트 관련 날리지 규칙 0개 검색됨 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:58 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 12:57:58 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:58 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 12:57:58 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 12:57:58 [INFO] 텍스트 관련 날리지 규칙 0개 검색됨 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [WARN] 오류로 인해 목업 임베딩으로 대체합니다 
+2025-05-05 12:57:58 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 12:57:58 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 12:58:07 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:58:07 [INFO] 교정 결과 저장 완료 (ID: 6818374f37783362c8d37c93) 
+2025-05-05 12:58:13 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 12:58:13 [INFO] 교정 결과 저장 완료 (ID: 6818375537783362c8d37c96) 
+2025-05-05 12:58:13 [INFO] [af3679dc-c425-4205-9f20-6915dec63a6d] ::1 POST /api/proofread 200 16279ms 
+2025-05-05 13:01:07 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 13:01:09 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 13:01:09 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 13:01:09 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 13:01:09 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 13:01:09 [INFO] PromptService 초기화 완료 
+2025-05-05 13:01:09 [INFO] MongoDB 연결 완료 
+2025-05-05 13:01:09 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 13:01:20 [INFO] 빠른 교정 요청: 텍스트 길이 55자, 사용자 user123 
+2025-05-05 13:01:20 [INFO] 기사 생성 완료: 681838106e6075c6129561dd 
+2025-05-05 13:01:20 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 13:01:20 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 13:01:20 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 13:01:20 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 13:01:20 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 13:01:20 [INFO] 관련 스타일가이드 0개 검색 완료 
+2025-05-05 13:01:20 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"minimal"} 
+2025-05-05 13:01:20 [WARN] 일치하는 프롬프트를 찾을 수 없음: {"isActive":true,"type":"correction","level":"enhanced"} 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 13:01:20 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 13:01:20 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 13:01:20 [INFO] 텍스트 관련 날리지 규칙 0개 검색됨 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 13:01:20 [INFO] 텍스트 관련 날리지 규칙 0개 검색됨 
+2025-05-05 13:01:20 [INFO] 목업 임베딩 사용 중 
+2025-05-05 13:01:20 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 13:01:20 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 13:01:20 [WARN] 벡터 필드가 있는 문서가 없습니다: Knowledge 
+2025-05-05 13:01:29 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 13:01:29 [INFO] 교정 결과 저장 완료 (ID: 681838196e6075c6129561f1) 
+2025-05-05 13:01:34 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 13:01:34 [INFO] 교정 결과 저장 완료 (ID: 6818381e6e6075c6129561f4) 
+2025-05-05 13:01:34 [INFO] [44cbf5a4-d60c-4bf9-8a18-f3a26d675d9f] ::1 POST /api/proofread 200 13759ms 
+2025-05-05 13:01:40 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 

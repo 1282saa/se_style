@@ -44,6 +44,9 @@ const config = {
 
   // 속도 제한
   RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX || "120", 10),
+
+  // 개발 설정
+  USE_MOCK_EMBEDDINGS: process.env.USE_MOCK_EMBEDDINGS === "true" || false,
 };
 
 // 환경 변수 확인 및 오류 방지

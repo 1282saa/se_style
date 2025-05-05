@@ -1,7 +1,9 @@
 // src/services/styleGuideService.js
+const mongoose = require("mongoose");
 const Styleguide = require("../models/styleguide.model");
-const anthropicService = require("./llm/anthropicService"); // 통합된 LLM 서비스
+const anthropicService = require("./llm/anthropicService");
 const logger = require("../utils/logger");
+const cache = require("../utils/cache");
 
 /**
  * 스타일 가이드 서비스
@@ -15,11 +17,23 @@ class StyleGuideService {
    * @param {number} limit - 최대 결과 수
    * @returns {Promise<Array>} - 관련 스타일 가이드 배열
    */
-  async findRelatedStyleGuides(text, limit = 5) {
+  async findRelatedStyleguides(text, limit = 10) {
     try {
       if (!text) {
         logger.warn("빈 텍스트로 스타일 가이드 검색 시도");
         return [];
+      }
+
+      // 캐시 키 생성 (텍스트 해시 기준)
+      const cacheKey = `style:${Buffer.from(text.substring(0, 200)).toString(
+        "base64"
+      )}`;
+
+      // 캐시 확인
+      const cachedResults = cache.get(cacheKey);
+      if (cachedResults) {
+        logger.debug(`스타일 가이드 캐시 적중: ${cacheKey}`);
+        return cachedResults;
       }
 
       // 텍스트 길이 제한
@@ -33,6 +47,10 @@ class StyleGuideService {
         const results = await this.vectorSearch(searchText, limit);
         if (results && results.length > 0) {
           logger.info(`벡터 검색 결과: ${results.length}개`);
+
+          // 캐시에 저장
+          cache.set(cacheKey, results, 3600); // 1시간 캐시
+
           return results;
         }
       } catch (error) {
@@ -47,6 +65,10 @@ class StyleGuideService {
         limit
       );
       logger.info(`키워드 검색 결과: ${keywordResults.length}개`);
+
+      // 캐시에 저장
+      cache.set(cacheKey, keywordResults, 3600); // 1시간 캐시
+
       return keywordResults;
     } catch (error) {
       logger.error(`스타일 가이드 검색 오류: ${error.message}`);
@@ -71,6 +93,167 @@ class StyleGuideService {
   }
 
   /**
+   * 텍스트 임베딩을 사용한 벡터 검색을 수행합니다.
+   * @param {string} text - 검색할 텍스트
+   * @param {number} limit - 최대 결과 수
+   * @returns {Promise<Array>} - 검색 결과 배열
+   */
+  async vectorSearch(text, limit) {
+    try {
+      // 텍스트 길이 제한
+      const maxTextLength = 1000;
+      const searchText =
+        text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
+
+      // 텍스트 임베딩 생성
+      const embedding = await anthropicService.createEmbedding(searchText);
+      if (!embedding || embedding.length === 0) {
+        throw new Error("임베딩 생성 실패");
+      }
+
+      // MongoDB Atlas Vector Search 사용 (인덱스 이름: vector_index)
+      const pipeline = [
+        {
+          $vectorSearch: {
+            index: "vector_index",
+            queryVector: embedding,
+            path: "vector",
+            numCandidates: limit * 3,
+            limit: limit,
+          },
+        },
+        {
+          $match: {
+            isActive: true,
+          },
+        },
+        {
+          $addFields: {
+            score: { $meta: "searchScore" },
+          },
+        },
+        {
+          $sort: {
+            score: -1,
+          },
+        },
+        {
+          $limit: limit,
+        },
+        {
+          $project: {
+            vector: 0, // 벡터는 응답에서 제외
+          },
+        },
+      ];
+
+      // 벡터 검색 실행
+      const results = await Styleguide.aggregate(pipeline);
+
+      if (results.length > 0) {
+        // 사용 시간 업데이트
+        const guideIds = results.map((guide) => guide._id);
+        Styleguide.updateMany(
+          { _id: { $in: guideIds } },
+          { $set: { lastUsedAt: new Date() } }
+        ).catch((err) =>
+          logger.warn(`마지막 사용 시간 업데이트 실패: ${err.message}`)
+        );
+      }
+
+      return results;
+    } catch (vectorSearchError) {
+      logger.warn(`벡터 검색 오류: ${vectorSearchError.message}`);
+
+      // 대체 방법: 메모리 내 코사인 유사도 계산
+      logger.info("메모리 내 코사인 유사도 계산 사용");
+
+      try {
+        // 임베딩 생성
+        const embedding = await anthropicService.createEmbedding(text);
+
+        // 벡터가 있는 스타일 가이드 조회
+        const allGuides = await Styleguide.find({
+          vector: { $exists: true, $ne: null },
+          isActive: true,
+        }).select("+vector"); // vector 필드는 기본적으로 제외되므로 명시적으로 포함
+
+        if (!allGuides || allGuides.length === 0) {
+          logger.warn(
+            "벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다."
+          );
+          const keywords = this.extractKeywords(text);
+          return this.keywordSearch(keywords, limit);
+        }
+
+        // 코사인 유사도 계산
+        const scoredGuides = allGuides
+          .map((guide) => {
+            const similarity = this.calculateCosineSimilarity(
+              embedding,
+              guide.vector
+            );
+            return {
+              ...guide.toObject(),
+              score: similarity,
+            };
+          })
+          .filter((guide) => guide.score > 0.5) // 유사도가 일정 수준 이상인 것만 필터링
+          .sort((a, b) => b.score - a.score) // 유사도 기준 내림차순 정렬
+          .slice(0, limit); // 상위 N개만 선택
+
+        logger.info(`코사인 유사도 계산 결과: ${scoredGuides.length}개`);
+
+        return scoredGuides;
+      } catch (error) {
+        logger.error(`인메모리 유사도 계산 오류: ${error.message}`);
+        throw error;
+      }
+    }
+  }
+
+  /**
+   * 두 벡터 간의 코사인 유사도를 계산합니다.
+   * @param {Array<number>} vecA - 첫 번째 벡터
+   * @param {Array<number>} vecB - 두 번째 벡터
+   * @returns {number} - 코사인 유사도 (-1 ~ 1)
+   * @private
+   */
+  calculateCosineSimilarity(vecA, vecB) {
+    if (!vecA || !vecB || vecA.length !== vecB.length) {
+      return 0;
+    }
+
+    try {
+      // 최적화를 위해 Float32Array 사용
+      const vecATyped = new Float32Array(vecA);
+      const vecBTyped = new Float32Array(vecB);
+
+      let dotProduct = 0;
+      let normA = 0;
+      let normB = 0;
+
+      for (let i = 0; i < vecATyped.length; i++) {
+        dotProduct += vecATyped[i] * vecBTyped[i];
+        normA += vecATyped[i] * vecATyped[i];
+        normB += vecBTyped[i] * vecBTyped[i];
+      }
+
+      normA = Math.sqrt(normA);
+      normB = Math.sqrt(normB);
+
+      if (normA === 0 || normB === 0) {
+        return 0;
+      }
+
+      return dotProduct / (normA * normB);
+    } catch (error) {
+      logger.error(`코사인 유사도 계산 오류: ${error.message}`);
+      return 0;
+    }
+  }
+
+  /**
    * 키워드 기반 검색을 수행합니다.
    * @param {Array} keywords - 검색 키워드 배열
    * @param {number} limit - 최대 결과 수
@@ -89,6 +272,7 @@ class StyleGuideService {
 
       // 검색 쿼리 생성
       const query = {
+        isActive: true,
         $or: [
           { section: { $in: keywordPatterns } },
           { content: { $in: keywordPatterns } },
@@ -192,146 +376,6 @@ class StyleGuideService {
     } catch (error) {
       logger.error(`키워드 추출 오류: ${error.message}`);
       return [];
-    }
-  }
-
-  /**
-   * 텍스트 임베딩을 사용한 벡터 검색을 수행합니다.
-   * @param {string} text - 검색할 텍스트
-   * @param {number} limit - 최대 결과 수
-   * @returns {Promise<Array>} - 검색 결과 배열
-   */
-  async vectorSearch(text, limit) {
-    try {
-      // 텍스트 길이 제한
-      const maxTextLength = 1000;
-      const searchText =
-        text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
-
-      try {
-        // 텍스트 임베딩 생성
-        const embedding = await anthropicService.createEmbedding(searchText);
-
-        // MongoDB Atlas Vector Search 가능 여부 확인
-        let vectorSearchResults = [];
-
-        try {
-          // MongoDB Atlas Vector Search 시도
-          if (typeof Styleguide.vectorSearch === "function") {
-            vectorSearchResults = await Styleguide.vectorSearch(
-              embedding,
-              limit
-            );
-
-            if (vectorSearchResults && vectorSearchResults.length > 0) {
-              logger.info(
-                `벡터 검색 성공: ${vectorSearchResults.length}개 결과`
-              );
-              return vectorSearchResults;
-            }
-          }
-        } catch (vectorSearchError) {
-          logger.warn(
-            `MongoDB 벡터 검색 오류: ${vectorSearchError.message}. 대체 방식으로 전환합니다.`
-          );
-        }
-
-        // 대체 방법: 메모리 내 코사인 유사도 계산
-        logger.info("메모리 내 코사인 유사도 계산 사용");
-
-        // 벡터가 있는 스타일 가이드 조회
-        const allGuides = await Styleguide.find({
-          vector: { $exists: true, $ne: null },
-        }).select("+vector"); // vector 필드는 기본적으로 제외되므로 명시적으로 포함
-
-        if (!allGuides || allGuides.length === 0) {
-          logger.warn(
-            "벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다."
-          );
-          const keywords = this.extractKeywords(text);
-          return this.keywordSearch(keywords, limit);
-        }
-
-        // 코사인 유사도 계산
-        const scoredGuides = allGuides
-          .map((guide) => {
-            const similarity = this.calculateCosineSimilarity(
-              embedding,
-              guide.vector
-            );
-            return {
-              ...guide.toObject(),
-              score: similarity,
-            };
-          })
-          .filter((guide) => guide.score > 0.5) // 유사도가 일정 수준 이상인 것만 필터링
-          .sort((a, b) => b.score - a.score) // 유사도 기준 내림차순 정렬
-          .slice(0, limit); // 상위 N개만 선택
-
-        logger.info(`코사인 유사도 계산 결과: ${scoredGuides.length}개`);
-
-        return scoredGuides;
-      } catch (embeddingError) {
-        logger.error(
-          `임베딩 생성 오류: ${embeddingError.message}. 키워드 검색으로 전환합니다.`
-        );
-        const keywords = this.extractKeywords(text);
-        return this.keywordSearch(keywords, limit);
-      }
-    } catch (error) {
-      logger.error(`벡터 검색 오류: ${error.message}`);
-
-      // 오류 발생 시 키워드 검색으로 대체
-      logger.info("벡터 검색 오류로 키워드 검색으로 전환");
-      const keywords = this.extractKeywords(text);
-      return this.keywordSearch(keywords, limit);
-    }
-  }
-
-  /**
-   * 두 벡터 간의 코사인 유사도를 계산합니다.
-   * @param {Array} vecA - 첫 번째 벡터
-   * @param {Array} vecB - 두 번째 벡터
-   * @returns {number} - 코사인 유사도 (-1 ~ 1)
-   */
-  calculateCosineSimilarity(vecA, vecB) {
-    if (!vecA || !vecB || vecA.length !== vecB.length) {
-      return 0;
-    }
-
-    try {
-      // Float32Array로 변환하여 성능 향상
-      const vecATyped = new Float32Array(vecA);
-      const vecBTyped = new Float32Array(vecB);
-
-      let dotProduct = 0;
-      let normA = 0;
-      let normB = 0;
-
-      // 벡터 길이가 길 경우 청크 단위로 처리
-      const chunkSize = 1000;
-
-      for (let i = 0; i < vecATyped.length; i += chunkSize) {
-        const end = Math.min(i + chunkSize, vecATyped.length);
-
-        for (let j = i; j < end; j++) {
-          dotProduct += vecATyped[j] * vecBTyped[j];
-          normA += vecATyped[j] * vecATyped[j];
-          normB += vecBTyped[j] * vecBTyped[j];
-        }
-      }
-
-      normA = Math.sqrt(normA);
-      normB = Math.sqrt(normB);
-
-      if (normA === 0 || normB === 0) {
-        return 0;
-      }
-
-      return dotProduct / (normA * normB);
-    } catch (error) {
-      logger.error(`코사인 유사도 계산 오류: ${error.message}`);
-      return 0;
     }
   }
 

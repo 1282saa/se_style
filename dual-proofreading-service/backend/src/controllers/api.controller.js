@@ -19,22 +19,23 @@ const quickProofread = asyncHandler(async (req, res) => {
 
   // 입력 유효성 검사
   if (!text) {
-    throw new ValidationError("교정할 텍스트가 제공되지 않았습니다.");
+    return res.status(400).json({
+      success: false,
+      message: "교정할 텍스트가 제공되지 않았습니다.",
+    });
   }
 
   // 텍스트 길이 제한
   if (text.length > 10000) {
-    throw new ValidationError(
-      "텍스트 길이가 너무 깁니다. 10,000자 이하로 입력해주세요."
-    );
+    return res.status(400).json({
+      success: false,
+      message: "텍스트 길이가 너무 깁니다. 10,000자 이하로 입력해주세요.",
+    });
   }
-
-  // 텍스트 정규화
-  const normalizedText = textProcessor.normalizeText(text);
 
   // 빠른 교정 실행
   const result = await proofreadingService.quickProofread(
-    normalizedText,
+    text,
     userId,
     metadata
   );
@@ -43,21 +44,7 @@ const quickProofread = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "교정이 완료되었습니다",
-    data: {
-      articleId: result.articleId,
-      original: result.original,
-      corrections: result.corrections.map((c) => ({
-        id: c.id,
-        type: c.type,
-        text: c.text,
-        changes: c.changes ? c.changes.length : 0,
-      })),
-      stats: {
-        originalLength: text.length,
-        minimalLength: result.corrections[0].text.length,
-        enhancedLength: result.corrections[1].text.length,
-      },
-    },
+    data: result,
   });
 });
 
@@ -140,7 +127,10 @@ const saveUserChoice = asyncHandler(async (req, res) => {
 
   // 입력 유효성 검사
   if (!articleId || !correctionId) {
-    throw new ValidationError("기사 ID와 선택한 교정 결과 ID가 필요합니다.");
+    return res.status(400).json({
+      success: false,
+      message: "기사 ID와 선택한 교정 결과 ID가 필요합니다.",
+    });
   }
 
   // 사용자 선택 저장
@@ -158,10 +148,9 @@ const saveUserChoice = asyncHandler(async (req, res) => {
       articleId: result.articleId,
       selectedCorrectionId: correctionId,
       selectedPromptType: result.selectedPromptType,
-      typeName: result.selectedPromptType === 1 ? "최소 교정" : "적극적 교정",
       feedback: {
         rating: result.rating,
-        hasComment: result.comment && result.comment.length > 0,
+        hasComment: !!result.comment && result.comment.length > 0,
       },
     },
   });
@@ -173,17 +162,25 @@ const saveUserChoice = asyncHandler(async (req, res) => {
  * @route POST /api/proofread/custom
  */
 const customProofread = asyncHandler(async (req, res) => {
-  const { articleId, preferences } = req.body;
+  const { articleId, userId } = req.body;
 
   // 입력 유효성 검사
   if (!articleId) {
-    throw new ValidationError("기사 ID가 제공되지 않았습니다.");
+    return res.status(400).json({
+      success: false,
+      message: "기사 ID가 제공되지 않았습니다.",
+    });
   }
+
+  // 사용자 선호도 분석
+  const preferences = await proofreadingService.analyzeUserPreferences(
+    userId || "anonymous"
+  );
 
   // 맞춤형 교정 생성
   const result = await proofreadingService.generateCustomCorrection(
     articleId,
-    preferences || {}
+    preferences
   );
 
   // 응답 구성
@@ -195,7 +192,8 @@ const customProofread = asyncHandler(async (req, res) => {
       articleId: result.articleId,
       text: result.text,
       type: "custom",
-      changes: result.changes ? result.changes.length : 0,
+      changes: result.changes,
+      appliedPreferences: preferences,
     },
   });
 });

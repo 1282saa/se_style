@@ -4,44 +4,84 @@
  * @module utils/errorHandler
  */
 
+const { ApiError } = require("./errors");
 const logger = require("./logger");
 
 /**
- * API 응답 형식의 오류 객체를 생성합니다.
- * @param {Error} error - 오류 객체
- * @param {number} statusCode - HTTP 상태 코드 (기본값: 500)
- * @returns {Object} - 응답 형식의 오류 객체
+ * API 오류 처리 미들웨어
+ * @param {Error} err - 발생한 오류
+ * @param {Object} req - Express 요청 객체
+ * @param {Object} res - Express 응답 객체
+ * @param {Function} next - Express 다음 미들웨어 함수
  */
-const formatError = (error, statusCode = 500) => {
-  // 오류 로깅
-  logger.error(`오류 발생: ${error.message}`);
-  if (error.stack) {
-    logger.debug(`스택 트레이스: ${error.stack}`);
+const errorHandler = (err, req, res, next) => {
+  // 이미 응답이 전송된 경우
+  if (res.headersSent) {
+    return next(err);
   }
 
-  // 오류 응답 형식
-  return {
+  let statusCode = 500;
+  let message = "서버 내부 오류가 발생했습니다";
+  let errorDetails = null;
+
+  // API 오류인 경우
+  if (err instanceof ApiError) {
+    statusCode = err.statusCode;
+    message = err.message;
+  } else if (err.name === "ValidationError" && err.errors) {
+    // Mongoose 검증 오류
+    statusCode = 400;
+    message = "데이터 유효성 검증에 실패했습니다";
+    errorDetails = Object.values(err.errors).map((e) => e.message);
+  } else if (err.name === "MongoServerError" && err.code === 11000) {
+    // MongoDB 중복 키 오류
+    statusCode = 409;
+    message = "이미 존재하는 데이터입니다";
+  } else if (err.name === "SyntaxError" && err.status === 400) {
+    // JSON 파싱 오류
+    statusCode = 400;
+    message = "잘못된 JSON 형식입니다";
+  } else if (err.name === "TokenExpiredError") {
+    // JWT 토큰 만료
+    statusCode = 401;
+    message = "인증 토큰이 만료되었습니다";
+  } else if (err.name === "JsonWebTokenError") {
+    // JWT 토큰 오류
+    statusCode = 401;
+    message = "유효하지 않은 인증 토큰입니다";
+  }
+
+  // 개발 환경에서는 상세 오류 표시
+  if (process.env.NODE_ENV === "development") {
+    errorDetails = errorDetails || err.stack;
+  }
+
+  // 오류 로깅
+  const logMethod = statusCode >= 500 ? logger.error : logger.warn;
+  logMethod(`[${statusCode}] ${message}`, {
+    path: req.path,
+    method: req.method,
+    ip: req.ip,
+    error: err.message,
+    stack: err.stack,
+  });
+
+  // 응답 전송
+  res.status(statusCode).json({
     success: false,
-    statusCode,
-    message: error.message || "서버 내부 오류가 발생했습니다.",
-    error: process.env.NODE_ENV === "development" ? error.stack : undefined,
-  };
+    message,
+    ...(errorDetails &&
+      process.env.NODE_ENV === "development" && { error: errorDetails }),
+  });
 };
 
 /**
- * 비동기 함수에 대한 오류 처리 래퍼
- * @param {Function} fn - 비동기 컨트롤러 함수
- * @returns {Function} - 오류 처리가 추가된 래퍼 함수
+ * 비동기 라우트 핸들러 래퍼
+ * @param {Function} fn - 비동기 라우트 핸들러
+ * @returns {Function} - 오류 처리가 포함된 라우트 핸들러
  */
-const asyncHandler = (fn) => {
-  return async (req, res, next) => {
-    try {
-      await fn(req, res, next);
-    } catch (error) {
-      const formattedError = formatError(error);
-      res.status(formattedError.statusCode || 500).json(formattedError);
-    }
-  };
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
 };
 
 /**
@@ -139,8 +179,8 @@ class ServiceUnavailableError extends AppError {
 }
 
 module.exports = {
+  errorHandler,
   asyncHandler,
-  formatError,
   AppError,
   ValidationError,
   NotFoundError,

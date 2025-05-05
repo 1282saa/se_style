@@ -9,6 +9,8 @@ const config = require("../../config");
 const cache = require("../../utils/cache");
 const redis = require("../../utils/redisClient");
 const { estimateTokens } = require("../../utils/tokens");
+const axios = require("axios");
+const embeddingProvider = require("../rag/embeddingProvider");
 
 const MASK_PII = (s = "") =>
   s
@@ -33,6 +35,8 @@ class AnthropicService {
       this.model = config.CLAUDE_MODEL || "claude-3-opus-20240229";
       this.maxTokens = Number(config.ANTHROPIC_MAX_TOKENS) || 4000;
       this.embedModel = config.EMBEDDING_MODEL || "claude-3-sonnet-20240229";
+      this.apiKey = process.env.ANTHROPIC_API_KEY;
+      this.baseUrl = "https://api.anthropic.com/v1/messages";
 
       logger.info(
         `AnthropicService 초기화 (model=${this.model}, maxTokens=${this.maxTokens})`
@@ -122,30 +126,18 @@ class AnthropicService {
   /* ---------- 2. 임베딩 ---------- */
   async createEmbedding(text) {
     try {
-      if (!text) {
-        logger.warn("임베딩 생성을 위한 텍스트가 비어 있습니다");
-        return new Array(1536).fill(0); // 기본 빈 임베딩 벡터 반환
-      }
-
-      const truncated = text.length > 8000 ? text.slice(0, 8000) : text;
-
-      // Anthropic API 호출 수정
-      const response = await this.client.embeddings.create({
-        model: this.embedModel,
-        input: truncated,
-      });
-
-      // 응답 확인
-      if (!response || !response.embedding) {
-        logger.error("임베딩 결과가 유효하지 않습니다");
-        return new Array(1536).fill(0); // 기본 빈 임베딩 벡터 반환
-      }
-
-      return response.embedding;
+      // 임베딩 제공자 서비스 사용
+      return await embeddingProvider.createEmbedding(text);
     } catch (error) {
-      logger.error(`임베딩 생성 오류: ${error.message}`);
-      // 오류 시 기본 벡터 반환
-      return new Array(1536).fill(0);
+      logger.error(`임베딩 생성 중 오류: ${error.message}`);
+
+      // 오류 발생 시 개발 환경에서는 목업 임베딩 반환
+      if (config.NODE_ENV === "development") {
+        logger.warn("개발 환경에서 목업 임베딩을 생성합니다.");
+        return embeddingProvider.createMockEmbedding();
+      }
+
+      throw error;
     }
   }
 
@@ -208,6 +200,102 @@ class AnthropicService {
         corrections: [],
         metadata: { model: r.model || "unknown" },
       };
+    }
+  }
+
+  /**
+   * Claude API를 사용하여 텍스트 생성
+   * @param {string} systemPrompt - 시스템 프롬프트
+   * @param {string} userPrompt - 사용자 프롬프트
+   * @param {Object} options - 추가 옵션
+   * @returns {Promise<Object>} - Claude API 응답
+   */
+  async generateText(systemPrompt, userPrompt, options = {}) {
+    try {
+      if (!this.apiKey) {
+        throw new Error("ANTHROPIC_API_KEY가 설정되지 않았습니다.");
+      }
+
+      const maxTokens = options.maxTokens || 4000;
+      const temperature = options.temperature || 0.7;
+
+      logger.info(`Claude API 요청: ${userPrompt.substring(0, 50)}...`);
+
+      const response = await axios.post(
+        this.baseUrl,
+        {
+          model: this.model,
+          system: systemPrompt,
+          messages: [
+            {
+              role: "user",
+              content: userPrompt,
+            },
+          ],
+          max_tokens: maxTokens,
+          temperature: temperature,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": this.apiKey,
+            "anthropic-version": "2023-06-01",
+          },
+        }
+      );
+
+      logger.info("Claude API 응답 수신 완료");
+      return response.data;
+    } catch (error) {
+      logger.error(`Claude API 오류: ${error.message}`);
+      if (error.response) {
+        logger.error(`상태 코드: ${error.response.status}`);
+        logger.error(`응답 데이터: ${JSON.stringify(error.response.data)}`);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * JSON 응답을 안전하게 파싱합니다.
+   * @param {string} text - 파싱할 텍스트
+   * @returns {Object|null} - 파싱된 객체 또는 null
+   */
+  safeParseJSON(text) {
+    if (!text) return null;
+
+    try {
+      // 1. 직접 파싱 시도
+      return JSON.parse(text);
+    } catch (directError) {
+      logger.debug(`직접 JSON 파싱 실패: ${directError.message}`);
+
+      try {
+        // 2. 제어 문자 제거 후 파싱 시도
+        const cleanedText = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        return JSON.parse(cleanedText);
+      } catch (cleanError) {
+        logger.debug(`정제 후 JSON 파싱 실패: ${cleanError.message}`);
+
+        try {
+          // 3. JSON 코드 블록에서 추출 시도
+          const jsonBlockRegex = /```(?:json)?\s*({[\s\S]*?})\s*```/;
+          const match = text.match(jsonBlockRegex);
+
+          if (match && match[1]) {
+            const jsonContent = match[1]
+              .trim()
+              .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+            return JSON.parse(jsonContent);
+          }
+        } catch (blockError) {
+          logger.debug(`JSON 블록 파싱 실패: ${blockError.message}`);
+        }
+
+        // 4. 모든 방법 실패
+        logger.warn("모든 JSON 파싱 방법 실패");
+        return null;
+      }
     }
   }
 }

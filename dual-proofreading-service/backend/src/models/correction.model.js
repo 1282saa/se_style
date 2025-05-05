@@ -117,15 +117,11 @@ const CorrectionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Article",
       required: true,
-      index: true,
-      description: "교정된 기사 ID",
     },
     promptType: {
       type: Number,
-      required: true,
       enum: [1, 2, 3], // 1: 최소한 교열, 2: 적극적 교열, 3: 맞춤형 교열
-      index: true,
-      description: "사용된 프롬프트 유형",
+      required: true,
     },
     correctedText: {
       type: String,
@@ -256,9 +252,12 @@ CorrectionSchema.virtual("article", {
   justOne: true,
 });
 
-// 색인 설정
-CorrectionSchema.index({ articleId: 1, promptType: 1 }, { unique: true });
-CorrectionSchema.index({ createdAt: -1 });
-CorrectionSchema.index({ "llmInfo.model": 1 }); // 모델별 검색 용이하게
+// 인덱스를 한 번만 정의 (중복 인덱스 방지)
+CorrectionSchema.index({ articleId: 1 });
+CorrectionSchema.index({ promptType: 1 });
+CorrectionSchema.index({ createdAt: 1 });
+
+// 다중 필드 인덱스 추가 (단일 필드 인덱스 대체)
+CorrectionSchema.index({ articleId: 1, promptType: 1, createdAt: -1 });
 
 module.exports = mongoose.model("Correction", CorrectionSchema);

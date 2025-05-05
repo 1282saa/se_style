@@ -76,6 +76,11 @@ app.get("/health", (req, res) => {
 /* 9. 라우트 ------------------------------------------------------ */
 app.use(routes);
 
+// 새로운 라우트 등록
+app.use("/api", require("./routes/api.routes"));
+app.use("/api/articles", require("./routes/article.routes"));
+app.use("/api/styleguides", require("./routes/styleguide.routes"));
+
 /* 10. 404 ------------------------------------------------------- */
 app.use((req, res) =>
   res.status(404).json({ success: false, message: "리소스를 찾을 수 없습니다" })

@@ -55,3 +55,37 @@
 2025-05-05 09:22:11 [ERROR] Claude API 호출 오류: 400 {"type":"error","error":{"type":"invalid_request_error","message":"signal: Extra inputs are not permitted"}} {"stack":"Error: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"signal: Extra inputs are not permitted\"}}\n    at AnthropicService.proofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/llm/anthropicService.js:75:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async ProofreadingService.callClaudeAPI (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:248:22)\n    at async ProofreadingService.generateCorrection (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:147:22)\n    at async Promise.all (index 0)\n    at async ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:506:42)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:36:18\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/utils/errorHandler.js:39:7\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/utils/errorHandler.js:39:7","code":"PROOFREAD_TIMEOUT"}
 2025-05-05 09:22:11 [ERROR] 교정 생성 오류 (프롬프트 유형: 1): 교정 요청 시간이 초과되었습니다. 나중에 다시 시도해주세요. 
 2025-05-05 09:27:49 [ERROR] 임베딩 생성 오류: Cannot read properties of undefined (reading 'create') 
+2025-05-05 12:28:52 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:28:52 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:29:04 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:29:04 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:29:08 [ERROR] 빠른 교정 오류: findRelevantStyleguides is not a function {"stack":"TypeError: findRelevantStyleguides is not a function\n    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:38:33)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18"}
+2025-05-05 12:29:08 [ERROR] Error: 교정 중 오류 발생: findRelevantStyleguides is not a function
+    at ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:54:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:40:18 
+2025-05-05 12:35:43 [ERROR] 기사 생성 오류: Article validation failed: originalText: Path `originalText` is required. 
+2025-05-05 12:35:43 [ERROR] 빠른 교정 오류: Article validation failed: originalText: Path `originalText` is required. 
+2025-05-05 12:35:43 [ERROR] ValidationError: Article validation failed: originalText: Path `originalText` is required.
+    at Document.invalidate (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/document.js:3343:32)
+    at /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/document.js:3104:17
+    at /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/node_modules/mongoose/lib/schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11) 
+2025-05-05 12:39:13 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:13 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:14 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:39:14 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:43:54 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:43:54 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:57 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:57 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 
+2025-05-05 12:57:58 [ERROR] 임베딩 생성 중 오류: Request failed with status code 404 

@@ -9,6 +9,13 @@ const router = express.Router();
 const apiController = require("../controllers/api.controller");
 const { asyncHandler } = require("../utils/errorHandler");
 const { validateRequest } = require("../middlewares/validator");
+const { authenticate } = require("../middleware/auth");
+const { validateSchema } = require("../middleware/validator");
+const {
+  proofreadSchema,
+  choiceSchema,
+  customProofreadSchema,
+} = require("../validators/api.validators");
 
 /**
  * @route POST /api/proofread
@@ -107,5 +114,8 @@ router.get("/status", asyncHandler(apiController.getServiceStatus));
 router.get("/docs", (req, res) => {
   res.redirect("/docs/index.html");
 });
+
+// 인증이 필요한 엔드포인트
+// router.get('/user/preferences', authenticate, apiController.getUserPreferences);
 
 module.exports = router;

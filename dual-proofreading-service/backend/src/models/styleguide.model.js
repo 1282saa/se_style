@@ -7,6 +7,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
+ * 스타일 가이드 예제 스키마
+ */
+const ExampleSchema = new Schema({
+  wrong: { type: String, required: false },
+  correct: { type: String, required: false },
+  explanation: { type: String, required: false },
+});
+
+/**
  * 스타일 가이드 스키마
  * @typedef {Object} Styleguide
  * @property {string} section - 섹션 이름
@@ -23,6 +32,7 @@ const Schema = mongoose.Schema;
  */
 const StyleguideSchema = new Schema(
   {
+    ruleId: { type: String, required: true, unique: true, index: true },
     section: {
       type: String,
       required: true,
@@ -38,40 +48,19 @@ const StyleguideSchema = new Schema(
     },
     category: {
       type: String,
-      required: true,
+      required: false,
       index: true,
       description: "스타일 가이드 카테고리",
       trim: true,
     },
-    tags: {
-      type: [String],
-      description: "검색용 태그",
-      validate: {
-        validator: function (tags) {
-          // 태그 유효성 검사: 빈 문자열 제거 및 중복 제거
-          return tags.every((tag) => tag && tag.trim().length > 0);
-        },
-        message: "유효하지 않은 태그가 포함되어 있습니다",
-      },
-    },
-    vector: {
-      type: [Number],
-      sparse: true,
-      select: false, // 기본적으로 조회 시 제외
-      description: "임베딩 벡터 (검색용)",
-      validate: {
-        validator: function (vec) {
-          // 벡터 유효성 검사: 적절한 차원이 아니면 오류
-          return !vec || vec.length === 0 || vec.length === 1536; // 일반적인 임베딩 차원
-        },
-        message: "벡터 차원이 올바르지 않습니다",
-      },
-    },
+    tags: [{ type: String, index: true }],
+    examples: [ExampleSchema],
+    vector: { type: [Number], select: false }, // 기본적으로 조회 제외
     priority: {
       type: Number,
-      enum: [1, 2, 3, 4, 5], // 1: 지식, 2: 참고, 3: 제안, 4: 권고, 5: 필수
       default: 3,
-      description: "스타일 가이드 우선순위",
+      min: 1,
+      max: 5, // 1: 참고, 3: 중요, 5: 필수
     },
     metadata: {
       type: Map,
@@ -100,14 +89,20 @@ const StyleguideSchema = new Schema(
     },
     lastUsedAt: {
       type: Date,
+      default: null,
       description: "마지막 사용 시간",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
-    timestamps: {
-      createdAt: "createdAt",
-      updatedAt: "updatedAt",
-    },
+    timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
@@ -119,6 +114,22 @@ StyleguideSchema.index({ tags: 1 });
 StyleguideSchema.index({ "metadata.ruleId": 1 }, { sparse: true });
 StyleguideSchema.index({ category: 1, priority: -1 });
 StyleguideSchema.index({ isActive: 1, priority: -1 }); // 활성 상태 및 우선순위로 검색 용이하게
+StyleguideSchema.index({ section: "text", content: "text", tags: "text" });
+
+/**
+ * 검색 스코어 가상 속성
+ */
+StyleguideSchema.virtual("score").get(function () {
+  return this._score;
+});
+
+StyleguideSchema.set("toJSON", {
+  virtuals: true,
+  transform: function (doc, ret) {
+    delete ret.vector; // 항상 벡터 필드 제외
+    return ret;
+  },
+});
 
 /**
  * 가이드 요약 생성
@@ -150,11 +161,6 @@ StyleguideSchema.methods.deactivate = async function () {
 };
 
 /**
- * 가이드를 활성화합니다.
- * @function activate
- *
- *
- * /**
  * 가이드를 활성화합니다.
  * @function activate
  * @memberof Styleguide
@@ -363,4 +369,6 @@ StyleguideSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Styleguide", StyleguideSchema);
+// 스타일 가이드 모델 생성 및 반환
+module.exports =
+  mongoose.models.Styleguide || mongoose.model("Styleguide", StyleguideSchema);
