@@ -80,6 +80,7 @@ app.use(routes);
 app.use("/api", require("./routes/api.routes"));
 app.use("/api/articles", require("./routes/article.routes"));
 app.use("/api/styleguides", require("./routes/styleguide.routes"));
+app.use("/api/social", require("./routes/social.routes"));
 
 /* 10. 404 ------------------------------------------------------- */
 app.use((req, res) =>

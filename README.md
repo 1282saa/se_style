@@ -32,6 +32,46 @@
 - **사용자 피드백 시스템**: 사용자가 선호하는 교정 스타일 선택 및 평가 가능
 - **맞춤형 시스템**: 사용자의 선택 데이터를 학습하여 점차 개인화된 교정 제공
 
+## 소셜 미디어 통합 기능
+
+- **소셜 미디어 계정 연결**: 다양한 소셜 미디어 계정(Instagram, Thread 등) 연결 및 관리 기능
+  - 엑세스 토큰과 플랫폼 사용자 ID를 활용한 손쉬운 계정 연결
+  - 연결된 계정 관리 및 상태 확인
+- **교정 콘텐츠 소셜 미디어 공유**: 교정된 글을 다양한 소셜 미디어로 공유
+  - **플랫폼별 최적화된 콘텐츠 생성**: Claude API를 활용한 플랫폼별 맞춤형 게시물 생성
+  - **게시물 프리뷰 및 편집**: 생성된 콘텐츠 미리보기 및 게시 전 수정 가능
+  - **원클릭 게시**: 연결된 소셜 미디어에 교정된 콘텐츠 바로 게시 기능
+- **통합 소셜 미디어 대시보드**: 소셜 미디어 활동 현황 확인 및 분석
+  - **Instagram 통계**: 게시물 유형 분석, 인기 해시태그, 게시 시간대 분석
+  - **Thread 인사이트**: 조회수, 좋아요, 답글, 리포스트, 인용 등의 통계 정보
+
+### 지원 플랫폼
+
+현재 다음 소셜 미디어 플랫폼이 지원됩니다:
+
+- **Instagram**: 이미지 기반 게시물 생성 및 통계 확인
+- **Thread**: 텍스트 중심의 게시물 생성 및 인사이트 분석
+
+### 소셜 미디어 기능 사용법
+
+1. **계정 연결하기**:
+
+   - SocialShareModal에서 '계정 연결' 옵션 선택
+   - 원하는 플랫폼 선택 후 엑세스 토큰과 사용자 ID 입력
+   - '연결하기' 버튼 클릭하여 계정 연결 완료
+
+2. **교정된 글 공유하기**:
+
+   - 교정 결과 페이지에서 '소셜 미디어에 공유' 버튼 클릭
+   - 공유할 플랫폼 선택
+   - 자동 생성된 게시물 내용 확인 및 필요시 편집
+   - '게시하기' 버튼 클릭하여 선택한 플랫폼에 게시
+
+3. **통계 확인하기**:
+   - SocialShareModal에서 '통계 보기' 옵션 선택
+   - 확인할 플랫폼 선택
+   - 해당 플랫폼의 상세 통계 확인
+
 ## 기술 스택
 
 ### 백엔드
@@ -126,25 +166,33 @@ dual-proofreading-service/
 │   │   ├── controllers/                # API 컨트롤러
 │   │   │   ├── article.controller.js   # 기사 관련 컨트롤러
 │   │   │   ├── styleGuide.controller.js # 스타일 가이드 관련 컨트롤러
-│   │   │   └── analytics.controller.js # 분석 관련 컨트롤러
+│   │   │   ├── analytics.controller.js # 분석 관련 컨트롤러
+│   │   │   └── social.controller.js    # 소셜 미디어 관련 컨트롤러
 │   │   │
 │   │   ├── models/                     # MongoDB 모델
 │   │   │   ├── article.model.js        # 기사 모델
 │   │   │   ├── correction.model.js     # 교열 결과 모델
 │   │   │   ├── userChoice.model.js     # 사용자 선택 모델
 │   │   │   ├── proofreading.model.js   # 교정 작업 모델
-│   │   │   └── styleguide.model.js     # 스타일 가이드 모델
+│   │   │   ├── styleguide.model.js     # 스타일 가이드 모델
+│   │   │   ├── socialPost.model.js     # 소셜 미디어 게시물 모델
+│   │   │   └── socialAccount.model.js  # 소셜 미디어 계정 모델
 │   │   │
 │   │   ├── routes/                     # API 라우트
 │   │   │   ├── index.js                # 라우트 통합
 │   │   │   ├── article.routes.js       # 기사 관련 라우트
 │   │   │   ├── styleguide.routes.js    # 스타일 가이드 관련 라우트
-│   │   │   └── analytics.routes.js     # 분석 관련 라우트
+│   │   │   ├── analytics.routes.js     # 분석 관련 라우트
+│   │   │   └── social.routes.js        # 소셜 미디어 관련 라우트
 │   │   │
 │   │   ├── services/                   # 비즈니스 로직
 │   │   │   ├── proofreadingService.js  # 교열 서비스 통합
 │   │   │   ├── styleGuideService.js    # 스타일 가이드 서비스
 │   │   │   ├── analyticsService.js     # 분석 서비스
+│   │   │   ├── socialMediaService.js   # 소셜 미디어 통합 서비스
+│   │   │   ├── social/                 # 소셜 미디어 플랫폼별 서비스
+│   │   │   │   ├── instagramService.js # Instagram API 연동
+│   │   │   │   └── threadService.js    # Thread API 연동
 │   │   │   ├── llm/                    # LLM 연동 관련
 │   │   │   │   ├── llm.service.js      # LLM 서비스 인터페이스
 │   │   │   │   ├── anthropicService.js # Anthropic Claude API 연동
@@ -180,7 +228,9 @@ dual-proofreading-service/
 │   │   │   ├── ArticleInput.js         # 기사 입력 폼 컴포넌트
 │   │   │   ├── CorrectionCompare.js    # 교열 결과 비교 컴포넌트
 │   │   │   ├── Header.js               # 헤더 컴포넌트
-│   │   │   └── Footer.js               # 푸터 컴포넌트
+│   │   │   ├── Footer.js               # 푸터 컴포넌트
+│   │   │   ├── SocialShareModal.js     # 소셜 미디어 공유 모달 컴포넌트
+│   │   │   └── SocialStatsDashboard.js # 소셜 미디어 통계 대시보드 컴포넌트
 │   │   │
 │   │   ├── pages/                      # 페이지 컴포넌트
 │   │   │   ├── HomePage.js             # 홈 페이지
@@ -393,6 +443,15 @@ dual-proofreading-service/
 - `GET /api/analytics/feedback`: 사용자 피드백 통계
 - `GET /api/analytics/category-stats`: 카테고리별 교정 통계
 
+### 소셜 미디어 관련 API
+
+- `GET /api/social/accounts`: 연결된 소셜 미디어 계정 목록 조회
+- `POST /api/social/connect/:platform`: 소셜 미디어 계정 연결
+- `POST /api/social/generate`: 소셜 미디어 게시물 생성
+- `POST /api/social/publish/:postId`: 생성된 게시물을 소셜 미디어에 게시
+- `GET /api/social/posts`: 사용자의 소셜 미디어 포스트 목록 조회
+- `GET /api/social/statistics`: 소셜 미디어 통계 조회
+
 ## 향후 개발 계획
 
 1. **개인화 알고리즘 고도화**
@@ -456,6 +515,11 @@ CORS_ORIGIN=http://localhost:3001
 
 # 토큰 제한
 TOKEN_LIMIT=16000
+
+# 소셜 미디어 API 설정
+THREAD_ACCESS_TOKEN=your_thread_access_token_here
+THREAD_USER_ID=your_thread_user_id_here
+INSTAGRAM_ACCESS_TOKEN=your_instagram_access_token_here
 ```
 
 Config 파일은 src/config/index.js에 위치하며 환경 변수를 로드합니다.

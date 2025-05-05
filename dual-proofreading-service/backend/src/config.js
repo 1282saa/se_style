@@ -1,5 +1,44 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 const path = require("path");
+const fs = require("fs");
+
+// 환경변수 로드 함수
+const loadEnvVariables = () => {
+  const envPath = path.resolve(__dirname, "../.env");
+
+  if (fs.existsSync(envPath)) {
+    console.log(`.env 파일을 찾았습니다: ${envPath}`);
+    dotenv.config({ path: envPath });
+  } else {
+    console.log(".env 파일을 찾을 수 없습니다.");
+    // 기본 .env 로드 시도
+    dotenv.config();
+  }
+
+  // 환경 변수 확인 및 로깅
+  const keysToCheck = [
+    "ANTHROPIC_API_KEY",
+    "CLAUDE_MODEL",
+    "THREAD_ACCESS_TOKEN",
+    "THREAD_USER_ID",
+    "INSTAGRAM_ACCESS_TOKEN",
+  ];
+
+  for (const key of keysToCheck) {
+    if (process.env[key]) {
+      const valuePreview =
+        key.includes("TOKEN") || key.includes("KEY")
+          ? `설정됨 (${process.env[key].substring(0, 5)}...)`
+          : process.env[key];
+      console.log(`${key}: ${valuePreview}`);
+    } else {
+      console.log(`${key}: 설정되지 않음`);
+    }
+  }
+};
+
+// 환경변수 로드
+loadEnvVariables();
 
 const config = {
   // 서버 설정
@@ -32,6 +71,14 @@ const config = {
 
   // 개발 환경 API 키
   DEV_API_KEY: process.env.DEV_API_KEY || "dev-api-key-for-testing",
+
+  // 소셜 미디어 설정
+  THREAD_ACCESS_TOKEN: process.env.THREAD_ACCESS_TOKEN,
+  THREAD_USER_ID: process.env.THREAD_USER_ID,
+  INSTAGRAM_ACCESS_TOKEN: process.env.INSTAGRAM_ACCESS_TOKEN,
+
+  // 비율 제한 설정
+  RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX || 120, 10),
 };
 
 module.exports = config;

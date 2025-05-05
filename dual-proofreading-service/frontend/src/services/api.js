@@ -77,6 +77,41 @@ export const styleGuideApi = {
   },
 };
 
+// 소셜 미디어 관련 API 함수
+export const socialMediaApi = {
+  // 연결된 소셜 미디어 계정 목록 조회
+  getConnectedAccounts: (userId) =>
+    api.get("/social/accounts", { params: { userId } }),
+
+  // 소셜 미디어 계정 연결
+  connectAccount: (platform, credentials) =>
+    api.post(`/social/connect/${platform}`, credentials),
+
+  // 소셜 미디어 게시물 생성
+  generatePost: (articleId, data) =>
+    api.post("/social/generate", { articleId, ...data }),
+
+  // 소셜 미디어에 게시
+  publishPost: (postId, userId) =>
+    api.post(`/social/publish/${postId}`, { userId }),
+
+  // 사용자의 소셜 미디어 포스트 목록 조회
+  getUserPosts: (userId, platform, status, page = 1, limit = 10) =>
+    api.get("/social/posts", {
+      params: { userId, platform, status, page, limit },
+    }),
+
+  // 소셜 미디어 플랫폼별 통계 조회
+  getPlatformStatistics: (platform, userId) =>
+    api.get("/social/statistics", { params: { platform, userId } }),
+
+  // 소셜 미디어 통계 조회 (모든 플랫폼 또는 특정 플랫폼)
+  getStatistics: (userId, platform = null) =>
+    api.get("/social/statistics", {
+      params: { userId, platform },
+    }),
+};
+
 // 분석 관련 API 함수
 export const analyticsApi = {
   // 프롬프트별 성능 분석
@@ -94,4 +129,5 @@ export default {
   articleApi,
   styleGuideApi,
   analyticsApi,
+  socialMediaApi,
 };

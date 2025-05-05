@@ -285,4 +285,107 @@ class AnthropicService {
   }
 }
 
+/**
+ * 소셜 미디어용 콘텐츠 생성
+ * @param {string} originalText - 원본 텍스트
+ * @param {string} platform - 소셜 미디어 플랫폼
+ * @returns {Promise<string>} - 최적화된 텍스트
+ */
+async function generateSocialContent(originalText, platform = "instagram") {
+  const anthropicService = module.exports; // 현재 모듈 인스턴스
+
+  // 플랫폼별 프롬프트 커스터마이징
+  let systemPrompt, userPrompt;
+
+  // 시스템 프롬프트 기본 설정
+  let maxLength;
+  switch (platform.toLowerCase()) {
+    case "instagram":
+      systemPrompt = `당신은 인스타그램 게시물을 작성하는 전문가입니다. 인스타그램에 적합한 간결하고 매력적인 텍스트를 생성하세요. 해시태그를 적절히 추가하고, 이모지를 사용해 텍스트에 생동감을 부여하세요. 최대 2,200자 이내로 작성하세요.`;
+      maxLength = 2200;
+      break;
+    case "thread":
+      systemPrompt = `당신은 스레드(Thread) 게시물 작성 전문가입니다. 간결하면서도 핵심적인 내용을 담은 500자 이내의 스레드 게시물을 작성하세요. 가독성이 좋고 흥미로운 내용이 되도록 하세요.`;
+      maxLength = 500;
+      break;
+    case "twitter":
+      systemPrompt = `당신은 트위터(X) 게시물 작성 전문가입니다. 280자 이내의 간결하면서도 임팩트 있는 트윗을 작성하세요. 해시태그는 1-2개 정도만 적절히 사용하고, 핵심 메시지가 명확히 전달되도록 하세요.`;
+      maxLength = 280;
+      break;
+    case "facebook":
+      systemPrompt = `당신은 페이스북 게시물 작성 전문가입니다. 친근하고 대화하듯 자연스러운 텍스트를 생성하세요. 적절한 길이(최대 1,000자)로 내용을 요약하고 흥미로운 관점을 제시하세요.`;
+      maxLength = 1000;
+      break;
+    case "linkedin":
+      systemPrompt = `당신은 링크드인 게시물 작성 전문가입니다. 전문적이고 정보가 풍부한 비즈니스 관점의 게시물을 작성하세요. 3,000자 이내로 주요 포인트를 명확히 전달하고, 독자의 참여를 유도하는 질문으로 마무리하세요.`;
+      maxLength = 3000;
+      break;
+    default:
+      systemPrompt = `당신은 소셜 미디어 콘텐츠 작성 전문가입니다. 제공된 텍스트를 소셜 미디어에 적합한 형식으로 변환하세요. 간결하면서도 핵심 메시지를 유지하고, 독자의 관심을 끌 수 있도록 작성하세요.`;
+      maxLength = 1000;
+  }
+
+  // 사용자 프롬프트 구성
+  userPrompt = `다음 텍스트를 ${platform} 플랫폼에 최적화된 게시물로 변환해주세요:
+
+${originalText}
+
+요구사항:
+1. ${maxLength}자 이내로 작성
+2. 핵심 메시지를 유지하면서 매력적인 표현 사용
+3. 플랫폼에 맞는 스타일 적용(${platform}의 특성에 맞게)
+4. 가독성 향상을 위해 단락 나누기
+5. JSON 형식 없이 텍스트만 반환`;
+
+  try {
+    // Claude API 호출
+    const response = await anthropicService.generateText(
+      systemPrompt,
+      userPrompt,
+      {
+        temperature: 0.7,
+        maxTokens: 2000,
+      }
+    );
+
+    // 응답에서 텍스트 추출
+    const generatedText = response.content[0].text;
+
+    // 텍스트 정리 (불필요한 인용 부호, JSON 형식 제거 등)
+    let cleanedText = generatedText
+      .replace(/```[\s\S]*?```/g, "") // 코드 블록 제거
+      .replace(/"{3}[\s\S]*?"{3}/g, "") // 삼중 따옴표 블록 제거
+      .replace(/^["']|["']$/g, "") // 시작/끝 따옴표 제거
+      .trim();
+
+    // 텍스트가 '{'로 시작하고 '}'로 끝나면 JSON으로 간주하고 처리
+    if (cleanedText.startsWith("{") && cleanedText.endsWith("}")) {
+      try {
+        const jsonContent = JSON.parse(cleanedText);
+        // JSON 형식인 경우 내용만 추출
+        if (jsonContent.text || jsonContent.content) {
+          cleanedText = jsonContent.text || jsonContent.content;
+        }
+      } catch (err) {
+        // JSON 파싱 실패하면 원본 텍스트 사용
+        logger.warn(`JSON 파싱 실패: ${err.message}`);
+      }
+    }
+
+    // 길이 제한
+    if (cleanedText.length > maxLength) {
+      cleanedText = cleanedText.substring(0, maxLength);
+    }
+
+    return cleanedText;
+  } catch (error) {
+    logger.error(`소셜 미디어 콘텐츠 생성 실패: ${error.message}`);
+    throw new Error(`소셜 미디어 콘텐츠 생성 실패: ${error.message}`);
+  }
+}
+
+// 모듈 내보내기에 함수 추가
+const anthropicService = module.exports;
+anthropicService.generateSocialContent = generateSocialContent;
+
 module.exports = new AnthropicService();
