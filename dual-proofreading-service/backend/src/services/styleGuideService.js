@@ -1,6 +1,6 @@
 // src/services/styleGuideService.js
 const Styleguide = require("../models/styleguide.model");
-const claudeService = require("./llm/claudeService"); // 통합된 LLM 서비스
+const anthropicService = require("./llm/anthropicService"); // 통합된 LLM 서비스
 const logger = require("../utils/logger");
 
 /**
@@ -27,24 +27,30 @@ class StyleGuideService {
       const searchText =
         text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
 
-      // 벡터 검색 가능 여부 확인
-      const hasVectors = await this.hasVectorEmbeddings();
-
-      if (hasVectors) {
-        // 벡터 검색 사용
-        logger.info("벡터 검색 사용하여 스타일 가이드 검색");
-        return this.vectorSearch(searchText, limit);
-      } else {
-        // 키워드 기반 검색 사용
-        logger.info("키워드 검색 사용하여 스타일 가이드 검색");
-        const keywords = this.extractKeywords(searchText);
-        return this.keywordSearch(keywords, limit);
+      // 1. 벡터 검색 시도
+      logger.info("벡터 검색 사용하여 스타일 가이드 검색");
+      try {
+        const results = await this.vectorSearch(searchText, limit);
+        if (results && results.length > 0) {
+          logger.info(`벡터 검색 결과: ${results.length}개`);
+          return results;
+        }
+      } catch (error) {
+        logger.error(
+          `임베딩 생성 오류: ${error.message}. 키워드 검색으로 전환합니다.`
+        );
       }
-    } catch (error) {
-      logger.error(`관련 스타일 가이드 검색 오류: ${error.message}`);
 
-      // 오류 발생 시 빈 배열 반환 (서비스 중단 방지)
-      return [];
+      // 2. 키워드 검색 (대체 방법)
+      const keywordResults = await this.keywordSearch(
+        this.extractKeywords(searchText),
+        limit
+      );
+      logger.info(`키워드 검색 결과: ${keywordResults.length}개`);
+      return keywordResults;
+    } catch (error) {
+      logger.error(`스타일 가이드 검색 오류: ${error.message}`);
+      return []; // 오류 발생 시 빈 배열 반환
     }
   }
 
@@ -204,7 +210,7 @@ class StyleGuideService {
 
       try {
         // 텍스트 임베딩 생성
-        const embedding = await claudeService.createEmbedding(searchText);
+        const embedding = await anthropicService.createEmbedding(searchText);
 
         // MongoDB Atlas Vector Search 가능 여부 확인
         let vectorSearchResults = [];
@@ -358,7 +364,7 @@ ${
 `.trim();
 
       // 임베딩 생성
-      const embedding = await claudeService.createEmbedding(embeddingText);
+      const embedding = await anthropicService.createEmbedding(embeddingText);
 
       // 임베딩 저장
       styleGuide.vector = embedding;

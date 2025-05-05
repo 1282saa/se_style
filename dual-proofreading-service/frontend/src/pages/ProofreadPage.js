@@ -78,41 +78,69 @@ const ProofreadPage = () => {
       setResults(null);
 
       // 빠른 교정 API 호출
-      const response = await fetch(
-        "http://localhost:3003/api/articles/quick-proofread",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            text: articleText,
-            userId: "user123", // 실제 환경에서는 로그인한 사용자 ID로 대체
-            metadata: {},
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:3003/api/proofread", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: articleText,
+          userId: "user123", // 실제 환경에서는 로그인한 사용자 ID로 대체
+          metadata: {},
+        }),
+      });
 
       if (!response.ok) {
-        throw new Error("API 요청 실패");
+        throw new Error(
+          `API 요청 실패: ${response.status} ${response.statusText}`
+        );
       }
 
       const result = await response.json();
+      console.log("교정 API 응답:", result); // 디버깅용
 
-      if (result.success) {
-        setResults({
-          articleId: result.data.articleId,
-          original: articleText,
-          minimal: result.data.correction1.text,
-          enhanced: result.data.correction2.text,
-        });
-      } else {
-        throw new Error(result.message || "교정 처리 실패");
+      // 응답 구조 확인
+      if (!result || !result.success) {
+        throw new Error(result?.message || "교정 처리 실패");
       }
+
+      // 필수 데이터 확인
+      if (
+        !result.data ||
+        !result.data.corrections ||
+        !Array.isArray(result.data.corrections)
+      ) {
+        throw new Error("응답 데이터 구조가 올바르지 않습니다.");
+      }
+
+      // 각 교정 타입 찾기
+      const minimalCorrection = result.data.corrections.find(
+        (c) => c.type === "minimal"
+      );
+      const enhancedCorrection = result.data.corrections.find(
+        (c) => c.type === "enhanced"
+      );
+
+      // 결과가 모두 있는지 확인
+      if (!minimalCorrection || !enhancedCorrection) {
+        console.warn("일부 교정 결과가 누락되었습니다:", {
+          minimal: !!minimalCorrection,
+          enhanced: !!enhancedCorrection,
+        });
+      }
+
+      setResults({
+        articleId: result.data.articleId,
+        original: articleText,
+        minimal: minimalCorrection?.text || "교정 결과를 불러올 수 없습니다.",
+        enhanced: enhancedCorrection?.text || "교정 결과를 불러올 수 없습니다.",
+      });
     } catch (err) {
       console.error("교정 중 오류 발생:", err);
       setError(
-        "교정을 처리하는 중 오류가 발생했습니다. 나중에 다시 시도해주세요."
+        `교정을 처리하는 중 오류가 발생했습니다: ${
+          err.message || "알 수 없는 오류"
+        }. 나중에 다시 시도해주세요.`
       );
     } finally {
       setLoading(false);

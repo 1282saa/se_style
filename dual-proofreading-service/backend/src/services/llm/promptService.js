@@ -1,14 +1,88 @@
 const config = require("../../config");
 const logger = require("../../utils/logger");
-const {
-  promptGenerator,
-  promptTemplates,
-} = require("./promptGenerator.service");
+
+/**
+ * 프롬프트 템플릿 정의
+ */
+const promptTemplates = {
+  minimal: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 최소한의 필수적인 수정만 가하여 교정해 주세요.
+
+기본 맞춤법, 띄어쓰기, 문법 오류만 수정하고, 원문의 스타일과 어휘 선택은 최대한 유지하세요.
+
+{{STYLE_GUIDES}}
+
+### 원문:
+{{ORIGINAL_TEXT}}
+
+### 출력 형식:
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "originalText": "원본 텍스트",
+      "correctedText": "교정된 텍스트",
+      "explanation": "교정 이유 설명"
+    }
+  ]
+}`,
+
+  enhanced: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 포괄적으로 개선해 주세요.
+
+기본적인 맞춤법, 띄어쓰기, 문법 오류 수정은 물론, 더 명확하고 세련된 표현으로 개선하세요.
+문장 구조를 더 읽기 쉽게 재구성하고, 적절한 어휘로 대체하며, 논리적 흐름을 개선하세요.
+불필요한 반복은 제거하고, 전문적이고 세련된 문체로 변환해 주세요.
+
+{{STYLE_GUIDES}}
+
+### 원문:
+{{ORIGINAL_TEXT}}
+
+### 출력 형식:
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "originalText": "원본 텍스트",
+      "correctedText": "교정된 텍스트",
+      "explanation": "교정 이유 설명"
+    }
+  ]
+}`,
+
+  custom: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 교정해 주세요.
+
+{{USER_PREFERENCES}}
+
+{{STYLE_GUIDES}}
+
+### 원문:
+{{ORIGINAL_TEXT}}
+
+### 출력 형식:
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "originalText": "원본 텍스트",
+      "correctedText": "교정된 텍스트",
+      "explanation": "교정 이유 설명"
+    }
+  ]
+}`,
+};
 
 /**
  * LLM 프롬프트 생성 및 관리 서비스
  */
 class PromptService {
+  constructor() {
+    this.templates = promptTemplates;
+    logger.info("PromptService 초기화 완료");
+  }
+
   /**
    * 교정 유형에 따른 프롬프트를 생성합니다.
    * @param {number} promptType - 프롬프트 유형 (1: 최소, 2: 적극적)
@@ -19,7 +93,7 @@ class PromptService {
   generatePrompt(promptType, originalText, styleGuides = []) {
     // 프롬프트 템플릿 선택
     const template =
-      promptType === 1 ? promptTemplates.minimal : promptTemplates.enhanced;
+      promptType === 1 ? this.templates.minimal : this.templates.enhanced;
 
     // 스타일 가이드 컨텍스트 생성
     const styleGuideContext = this.formatStyleGuideContext(styleGuides);
@@ -33,13 +107,7 @@ class PromptService {
       `프롬프트 유형 ${promptType} 생성 완료 (길이: ${prompt.length}자)`
     );
 
-    return {
-      type: promptType === 1 ? "minimal" : "enhanced",
-      prompt,
-      textToAnalyze: originalText,
-      includesStyleGuides: styleGuides.length > 0,
-      styleGuideCount: styleGuides.length,
-    };
+    return prompt;
   }
 
   /**
@@ -51,7 +119,7 @@ class PromptService {
    */
   generateCustomPrompt(originalText, styleGuides = [], preferences = {}) {
     // 기본 프롬프트 템플릿
-    let template = promptTemplates.custom;
+    let template = this.templates.custom;
 
     // 사용자 선호도 분석 및 적용
     const userPreferences = this.analyzePreferences(preferences);
@@ -70,14 +138,7 @@ class PromptService {
 
     logger.debug(`맞춤형 프롬프트 생성 완료 (길이: ${prompt.length}자)`);
 
-    return {
-      type: "custom",
-      prompt,
-      textToAnalyze: originalText,
-      includesStyleGuides: styleGuides.length > 0,
-      styleGuideCount: styleGuides.length,
-      preferences: userPreferences,
-    };
+    return prompt;
   }
 
   /**

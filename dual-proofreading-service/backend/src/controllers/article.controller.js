@@ -166,6 +166,9 @@ const quickProofread = async (req, res) => {
   try {
     const { text, userId = "anonymous", metadata = {} } = req.body;
 
+    // 요청 로깅
+    logger.info(`빠른 교정 API 요청 (텍스트 길이: ${text?.length || 0})`);
+
     if (!text) {
       return res.status(400).json({
         success: false,
@@ -186,6 +189,17 @@ const quickProofread = async (req, res) => {
       text,
       userId,
       metadata
+    );
+
+    // 응답 구조 로깅
+    logger.info(
+      `빠른 교정 API 응답 구조: ${JSON.stringify({
+        hasArticleId: !!result.articleId,
+        hasOriginal: !!result.original,
+        correctionsCount: result.corrections?.length || 0,
+        hasCorrections: !!result.corrections,
+        firstCorrectionHasText: result.corrections?.[0]?.text ? true : false,
+      })}`
     );
 
     res.status(200).json({

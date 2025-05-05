@@ -4,7 +4,7 @@ const Article = require("../models/article.model");
 const Correction = require("../models/correction.model");
 const UserChoice = require("../models/userChoice.model");
 const styleGuideService = require("./styleGuideService");
-const claudeService = require("./llm/claudeService"); // anthropicService를 claudeService로 통합
+const anthropicService = require("./llm/anthropicService"); // anthropicService를 anthropicService 통합
 const promptService = require("./llm/promptService");
 const logger = require("../utils/logger");
 const config = require("../config");
@@ -231,10 +231,60 @@ class ProofreadingService {
    * @private
    */
   async callClaudeAPI(prompt, cacheKey) {
-    return await claudeService.proofread(prompt, {
-      cacheKey,
-      model: config.CLAUDE_MODEL,
-    });
+    try {
+      // 요청 텍스트 추출 (원문 부분만)
+      const textToAnalyze = prompt.includes("원문:")
+        ? prompt.split("원문:")[1].split("\n")[0].trim()
+        : "";
+
+      // anthropicService 호출 전 로깅 추가
+      logger.debug(
+        `Claude API 호출 준비: 프롬프트 길이 ${prompt.length}자, 캐시키: ${
+          cacheKey || "없음"
+        }`
+      );
+
+      // anthropicService 호출 구조 수정
+      const result = await anthropicService.proofread(
+        { prompt, textToAnalyze },
+        { cacheKey, model: config.CLAUDE_MODEL }
+      );
+
+      // 결과 확인 로깅 추가
+      logger.debug(`Claude API 응답: ${JSON.stringify(result)}`);
+
+      // 결과가 undefined 또는 예상 구조가 아닌 경우 체크
+      if (!result || !result.correctedText) {
+        logger.error(
+          `유효하지 않은 Claude API 응답: ${JSON.stringify(result)}`
+        );
+        throw new Error("교정 결과가 올바른 형식이 아닙니다");
+      }
+
+      return result;
+    } catch (error) {
+      // 오류 상세 로깅
+      logger.error(`Claude API 호출 오류: ${error.message}`, {
+        stack: error.stack,
+        code: error.code || "UNKNOWN",
+      });
+
+      // 오류 유형에 따른 처리
+      if (error.name === "AbortError" || error.code === "PROOFREAD_TIMEOUT") {
+        throw new Error(
+          "교정 요청 시간이 초과되었습니다. 나중에 다시 시도해주세요."
+        );
+      }
+
+      if (error.message && error.message.includes("is not a function")) {
+        throw new Error(
+          "교정 시스템 내부 함수 오류가 발생했습니다. 관리자에게 문의하세요."
+        );
+      }
+
+      // 일반적인 오류 처리
+      throw new Error(`교정 API 호출 중 오류가 발생했습니다: ${error.message}`);
+    }
   }
 
   /**
