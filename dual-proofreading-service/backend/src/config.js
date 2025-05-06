@@ -40,6 +40,14 @@ const loadEnvVariables = () => {
 // 환경변수 로드
 loadEnvVariables();
 
+// Chroma DB 관련 설정
+const USE_CHROMA = process.env.USE_CHROMA === "true";
+const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
+const CHROMA_COLLECTION_NAME =
+  process.env.CHROMA_COLLECTION_NAME || "styleguides";
+const CHROMA_KNOWLEDGE_COLLECTION =
+  process.env.CHROMA_KNOWLEDGE_COLLECTION || "knowledge";
+
 const config = {
   // 서버 설정
   PORT: process.env.PORT || 3003,
@@ -79,6 +87,12 @@ const config = {
 
   // 비율 제한 설정
   RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX || 120, 10),
+
+  // Chroma 설정 추가
+  USE_CHROMA,
+  CHROMA_URL,
+  CHROMA_COLLECTION_NAME,
+  CHROMA_KNOWLEDGE_COLLECTION,
 };
 
 module.exports = config;

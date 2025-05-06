@@ -5,6 +5,7 @@ const anthropicService = require("./llm/anthropicService");
 const embeddingProvider = require("./rag/embeddingProvider");
 const logger = require("../utils/logger");
 const cache = require("../utils/cache");
+const knowledgeService = require("./knowledgeService");
 
 /**
  * 스타일 가이드 서비스
@@ -102,7 +103,7 @@ class StyleGuideService {
   async vectorSearch(text, limit) {
     try {
       // 텍스트 길이 제한
-      const maxTextLength = 1000;
+      const maxTextLength = 10000;
       const searchText =
         text.length > maxTextLength ? text.substring(0, maxTextLength) : text;
 
@@ -577,6 +578,249 @@ ${
     } catch (error) {
       logger.error(`스타일북 가져오기 오류: ${error.message}`);
       throw new Error(`스타일북 가져오기 중 오류 발생: ${error.message}`);
+    }
+  }
+
+  /**
+   * 서울경제 교열 규칙을 스타일 가이드 형식으로 가져옵니다.
+   * @returns {Promise<Array>} - 스타일 가이드로 변환된 서울경제 교열 규칙
+   */
+  async getSeoulEconomicRulesAsStyleguides() {
+    try {
+      // 캐시 키 생성
+      const cacheKey = "seoul_economic_rules_as_styleguides";
+
+      // 캐시 확인
+      const cachedResults = cache.get(cacheKey);
+      if (cachedResults) {
+        logger.debug(`서울경제 교열 규칙 스타일 가이드 캐시 적중`);
+        return cachedResults;
+      }
+
+      // 서울경제 교열 규칙 가져오기
+      const rules = await knowledgeService.getSeoulEconomicRules();
+      if (!rules || !rules.SeoulEconomicEditingRules) {
+        logger.warn("서울경제 교열 규칙을 가져올 수 없습니다");
+        return [];
+      }
+
+      const styleguides = [];
+
+      // 우선순위 레벨 정보 추출
+      const priorityLevels = rules.SeoulEconomicEditingRules.PriorityLevels;
+      if (priorityLevels && priorityLevels.Level) {
+        const levels = Array.isArray(priorityLevels.Level)
+          ? priorityLevels.Level
+          : [priorityLevels.Level];
+
+        levels.forEach((level) => {
+          styleguides.push({
+            section: `우선순위 레벨: ${level.id}`,
+            content: `${level.name}: ${level._}`,
+            category: "교열 규칙",
+            tags: ["우선순위", "서울경제", level.id, level.name],
+            priority: 5,
+            source: "seouleconomic-editing-rules.xml",
+            isSeoulEconomicRule: true,
+          });
+        });
+      }
+
+      // 표기 관련 규칙 추출
+      const spellingRules =
+        rules.SeoulEconomicEditingRules.SpellingAndSpacingPrinciples;
+      if (spellingRules) {
+        // 일반 원칙
+        if (
+          spellingRules.GeneralPrinciples &&
+          spellingRules.GeneralPrinciples.Principle
+        ) {
+          const principles = Array.isArray(
+            spellingRules.GeneralPrinciples.Principle
+          )
+            ? spellingRules.GeneralPrinciples.Principle
+            : [spellingRules.GeneralPrinciples.Principle];
+
+          principles.forEach((principle) => {
+            styleguides.push({
+              section: `일반 원칙: ${principle.Name}`,
+              content: `${principle.Description}\n\n적용: ${
+                principle.Application || ""
+              }`,
+              category: "표기 원칙",
+              tags: ["일반 원칙", "서울경제", principle.id],
+              priority: 4,
+              source: "seouleconomic-editing-rules.xml",
+              isSeoulEconomicRule: true,
+            });
+          });
+        }
+
+        // 띄어쓰기 원칙
+        if (
+          spellingRules.SpacingPrinciples &&
+          spellingRules.SpacingPrinciples.Principle
+        ) {
+          const principles = Array.isArray(
+            spellingRules.SpacingPrinciples.Principle
+          )
+            ? spellingRules.SpacingPrinciples.Principle
+            : [spellingRules.SpacingPrinciples.Principle];
+
+          principles.forEach((principle) => {
+            const examples =
+              principle.Examples && principle.Examples.Example
+                ? Array.isArray(principle.Examples.Example)
+                  ? principle.Examples.Example.join(", ")
+                  : principle.Examples.Example
+                : "";
+
+            styleguides.push({
+              section: `띄어쓰기 원칙: ${principle.Name}`,
+              content: `${principle.Description}\n\n예시: ${examples}\n\n${
+                principle.Exception || ""
+              }`,
+              category: "띄어쓰기",
+              tags: ["띄어쓰기", "서울경제", principle.id],
+              priority: 4,
+              source: "seouleconomic-editing-rules.xml",
+              isSeoulEconomicRule: true,
+            });
+          });
+        }
+
+        // 표기 원칙
+        if (
+          spellingRules.SpellingPrinciples &&
+          spellingRules.SpellingPrinciples.Principle
+        ) {
+          const principles = Array.isArray(
+            spellingRules.SpellingPrinciples.Principle
+          )
+            ? spellingRules.SpellingPrinciples.Principle
+            : [spellingRules.SpellingPrinciples.Principle];
+
+          principles.forEach((principle) => {
+            let content = `${principle.Description}\n\n`;
+
+            if (principle.Examples && principle.Examples.Example) {
+              const examples = Array.isArray(principle.Examples.Example)
+                ? principle.Examples.Example.join("\n")
+                : principle.Examples.Example;
+              content += `예시:\n${examples}\n\n`;
+            }
+
+            if (principle.Rules && principle.Rules.Rule) {
+              const rules = Array.isArray(principle.Rules.Rule)
+                ? principle.Rules.Rule.join("\n")
+                : principle.Rules.Rule;
+              content += `규칙:\n${rules}`;
+            }
+
+            styleguides.push({
+              section: `표기 원칙: ${principle.Name}`,
+              content: content,
+              category: "표기",
+              tags: ["표기", "서울경제", principle.id],
+              priority: 4,
+              source: "seouleconomic-editing-rules.xml",
+              isSeoulEconomicRule: true,
+            });
+          });
+        }
+      }
+
+      // 서울경제 특화 규칙 추출
+      const specificRules =
+        rules.SeoulEconomicEditingRules.SeoulEconomicSpecificRules;
+      if (specificRules) {
+        // 서울경제 특화 규칙의 각 섹션을 순회
+        Object.keys(specificRules).forEach((sectionKey) => {
+          const section = specificRules[sectionKey];
+
+          // rule 객체를 가진 항목만 처리
+          if (section && section.rule) {
+            const rules = Array.isArray(section.rule)
+              ? section.rule
+              : [section.rule];
+
+            rules.forEach((rule) => {
+              let content = "";
+
+              if (rule.description) {
+                content += `${rule.description}\n\n`;
+              }
+
+              if (rule.examples && rule.examples.example) {
+                const examples = Array.isArray(rule.examples.example)
+                  ? rule.examples.example
+                  : [rule.examples.example];
+
+                content += "예시:\n";
+                examples.forEach((example) => {
+                  content += `- ${example}\n`;
+                });
+              }
+
+              styleguides.push({
+                section: `서울경제 특화 규칙: ${rule.pattern || sectionKey}`,
+                content: content,
+                category: "서울경제 특화",
+                tags: ["서울경제", "특화 규칙", sectionKey],
+                priority: 3,
+                source: "seouleconomic-editing-rules.xml",
+                isSeoulEconomicRule: true,
+              });
+            });
+          }
+        });
+      }
+
+      // 캐시에 저장
+      cache.set(cacheKey, styleguides, 3600 * 24); // 24시간 캐시
+
+      logger.info(
+        `서울경제 교열 규칙 스타일 가이드 변환 완료: ${styleguides.length}개`
+      );
+      return styleguides;
+    } catch (error) {
+      logger.error(
+        `서울경제 교열 규칙 스타일 가이드 변환 오류: ${error.message}`
+      );
+      return [];
+    }
+  }
+
+  /**
+   * 텍스트에 적용할 모든 스타일 가이드를 찾습니다.
+   * (일반 스타일 가이드 + 서울경제 교열 규칙)
+   * @param {string} text - 검색할 텍스트
+   * @param {number} limit - 최대 결과 수
+   * @returns {Promise<Array>} - 모든 관련 스타일 가이드 배열
+   */
+  async findAllRelevantStyleguides(text, limit = 15) {
+    try {
+      // 일반 스타일 가이드 검색
+      const regularStyleguides = await this.findRelatedStyleguides(text, limit);
+
+      // 서울경제 교열 규칙 가져오기
+      const seoulEconomicStyleguides =
+        await this.getSeoulEconomicRulesAsStyleguides();
+
+      // 결합 및 우선순위 정렬
+      const allStyleguides = [
+        ...regularStyleguides,
+        ...seoulEconomicStyleguides,
+      ]
+        .sort((a, b) => (b.priority || 0) - (a.priority || 0))
+        .slice(0, limit);
+
+      logger.info(`전체 스타일 가이드 검색 결과: ${allStyleguides.length}개`);
+
+      return allStyleguides;
+    } catch (error) {
+      logger.error(`전체 스타일 가이드 검색 오류: ${error.message}`);
+      return [];
     }
   }
 }

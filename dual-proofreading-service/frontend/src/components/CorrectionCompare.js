@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { articleApi } from "../services/api";
+import PriorityLevelsGuide from "./PriorityLevelsGuide";
+import CorrectionDetails from "./CorrectionDetails";
 
 // 교열 결과를 비교 표시하는 컴포넌트
 const CorrectionCompare = ({ articleId }) => {
@@ -123,6 +125,9 @@ const CorrectionCompare = ({ articleId }) => {
         </div>
       </div>
 
+      {/* 우선순위 등급 가이드 추가 */}
+      <PriorityLevelsGuide />
+
       {/* 교열 결과 비교 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* 프롬프트1 결과 (최소한의 교정) */}
@@ -139,27 +144,10 @@ const CorrectionCompare = ({ articleId }) => {
           <div className="bg-gray-50 p-3 rounded whitespace-pre-wrap min-h-[200px]">
             {minimalCorrection?.correctedText || "결과를 불러오는 중..."}
           </div>
-          {minimalCorrection?.changes &&
-            minimalCorrection.changes.length > 0 && (
-              <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">주요 수정 사항:</h4>
-                <ul className="text-sm list-disc pl-5">
-                  {minimalCorrection.changes.slice(0, 3).map((change, idx) => (
-                    <li key={idx}>
-                      '{change.original}' → '{change.corrected}'
-                      <span className="text-gray-500 text-xs ml-1">
-                        ({change.reason})
-                      </span>
-                    </li>
-                  ))}
-                  {minimalCorrection.changes.length > 3 && (
-                    <li className="text-gray-500">
-                      그 외 {minimalCorrection.changes.length - 3}개 수정
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
+
+          {/* 최소 교정 상세 내용 */}
+          <CorrectionDetails correction={minimalCorrection} />
+
           <div className="mt-4 flex justify-center">
             <button
               className={`px-4 py-2 rounded ${
@@ -188,27 +176,10 @@ const CorrectionCompare = ({ articleId }) => {
           <div className="bg-gray-50 p-3 rounded whitespace-pre-wrap min-h-[200px]">
             {enhancedCorrection?.correctedText || "결과를 불러오는 중..."}
           </div>
-          {enhancedCorrection?.changes &&
-            enhancedCorrection.changes.length > 0 && (
-              <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">주요 수정 사항:</h4>
-                <ul className="text-sm list-disc pl-5">
-                  {enhancedCorrection.changes.slice(0, 3).map((change, idx) => (
-                    <li key={idx}>
-                      '{change.original}' → '{change.corrected}'
-                      <span className="text-gray-500 text-xs ml-1">
-                        ({change.reason})
-                      </span>
-                    </li>
-                  ))}
-                  {enhancedCorrection.changes.length > 3 && (
-                    <li className="text-gray-500">
-                      그 외 {enhancedCorrection.changes.length - 3}개 수정
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
+
+          {/* 향상된 교정 상세 내용 */}
+          <CorrectionDetails correction={enhancedCorrection} />
+
           <div className="mt-4 flex justify-center">
             <button
               className={`px-4 py-2 rounded ${

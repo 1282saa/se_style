@@ -11,6 +11,7 @@ const redis = require("../../utils/redisClient");
 const { estimateTokens } = require("../../utils/tokens");
 const axios = require("axios");
 const embeddingProvider = require("../rag/embeddingProvider");
+const responseParser = require("./responseParser");
 
 const MASK_PII = (s = "") =>
   s
@@ -129,54 +130,30 @@ class AnthropicService {
   /* ---------- private ---------- */
   #parse(r, origin) {
     try {
-      const t = r.content?.[0]?.text || "";
-      const m = {
+      const text = r.content?.[0]?.text || "";
+      const metadata = {
         model: r.model,
         promptTokens: r.usage?.input_tokens ?? 0,
         completionTokens: r.usage?.output_tokens ?? 0,
         totalTokens: r.usage?.total_tokens ?? 0,
       };
 
-      // JSON 코드 블록 추출 시도
-      let jsonContent = null;
-      const jsonBlock = t.match(/```json\s*([\s\S]*?)\s*```/);
-      if (jsonBlock && jsonBlock[1]) {
-        try {
-          jsonContent = JSON.parse(jsonBlock[1]);
-          logger.debug(`JSON 코드 블록 파싱 성공`);
-        } catch (e) {
-          logger.warn(`JSON 파싱 실패 (코드 블록): ${e.message}`);
-        }
+      // responseParser를 사용하여 Claude API 응답 파싱
+      const result = responseParser.createCorrectionResult(text, origin);
+
+      // 메타데이터 추가
+      result.metadata = metadata;
+
+      // 파싱 성공 여부 로깅
+      if (result.parsed) {
+        logger.info("Claude API 응답 JSON 파싱 성공");
+      } else {
+        logger.warn(
+          "Claude API 응답 JSON 파싱 실패, 텍스트 전체를 교정 결과로 사용"
+        );
       }
 
-      // 일반 JSON 객체 추출 시도
-      if (!jsonContent) {
-        const jsonObj = t.match(/{[\s\S]*?}/);
-        if (jsonObj && jsonObj[0]) {
-          try {
-            jsonContent = JSON.parse(jsonObj[0]);
-            logger.debug(`일반 JSON 객체 파싱 성공`);
-          } catch (e) {
-            logger.warn(`JSON 파싱 실패 (일반 객체): ${e.message}`);
-          }
-        }
-      }
-
-      // JSON이 성공적으로 파싱된 경우
-      if (jsonContent) {
-        return {
-          correctedText:
-            jsonContent.correctedText || jsonContent.corrected_text || t,
-          corrections: jsonContent.corrections || jsonContent.changes || [],
-          metadata: m,
-        };
-      }
-
-      // JSON 파싱 실패 시 텍스트 자체를 교정 결과로 사용
-      logger.warn(
-        "구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용"
-      );
-      return { correctedText: t, corrections: [], metadata: m };
+      return result;
     } catch (error) {
       logger.error(`응답 파싱 오류: ${error.message}`);
       // 기본 응답 반환
@@ -247,41 +224,7 @@ class AnthropicService {
    * @returns {Object|null} - 파싱된 객체 또는 null
    */
   safeParseJSON(text) {
-    if (!text) return null;
-
-    try {
-      // 1. 직접 파싱 시도
-      return JSON.parse(text);
-    } catch (directError) {
-      logger.debug(`직접 JSON 파싱 실패: ${directError.message}`);
-
-      try {
-        // 2. 제어 문자 제거 후 파싱 시도
-        const cleanedText = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-        return JSON.parse(cleanedText);
-      } catch (cleanError) {
-        logger.debug(`정제 후 JSON 파싱 실패: ${cleanError.message}`);
-
-        try {
-          // 3. JSON 코드 블록에서 추출 시도
-          const jsonBlockRegex = /```(?:json)?\s*({[\s\S]*?})\s*```/;
-          const match = text.match(jsonBlockRegex);
-
-          if (match && match[1]) {
-            const jsonContent = match[1]
-              .trim()
-              .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-            return JSON.parse(jsonContent);
-          }
-        } catch (blockError) {
-          logger.debug(`JSON 블록 파싱 실패: ${blockError.message}`);
-        }
-
-        // 4. 모든 방법 실패
-        logger.warn("모든 JSON 파싱 방법 실패");
-        return null;
-      }
-    }
+    return responseParser.parseClaudeResponse(text);
   }
 }
 

@@ -191,6 +191,182 @@ class MongoDBVectorAdapter {
       logger.error(`MongoDB 벡터 어댑터 연결 종료 오류: ${error.message}`);
     }
   }
+
+  /**
+   * 계층적 검색 수행 - 상위 문서 검색 후 필요시 관련 청크 검색
+   * @param {Object} model - 검색할 모델 (MongoDB 모델)
+   * @param {Array<number>} queryVector - 쿼리 벡터
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Object>} - 계층적 검색 결과
+   */
+  async hierarchicalSearch(model, queryVector, options = {}) {
+    try {
+      await this.connect();
+
+      const {
+        limit = 5,
+        minScore = 0.6,
+        filter = {},
+        scoreField = "score",
+        includeChunks = true,
+        chunksLimit = 3,
+        chunksMinScore = 0.65,
+      } = options;
+
+      // Step 1: 먼저 상위 문서 검색 (청크가 아닌 원본 문서)
+      const parentFilter = {
+        ...filter,
+        isChunk: { $ne: true }, // 청크가 아닌 문서만 검색
+      };
+
+      const parentResults = await this.search(model, queryVector, {
+        limit,
+        minScore,
+        filter: parentFilter,
+        scoreField,
+      });
+
+      // 결과가 없으면 빈 객체 반환
+      if (!parentResults || parentResults.length === 0) {
+        logger.warn("계층적 검색: 상위 문서를 찾을 수 없습니다");
+        return {
+          documents: [],
+          chunks: [],
+        };
+      }
+
+      // Step 2: 필요하면 관련 청크 검색
+      let allChunks = [];
+      if (includeChunks) {
+        // 부모 문서 ID 수집
+        const parentIds = parentResults
+          .map((doc) => doc.ruleId || doc._id)
+          .filter(Boolean);
+
+        if (parentIds.length > 0) {
+          logger.debug(
+            `계층적 검색: ${parentIds.length}개 부모 ID에 대한 청크 검색`
+          );
+
+          // 각 부모에 대한 청크 검색
+          for (const parentId of parentIds) {
+            // 부모 ID로 청크 필터링
+            const chunkFilter = {
+              ...filter,
+              isChunk: true,
+              parentId: parentId.toString(),
+            };
+
+            // 청크 검색
+            const chunks = await this.search(model, queryVector, {
+              limit: chunksLimit,
+              minScore: chunksMinScore,
+              filter: chunkFilter,
+              scoreField,
+            });
+
+            // 결과에 부모 ID 정보 추가 및 병합
+            if (chunks && chunks.length > 0) {
+              logger.debug(
+                `ID ${parentId}에 대한 청크 ${chunks.length}개 발견`
+              );
+              allChunks = [...allChunks, ...chunks];
+            }
+          }
+
+          // 점수 기준 정렬
+          allChunks.sort((a, b) => b[scoreField] - a[scoreField]);
+        }
+      }
+
+      logger.info(
+        `계층적 검색 결과: ${parentResults.length}개 문서, ${allChunks.length}개 청크`
+      );
+
+      // 최종 결과 구성
+      return {
+        documents: parentResults,
+        chunks: allChunks,
+      };
+    } catch (error) {
+      logger.error(`계층적 벡터 검색 오류: ${error.message}`);
+      return { documents: [], chunks: [] };
+    }
+  }
+
+  /**
+   * 카테고리 기반 계층적 검색 - 카테고리별로 상위 문서를 그룹화
+   * @param {Object} model - 검색할 모델 (MongoDB 모델)
+   * @param {Array<number>} queryVector - 쿼리 벡터
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Object>} - 카테고리별 그룹화된 검색 결과
+   */
+  async categorySearch(model, queryVector, options = {}) {
+    try {
+      await this.connect();
+
+      const {
+        limit = 20, // 더 많은 결과 검색 (그룹화 전)
+        minScore = 0.6,
+        filter = {},
+        scoreField = "score",
+        includeChunks = false,
+      } = options;
+
+      // 청크가 아닌 문서만 검색
+      const searchFilter = {
+        ...filter,
+        isChunk: { $ne: true },
+      };
+
+      // 검색 실행
+      const results = await this.search(model, queryVector, {
+        limit,
+        minScore,
+        filter: searchFilter,
+        scoreField,
+      });
+
+      // 결과 없으면 빈 객체 반환
+      if (!results || results.length === 0) {
+        return { categories: {} };
+      }
+
+      // 카테고리별 그룹화
+      const categories = {};
+      for (const doc of results) {
+        const category = doc.category || "기타";
+        if (!categories[category]) {
+          categories[category] = [];
+        }
+        categories[category].push(doc);
+      }
+
+      // 각 카테고리 내에서 점수 기준 정렬
+      for (const category in categories) {
+        categories[category].sort((a, b) => b[scoreField] - a[scoreField]);
+      }
+
+      // 필요시 청크 검색 추가
+      if (includeChunks) {
+        // hierarchicalSearch 메서드 호출하여 청크 포함
+        const { documents, chunks } = await this.hierarchicalSearch(
+          model,
+          queryVector,
+          options
+        );
+        return {
+          categories,
+          chunks,
+        };
+      }
+
+      return { categories };
+    } catch (error) {
+      logger.error(`카테고리 기반 검색 오류: ${error.message}`);
+      return { categories: {} };
+    }
+  }
 }
 
 module.exports = new MongoDBVectorAdapter();

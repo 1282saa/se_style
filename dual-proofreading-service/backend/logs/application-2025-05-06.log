@@ -1,0 +1,48 @@
+2025-05-06 14:04:37 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-06 14:04:37 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-06 14:04:37 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-06 14:04:37 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-06 14:04:37 [INFO] 날리지 서비스 초기화 완료 
+2025-05-06 14:04:37 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-06 14:04:37 [INFO] PromptService 초기화 완료 
+2025-05-06 14:04:37 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-06 14:04:37 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-06 14:04:37 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-06 14:04:37 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-06 14:04:37 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-06 14:04:37 [INFO] 날리지 서비스 초기화 완료 
+2025-05-06 14:04:37 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-06 14:04:37 [INFO] PromptService 초기화 완료 
+2025-05-06 14:04:37 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-06 14:04:37 [INFO] MongoDB 연결 완료 
+2025-05-06 14:04:37 [INFO] MongoDB 연결 완료 
+2025-05-06 14:04:37 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-06 14:04:41 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-06 14:04:41 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-06 14:04:41 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-06 14:04:41 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-06 14:04:41 [INFO] 날리지 서비스 초기화 완료 
+2025-05-06 14:04:41 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-06 14:04:41 [INFO] PromptService 초기화 완료 
+2025-05-06 14:04:41 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-06 14:04:41 [INFO] MongoDB 연결 완료 
+2025-05-06 14:04:41 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-06 14:04:41 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-06 14:04:41 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-06 14:04:41 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-06 14:04:41 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-06 14:04:41 [INFO] 날리지 서비스 초기화 완료 
+2025-05-06 14:04:41 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-06 14:04:41 [INFO] PromptService 초기화 완료 
+2025-05-06 14:04:41 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-06 14:04:41 [INFO] MongoDB 연결 완료 
+2025-05-06 14:04:44 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-06 14:04:44 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-06 14:04:44 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-06 14:04:44 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-06 14:04:45 [INFO] 날리지 서비스 초기화 완료 
+2025-05-06 14:04:45 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-06 14:04:45 [INFO] PromptService 초기화 완료 
+2025-05-06 14:04:45 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-06 14:04:45 [INFO] MongoDB 연결 완료 
+2025-05-06 14:04:45 [INFO] 🚀 Server @ http://localhost:3003 (development) 

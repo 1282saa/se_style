@@ -21,6 +21,7 @@ const ExampleSchema = new Schema({
  * @property {string} section - 섹션 이름
  * @property {string} content - 내용
  * @property {string} category - 카테고리
+ * @property {string} doc_type - 문서 유형 (rule, guideline, case, changelog)
  * @property {Array<string>} tags - 태그
  * @property {Array<number>} vector - 임베딩 벡터
  * @property {number} priority - 우선순위 (1: 지식, 2: 참고, 3: 제안, 4: 권고, 5: 필수)
@@ -52,6 +53,14 @@ const StyleguideSchema = new Schema(
       index: true,
       description: "스타일 가이드 카테고리",
       trim: true,
+    },
+    doc_type: {
+      type: String,
+      enum: ["rule", "guideline", "case", "changelog"],
+      default: "rule",
+      index: true,
+      description:
+        "문서 유형: 규칙(rule), 지침(guideline), 사례(case), 변경 로그(changelog)",
     },
     tags: [{ type: String }],
     examples: [ExampleSchema],
@@ -116,6 +125,8 @@ StyleguideSchema.index({ category: 1, priority: -1 });
 StyleguideSchema.index({ isActive: 1, priority: -1 }); // 활성 상태 및 우선순위로 검색 용이하게
 StyleguideSchema.index({ section: "text", content: "text", tags: "text" });
 StyleguideSchema.index({ embedding: 1 });
+StyleguideSchema.index({ doc_type: 1, version: 1 }); // 문서 유형 및 버전으로 빠른 필터링
+StyleguideSchema.index({ doc_type: 1, category: 1, isActive: 1 }); // 유형, 카테고리, 활성 상태 복합 인덱스
 
 /**
  * 검색 스코어 가상 속성
@@ -142,6 +153,7 @@ StyleguideSchema.methods.getSummary = function () {
     id: this._id,
     section: this.section,
     category: this.category,
+    doc_type: this.doc_type,
     priority: this.priority,
     tags: this.tags || [],
     isActive: this.isActive,

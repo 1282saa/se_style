@@ -7,6 +7,7 @@ const logger = require("../utils/logger");
 const vectorAdapter = require("../adapters/vector/mongodb");
 const embeddingProvider = require("./rag/embeddingProvider");
 const cache = require("../utils/cache");
+const { parseSeoulEconomicRules } = require("../utils/xmlParser");
 
 // 날리지 모델 임포트
 const Knowledge = require("../models/knowledge.model");
@@ -15,6 +16,10 @@ class KnowledgeService {
   constructor() {
     this.cacheEnabled = true;
     this.cacheTTL = 3600; // 1시간 캐시
+    this.seoulEconomicRules = null;
+    this.rulesLoaded = false;
+    this.CACHE_KEY = "seoul_economic_rules";
+    this.CACHE_TTL = 3600 * 24; // 24시간
     logger.info("날리지 서비스 초기화 완료");
   }
 
@@ -226,6 +231,165 @@ class KnowledgeService {
     }
 
     return result;
+  }
+
+  /**
+   * 서울경제 교열 규칙을 가져옵니다.
+   * @returns {Promise<object>} - 교열 규칙 객체
+   */
+  async getSeoulEconomicRules() {
+    try {
+      // 캐시 확인
+      const cachedRules = cache.get(this.CACHE_KEY);
+      if (cachedRules) {
+        logger.debug("서울경제 교열 규칙 캐시 적중");
+        return cachedRules;
+      }
+
+      // 이미 로드되었는지 확인
+      if (this.rulesLoaded && this.seoulEconomicRules) {
+        return this.seoulEconomicRules;
+      }
+
+      // XML 파일에서 규칙 로드
+      const parsedRules = await parseSeoulEconomicRules();
+      if (!parsedRules) {
+        throw new Error("서울경제 교열 규칙 로드 실패");
+      }
+
+      this.seoulEconomicRules = parsedRules;
+      this.rulesLoaded = true;
+
+      // 캐시에 저장
+      cache.set(this.CACHE_KEY, parsedRules, this.CACHE_TTL);
+
+      logger.info("서울경제 교열 규칙 로드 완료");
+      return this.seoulEconomicRules;
+    } catch (error) {
+      logger.error(`서울경제 교열 규칙 로드 오류: ${error.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * 서울경제 교열 규칙에서 특정 카테고리를 가져옵니다.
+   * @param {string} category - 카테고리 (예: 'PriorityLevels', 'SpellingAndSpacingPrinciples')
+   * @returns {Promise<object>} - 해당 카테고리 객체
+   */
+  async getRulesByCategory(category) {
+    try {
+      const rules = await this.getSeoulEconomicRules();
+      if (!rules || !rules.SeoulEconomicEditingRules) {
+        return null;
+      }
+
+      return rules.SeoulEconomicEditingRules[category] || null;
+    } catch (error) {
+      logger.error(
+        `교열 규칙 카테고리 조회 오류 (${category}): ${error.message}`
+      );
+      return null;
+    }
+  }
+
+  /**
+   * 서울경제 교열 규칙에서 특정 우선순위 레벨을 가져옵니다.
+   * @param {string} level - 우선순위 레벨 (예: 'P5', 'P4')
+   * @returns {Promise<object>} - 해당 우선순위 레벨 객체
+   */
+  async getPriorityLevel(level) {
+    try {
+      const priorityLevels = await this.getRulesByCategory("PriorityLevels");
+      if (!priorityLevels || !priorityLevels.Level) {
+        return null;
+      }
+
+      // Level이 배열인 경우와 단일 객체인 경우 모두 처리
+      const levels = Array.isArray(priorityLevels.Level)
+        ? priorityLevels.Level
+        : [priorityLevels.Level];
+
+      return levels.find((item) => item.id === level) || null;
+    } catch (error) {
+      logger.error(`우선순위 레벨 조회 오류 (${level}): ${error.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * 프롬프트에 포함할 교열 규칙 요약을 생성합니다.
+   * @returns {Promise<string>} - 프롬프트용 교열 규칙 요약
+   */
+  async generateRulesSummaryForPrompt() {
+    try {
+      const rules = await this.getSeoulEconomicRules();
+      if (!rules || !rules.SeoulEconomicEditingRules) {
+        return "";
+      }
+
+      // 핵심 원칙과 주요 규칙 추출
+      const framework =
+        rules.SeoulEconomicEditingRules.ConsistencyFramework || {};
+      const errorPrevention = framework.errorPreventionSystem || {};
+      const priorityLevels =
+        rules.SeoulEconomicEditingRules.PriorityLevels || {};
+
+      // 프롬프트 요약 구성
+      let summary = `[서울경제신문 교열 규칙 요약]\n\n`;
+
+      // 핵심 원칙
+      summary += `◆ 핵심 원칙:\n`;
+      if (errorPrevention.criticalWarning) {
+        summary += `- ${errorPrevention.criticalWarning.description}\n`;
+      }
+
+      if (
+        framework.deterministicRules &&
+        framework.deterministicRules.additionalRules
+      ) {
+        const principles =
+          framework.deterministicRules.additionalRules.principle;
+        if (Array.isArray(principles)) {
+          principles.forEach((principle) => {
+            summary += `- ${principle}\n`;
+          });
+        } else if (principles) {
+          summary += `- ${principles}\n`;
+        }
+      }
+
+      // 우선순위 레벨
+      summary += `\n◆ 우선순위 레벨:\n`;
+      if (priorityLevels.Level) {
+        const levels = Array.isArray(priorityLevels.Level)
+          ? priorityLevels.Level
+          : [priorityLevels.Level];
+
+        levels.forEach((level) => {
+          summary += `- ${level.id} (${level.name}): ${level._}\n`;
+        });
+      }
+
+      // 검증 프로토콜
+      summary += `\n◆ 검증 프로토콜:\n`;
+      if (
+        errorPrevention.verificationProtocol &&
+        errorPrevention.verificationProtocol.step
+      ) {
+        const steps = Array.isArray(errorPrevention.verificationProtocol.step)
+          ? errorPrevention.verificationProtocol.step
+          : [errorPrevention.verificationProtocol.step];
+
+        steps.forEach((step) => {
+          summary += `- ${step.order}. ${step.action}\n`;
+        });
+      }
+
+      return summary;
+    } catch (error) {
+      logger.error(`교열 규칙 요약 생성 오류: ${error.message}`);
+      return "";
+    }
   }
 }
 

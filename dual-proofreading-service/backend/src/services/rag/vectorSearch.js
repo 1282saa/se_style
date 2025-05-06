@@ -10,15 +10,28 @@
 const logger = require("../../utils/logger");
 const embeddingProvider = require("./embeddingProvider");
 const mongoAdapter = require("../../adapters/vector/mongodb");
+const chromaAdapter = require("../../adapters/vector/chromaAdapter");
 const cache = require("../../utils/cache");
 const Styleguide = require("../../models/styleguide.model");
+const config = require("../../config");
 
 /**
  * 벡터 검색 서비스
  */
 class VectorSearch {
   constructor() {
-    this.adapter = mongoAdapter;
+    // 어댑터 선택 (환경 변수나 설정에 따라)
+    this.useChroma =
+      process.env.USE_CHROMA === "true" || config.USE_CHROMA === true;
+
+    if (this.useChroma) {
+      logger.info("Chroma 벡터 검색 어댑터를 사용합니다.");
+      this.adapter = chromaAdapter;
+    } else {
+      logger.info("MongoDB 벡터 검색 어댑터를 사용합니다.");
+      this.adapter = mongoAdapter;
+    }
+
     this.defaultLimit = 10;
     this.defaultMinScore = 0.6;
   }
@@ -158,7 +171,9 @@ class VectorSearch {
       }
 
       logger.debug(
-        `벡터 검색 시작 (모델: ${model.modelName}, 차원: ${vector.length})`
+        `벡터 검색 시작 (모델: ${model.modelName}, 차원: ${
+          vector.length
+        }, 어댑터: ${this.useChroma ? "Chroma" : "MongoDB"})`
       );
       const searchOptions = this.#prepareSearchOptions(options);
       const results = await this.adapter.search(model, vector, searchOptions);
@@ -326,6 +341,219 @@ class VectorSearch {
       includeVector: options.includeVector || false,
       scoreField: options.scoreField || "score",
     };
+  }
+
+  /**
+   * 계층적 검색 수행 (문서와 관련 청크 함께 검색)
+   * @param {Array<number>} embedding - 검색 임베딩
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Object>} - 계층적 검색 결과 (documents, chunks)
+   */
+  async findHierarchical(embedding, options = {}) {
+    try {
+      if (!embedding || !Array.isArray(embedding) || embedding.length === 0) {
+        logger.warn("계층적 검색: 임베딩이 비어 있거나 유효하지 않습니다");
+        return { documents: [], chunks: [] };
+      }
+
+      // 캐시 키 생성
+      const cacheKey = `hier:${Buffer.from(
+        embedding.slice(0, 20).join(",")
+      ).toString("base64")}:${JSON.stringify(options).replace(
+        /[^a-zA-Z0-9]/g,
+        ""
+      )}`;
+
+      // 캐시 확인
+      const cachedResults = cache.get(cacheKey);
+      if (cachedResults) {
+        logger.debug(`계층적 검색 캐시 적중: ${cacheKey}`);
+        return cachedResults;
+      }
+
+      // 검색 옵션 준비
+      const searchOptions = this.#prepareSearchOptions(options);
+
+      // 계층적 검색 수행
+      logger.debug(
+        `계층적 검색 시작 (어댑터: ${this.useChroma ? "Chroma" : "MongoDB"})`
+      );
+
+      const results = await this.adapter.hierarchicalSearch(
+        Styleguide,
+        embedding,
+        searchOptions
+      );
+
+      // 결과가 있으면 캐싱
+      if (
+        results &&
+        ((results.documents && results.documents.length > 0) ||
+          (results.chunks && results.chunks.length > 0))
+      ) {
+        cache.set(cacheKey, results, 3600); // 1시간 캐싱
+      }
+
+      // 로그 기록
+      const docsCount = results.documents ? results.documents.length : 0;
+      const chunksCount = results.chunks ? results.chunks.length : 0;
+      logger.info(
+        `계층적 검색 완료: ${docsCount}개 문서, ${chunksCount}개 청크`
+      );
+
+      return results;
+    } catch (error) {
+      logger.error(`계층적 검색 오류: ${error.message}`);
+      return { documents: [], chunks: [] };
+    }
+  }
+
+  /**
+   * 문서 유형별 검색 수행
+   * @param {Array<number>} embedding - 검색 임베딩
+   * @param {string|Array<string>} docTypes - 검색할 문서 유형
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Array<Object>>} - 검색 결과
+   */
+  async findByDocType(embedding, docTypes, options = {}) {
+    try {
+      if (!embedding || !Array.isArray(embedding) || embedding.length === 0) {
+        logger.warn("문서 유형 검색: 임베딩이 비어 있거나 유효하지 않습니다");
+        return [];
+      }
+
+      if (!docTypes) {
+        logger.warn(
+          "문서 유형이 지정되지 않았습니다. 일반 검색으로 대체합니다"
+        );
+        return await this.searchByVector(Styleguide, embedding, options);
+      }
+
+      // 캐시 키 생성
+      const docTypesStr = Array.isArray(docTypes)
+        ? docTypes.join(",")
+        : docTypes;
+      const cacheKey = `dt:${docTypesStr}:${Buffer.from(
+        embedding.slice(0, 20).join(",")
+      ).toString("base64")}:${JSON.stringify(options).replace(
+        /[^a-zA-Z0-9]/g,
+        ""
+      )}`;
+
+      // 캐시 확인
+      const cachedResults = cache.get(cacheKey);
+      if (cachedResults) {
+        logger.debug(`문서 유형 검색 캐시 적중: ${cacheKey}`);
+        return cachedResults;
+      }
+
+      // 검색 옵션 준비
+      const searchOptions = this.#prepareSearchOptions(options);
+
+      // docTypes를 항상 배열로 처리
+      const types = Array.isArray(docTypes) ? docTypes : [docTypes];
+
+      // 필터에 doc_type 조건 추가
+      const filter = {
+        ...searchOptions.filter,
+        docType: { $in: types },
+      };
+
+      // 검색 수행
+      logger.debug(
+        `문서 유형 검색 시작 (유형: ${types.join(", ")}, 어댑터: ${
+          this.useChroma ? "Chroma" : "MongoDB"
+        })`
+      );
+
+      const results = await this.adapter.search(Styleguide, embedding, {
+        ...searchOptions,
+        filter,
+      });
+
+      // 결과가 있으면 캐싱
+      if (results && results.length > 0) {
+        cache.set(cacheKey, results, 3600); // 1시간 캐싱
+      }
+
+      logger.info(`문서 유형 검색 완료: ${results.length}개 결과`);
+      return results;
+    } catch (error) {
+      logger.error(`문서 유형 검색 오류: ${error.message}`);
+      return [];
+    }
+  }
+
+  /**
+   * 카테고리별 검색 수행
+   * @param {Array<number>} embedding - 검색 임베딩
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Object>} - 카테고리별 그룹화된 검색 결과
+   */
+  async findByCategory(embedding, options = {}) {
+    try {
+      if (!embedding || !Array.isArray(embedding) || embedding.length === 0) {
+        logger.warn("카테고리 검색: 임베딩이 비어 있거나 유효하지 않습니다");
+        return { categories: {} };
+      }
+
+      // 캐시 키 생성
+      const cacheKey = `cat:${Buffer.from(
+        embedding.slice(0, 20).join(",")
+      ).toString("base64")}:${JSON.stringify(options).replace(
+        /[^a-zA-Z0-9]/g,
+        ""
+      )}`;
+
+      // 캐시 확인
+      const cachedResults = cache.get(cacheKey);
+      if (cachedResults) {
+        logger.debug(`카테고리 검색 캐시 적중: ${cacheKey}`);
+        return cachedResults;
+      }
+
+      // 검색 옵션 준비
+      const searchOptions = this.#prepareSearchOptions(options);
+
+      // 카테고리 검색 수행
+      logger.debug(
+        `카테고리 검색 시작 (어댑터: ${this.useChroma ? "Chroma" : "MongoDB"})`
+      );
+
+      const results = await this.adapter.categorySearch(
+        Styleguide,
+        embedding,
+        searchOptions
+      );
+
+      // 결과가 있으면 캐싱 (최소 하나의 카테고리에 결과가 있는 경우)
+      if (
+        results &&
+        results.categories &&
+        Object.keys(results.categories).length > 0
+      ) {
+        cache.set(cacheKey, results, 3600); // 1시간 캐싱
+      }
+
+      // 로그 기록
+      const categoryCount = results.categories
+        ? Object.keys(results.categories).length
+        : 0;
+      const totalItems = results.categories
+        ? Object.values(results.categories).reduce(
+            (sum, items) => sum + items.length,
+            0
+          )
+        : 0;
+      logger.info(
+        `카테고리 검색 완료: ${categoryCount}개 카테고리, 총 ${totalItems}개 항목`
+      );
+
+      return results;
+    } catch (error) {
+      logger.error(`카테고리 검색 오류: ${error.message}`);
+      return { categories: {} };
+    }
   }
 }
 

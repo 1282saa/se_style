@@ -2,18 +2,48 @@ require("dotenv").config();
 const fs = require("fs").promises;
 const path = require("path");
 const mongoose = require("mongoose");
-// const styleGuideService = require("../src/services/styleGuideService"); // 사용하지 않으므로 제거
+const styleGuideService = require("../src/services/styleGuideService");
 const logger = require("../src/utils/logger");
 const Styleguide = require("../src/models/styleguide.model");
 const config = require("../src/config");
 const embeddingProvider = require("../src/services/rag/embeddingProvider");
-// Chroma 및 Document 관련 import 제거
-// const { Chroma } = require("@langchain/community/vectorstores/chroma");
-// const { Document } = require("@langchain/core/documents");
+const { Chroma } = require("@langchain/community/vectorstores/chroma");
+const { Document } = require("@langchain/core/documents");
 
-// --- Chroma DB 초기화 로직 전체 제거 ---
-// let vectorStore = null;
-// async function initializeVectorStore() { ... }
+// --- Chroma DB 초기화 ---
+let vectorStore = null;
+async function initializeVectorStore() {
+  const embeddings = embeddingProvider.getEmbeddingsInstance();
+  if (!embeddings) {
+    logger.error(
+      "Chroma 초기화 실패: 유효한 임베딩 모델 인스턴스를 가져올 수 없습니다."
+    );
+    return null;
+  }
+
+  try {
+    const persistDirectory = path.resolve(__dirname, "..", "db", "chromadb");
+    logger.info(`Chroma DB 영속성 디렉토리: ${persistDirectory}`);
+
+    vectorStore = new Chroma(embeddings, {
+      collectionName: config.CHROMA_COLLECTION_NAME || "styleguides",
+      persistDirectory: persistDirectory,
+    });
+
+    logger.info(
+      `Chroma DB 초기화 완료 (컬렉션: ${
+        config.CHROMA_COLLECTION_NAME || "styleguides"
+      })`
+    );
+    return vectorStore;
+  } catch (error) {
+    logger.error(`Chroma DB 초기화 오류: ${error.message}`, {
+      stack: error.stack,
+    });
+    return null;
+  }
+}
+// --- Chroma DB 초기화 끝 ---
 
 /**
  * 지정된 디렉토리와 그 하위 디렉토리에서 모든 JSON 파일을 재귀적으로 찾습니다.
@@ -41,7 +71,7 @@ async function findJsonFilesRecursive(dir) {
 }
 
 /**
- * 지정된 디렉토리에서 모든 JSON 스타일북 파일을 처리하고 MongoDB에 임베딩 저장
+ * 지정된 디렉토리에서 모든 JSON 스타일북 파일을 처리합니다.
  * @param {string} directoryPath - JSON 파일이 있는 디렉토리 경로
  */
 async function importAllStylebooks(directoryPath) {
@@ -71,28 +101,32 @@ async function importAllStylebooks(directoryPath) {
     await mongoose.connect(config.MONGODB_URI);
     logger.info("MongoDB 연결 완료");
 
-    // --- Chroma DB 초기화 호출 제거 ---
-    // vectorStore = await initializeVectorStore();
-    // if (!vectorStore) { ... }
+    vectorStore = await initializeVectorStore();
+    if (!vectorStore) {
+      logger.error("Vector Store 초기화 실패. 임포트를 중단합니다.");
+      if (mongoose.connection.readyState !== 0) {
+        await mongoose.connection.close();
+        logger.info("MongoDB 연결 종료");
+      }
+      process.exit(1);
+    }
 
     let totalMongoCount = 0;
-    let totalEmbeddingCount = 0;
-    // --- totalChromaCount 제거 ---
+    let totalChromaCount = 0;
 
     for (const filePath of jsonFiles) {
       const fileName = path.basename(filePath);
       logger.info(`파일 처리 중: ${fileName} (${filePath})`);
 
       try {
-        // MongoDB 저장 및 임베딩 생성
-        const { mongoCount, embeddingCount } = await importStylebookFromJson(
-          filePath
-          // --- vectorStore 인자 제거 ---
+        const { mongoCount, chromaCount } = await importStylebookFromJson(
+          filePath,
+          vectorStore
         );
         totalMongoCount += mongoCount;
-        totalEmbeddingCount += embeddingCount;
+        totalChromaCount += chromaCount;
         logger.info(
-          `${fileName} 파일에서 ${mongoCount}개 MongoDB 저장, ${embeddingCount}개 임베딩 생성 완료`
+          `${fileName} 파일에서 ${mongoCount}개 MongoDB, ${chromaCount}개 Chroma 처리 완료`
         );
       } catch (error) {
         logger.error(`${fileName} 파일 처리 중 오류 발생: ${error.message}`);
@@ -100,8 +134,7 @@ async function importAllStylebooks(directoryPath) {
     }
 
     logger.info(
-      `모든 파일 처리 완료: 총 ${totalMongoCount}개 MongoDB 저장, ${totalEmbeddingCount}개 임베딩 생성됨`
-      // --- Chroma 카운트 로깅 제거 ---
+      `모든 파일 처리 완료: 총 ${totalMongoCount}개 MongoDB, ${totalChromaCount}개 Chroma 항목 처리됨`
     );
   } catch (error) {
     logger.error(`스타일북 가져오기 오류: ${error.message}`, {
@@ -117,16 +150,14 @@ async function importAllStylebooks(directoryPath) {
 }
 
 /**
- * 표준화된 스타일북 JSON 파일을 파싱하여 MongoDB에 저장하고 임베딩 생성/업데이트
+ * 표준화된 스타일북 JSON 파일을 파싱하여 MongoDB와 Chroma에 저장
  * @param {string} filePath - JSON 파일 경로
- * @returns {Promise<{mongoCount: number, embeddingCount: number}>} - 처리된 항목 수
+ * @param {Chroma} vectorStoreInstance - 초기화된 Chroma 인스턴스
+ * @returns {Promise<{mongoCount: number, chromaCount: number}>} - 처리된 항목 수
  */
-async function importStylebookFromJson(
-  filePath /* --- vectorStoreInstance 인자 제거 --- */
-) {
+async function importStylebookFromJson(filePath, vectorStoreInstance) {
   let mongoCount = 0;
-  let embeddingCount = 0;
-  // --- chromaCount 제거 ---
+  let chromaCount = 0;
   const fileName = path.basename(filePath);
   try {
     const jsonData = await fs.readFile(filePath, "utf8");
@@ -136,15 +167,17 @@ async function importStylebookFromJson(
       logger.warn(
         `[${fileName}] 건너뛸 수 있습니다: 표준 스타일북 JSON 구조가 아닙니다. (file_id 또는 rules 누락)`
       );
-      return { mongoCount, embeddingCount };
+      return { mongoCount, chromaCount };
     }
 
     if (data.rules.length === 0) {
       logger.info(`[${fileName}] 처리할 규칙(rules)이 없습니다.`);
-      return { mongoCount, embeddingCount };
+      return { mongoCount, chromaCount };
     }
 
-    // 각 규칙(rule) 처리
+    const chromaDocs = [];
+    const chromaIds = [];
+
     for (const rule of data.rules) {
       if (!rule || !rule.rule_id || !rule.content) {
         logger.warn(
@@ -153,7 +186,6 @@ async function importStylebookFromJson(
         continue;
       }
 
-      // Styleguide 모델에 맞게 데이터 매핑
       const styleGuideData = {
         ruleId: rule.rule_id,
         section: rule.title || data.title || "섹션 없음",
@@ -185,51 +217,51 @@ async function importStylebookFromJson(
             (rule.content.length > 100 ? "..." : ""),
       };
 
-      // 1. MongoDB에 저장 또는 업데이트
       const savedGuide = await saveStyleGuide(styleGuideData);
-
-      // 2. MongoDB 저장 성공 시 임베딩 생성 및 업데이트
       if (savedGuide) {
         mongoCount++;
-        try {
-          // 임베딩 생성할 텍스트 구성
-          const embeddingText = `카테고리: ${
-            savedGuide.category || ""
-          }\n섹션: ${savedGuide.section || ""}\n내용: ${
-            savedGuide.content || ""
-          }`;
 
-          // 임베딩 생성
-          const embedding = await embeddingProvider.createEmbedding(
-            embeddingText
-          );
+        const metadata = {
+          ruleId: savedGuide.ruleId,
+          mongoId: savedGuide._id.toString(),
+          category: savedGuide.category,
+          section: savedGuide.section,
+          tags: savedGuide.tags || [],
+          priority: savedGuide.priority,
+          sourceFile: savedGuide.sourceFile,
+        };
+        const pageContent = `카테고리: ${metadata.category || ""}\n섹션: ${
+          metadata.section || ""
+        }\n내용: ${savedGuide.content || ""}`;
 
-          if (!embedding || embedding.length === 0) {
-            throw new Error("생성된 임베딩 벡터가 비어있습니다.");
-          }
-
-          // MongoDB 문서에 임베딩 업데이트
-          await Styleguide.updateOne(
-            { _id: savedGuide._id },
-            { $set: { embedding: embedding, updatedAt: new Date() } }
-          );
-          embeddingCount++;
-          logger.debug(`임베딩 생성 및 저장 완료: ${savedGuide.ruleId}`);
-        } catch (embeddingError) {
-          logger.error(
-            `임베딩 생성/저장 오류 (RuleID: ${savedGuide.ruleId}): ${embeddingError.message}`
-          );
-          // 임베딩 실패 시 어떻게 처리할지? (예: 로그만 남기고 계속 진행)
-        }
+        const doc = new Document({
+          pageContent: pageContent,
+          metadata: metadata,
+        });
+        chromaDocs.push(doc);
+        chromaIds.push(savedGuide.ruleId);
       }
-      // --- 기존 Chroma 저장 로직 제거 ---
+    }
+
+    if (chromaDocs.length > 0 && vectorStoreInstance) {
+      try {
+        await vectorStoreInstance.addDocuments(chromaDocs, { ids: chromaIds });
+        chromaCount = chromaDocs.length;
+        logger.debug(
+          `[${fileName}] ${chromaCount}개 문서를 Chroma에 추가/업데이트 완료`
+        );
+      } catch (chromaError) {
+        logger.error(
+          `[${fileName}] Chroma 문서 추가 중 오류: ${chromaError.message}`,
+          { stack: chromaError.stack }
+        );
+      }
     }
 
     logger.info(
-      `[${fileName}] ${mongoCount}개 MongoDB 저장, ${embeddingCount}개 임베딩 생성 완료.`
+      `[${fileName}] ${mongoCount}개 MongoDB, ${chromaCount}개 Chroma 처리 완료.`
     );
-    return { mongoCount, embeddingCount };
-    // --- Chroma 카운트 반환 제거 ---
+    return { mongoCount, chromaCount };
   } catch (error) {
     logger.error(
       `스타일북 JSON 파싱/처리 오류 (${fileName}): ${error.message}`,
@@ -240,8 +272,8 @@ async function importStylebookFromJson(
 }
 
 /**
- * 스타일 가이드를 데이터베이스에 저장 또는 업데이트 (임베딩 저장 로직은 여기서 제외)
- * @param {Object} styleGuideData - 저장할 스타일 가이드 데이터 (embedding 필드 제외)
+ * 스타일 가이드를 데이터베이스에 저장 또는 업데이트
+ * @param {Object} styleGuideData - 저장할 스타일 가이드 데이터
  * @returns {Promise<Object | null>} 저장/업데이트된 MongoDB 문서 또는 실패 시 null
  */
 async function saveStyleGuide(styleGuideData) {
@@ -250,13 +282,8 @@ async function saveStyleGuide(styleGuideData) {
       ruleId: styleGuideData.ruleId,
     });
 
-    // embedding 필드는 이 함수에서 직접 다루지 않음
-    const dataToSave = { ...styleGuideData };
-    delete dataToSave.embedding; // 혹시라도 포함되어 있다면 제거
-
     if (existingGuide) {
-      // 업데이트
-      Object.assign(existingGuide, dataToSave);
+      Object.assign(existingGuide, styleGuideData);
       existingGuide.updatedAt = new Date();
       await existingGuide.save();
       logger.debug(
@@ -264,8 +291,7 @@ async function saveStyleGuide(styleGuideData) {
       );
       return existingGuide;
     } else {
-      // 새로 생성
-      const newGuide = new Styleguide(dataToSave);
+      const newGuide = new Styleguide(styleGuideData);
       await newGuide.save();
       logger.debug(`스타일 가이드 생성 (MongoDB): ${styleGuideData.ruleId}`);
       return newGuide;
@@ -274,7 +300,7 @@ async function saveStyleGuide(styleGuideData) {
     logger.error(
       `스타일 가이드 저장 오류 (MongoDB - ${styleGuideData.ruleId}): ${error.message}`
     );
-    return null; // 실패 시 null 반환
+    return null;
   }
 }
 

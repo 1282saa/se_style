@@ -4,15 +4,16 @@ const Article = require("../models/article.model");
 const Correction = require("../models/correction.model");
 const UserChoice = require("../models/userChoice.model");
 const styleGuideService = require("./styleGuideService");
-const anthropicService = require("./llm/anthropicService"); // anthropicService를 anthropicService 통합
+const anthropicService = require("./llm/anthropicService");
 const logger = require("../utils/logger");
 const { extractChanges, calculateStats } = require("../utils/textAnalysis");
 const cache = require("../utils/cache");
 const { findRelevantStyleguides } = require("./rag/vectorSearch");
 const { selectPrompt } = require("./llm/promptSelector");
-const { buildPrompt, buildEnhancedPrompt } = require("./llm/promptBuilder");
+const promptBuilder = require("./llm/promptBuilder");
 const promptService = require("./llm/promptService");
 const knowledgeService = require("./knowledgeService");
+const ragService = require("./rag/ragService");
 const config = require("../config");
 
 /**
@@ -21,6 +22,12 @@ const config = require("../config");
  * - 다양한 교정 스타일 제공 (최소, 적극적, 맞춤형)
  */
 class ProofreadingService {
+  constructor() {
+    this.useRag = config.USE_RAG !== false;
+
+    logger.info(`교정 서비스 초기화: RAG ${this.useRag ? "사용" : "미사용"}`);
+  }
+
   /**
    * 빠른 교정을 수행합니다. (기사 생성 및 교정을 한 번에 처리)
    * @param {string} text - 교정할 텍스트
@@ -37,9 +44,14 @@ class ProofreadingService {
       // 1. 임시 기사 생성
       const article = await this.createArticle(text, userId, metadata);
 
-      // 2. 관련 스타일가이드 검색 (styleGuideService의 함수 호출로 수정)
-      const styleGuides = await styleGuideService.findRelatedStyleguides(text);
-      logger.info(`관련 스타일가이드 ${styleGuides.length}개 검색 완료`);
+      // 2. 관련 스타일가이드 검색 (RAG 서비스 사용)
+      const styleGuides = await this._findRelevantStyleGuides(text, {
+        useHierarchical: true,
+        limit: 10,
+      });
+      logger.info(
+        `관련 스타일가이드 검색 완료 (RAG 사용 여부: ${this.useRag})`
+      );
 
       // 3. 두 종류 교정 생성
       const [minimal, enhanced] = await Promise.all([
@@ -98,8 +110,15 @@ class ProofreadingService {
       // 기사 조회
       const article = await this.findArticleById(articleId);
 
-      // 관련 스타일 가이드 검색
-      const styleGuides = await findRelevantStyleguides(article.originalText);
+      // 관련 스타일 가이드 검색 (RAG 사용)
+      const styleGuides = await this._findRelevantStyleGuides(
+        article.originalText,
+        {
+          useHierarchical: options.useHierarchical ?? true,
+          docType: options.docType ?? null,
+          limit: options.guideLimit ?? 10,
+        }
+      );
 
       // 두 가지 교정 결과 생성 (병렬 처리)
       const [correction1, correction2] = await Promise.all([
@@ -139,6 +158,41 @@ class ProofreadingService {
   }
 
   /**
+   * 관련 스타일 가이드를 검색합니다. (RAG 및 기존 검색 지원)
+   * @param {string} text - 검색할 텍스트
+   * @param {Object} options - 검색 옵션
+   * @returns {Promise<Array|Object>} - 검색된 스타일 가이드
+   * @private
+   */
+  async _findRelevantStyleGuides(text, options = {}) {
+    try {
+      if (this.useRag) {
+        const guides = await ragService.findRelevantGuides(text, options);
+
+        if (!Array.isArray(guides)) {
+          if (guides.documents) {
+            return guides.documents;
+          } else if (guides.categories) {
+            return Object.values(guides.categories)
+              .flat()
+              .slice(0, options.limit || 10);
+          }
+        }
+
+        return guides;
+      } else {
+        return await findRelevantStyleguides(text, {
+          limit: options.limit || 10,
+          minScore: options.minScore || 0.6,
+        });
+      }
+    } catch (error) {
+      logger.error(`스타일 가이드 검색 오류: ${error.message}`);
+      return [];
+    }
+  }
+
+  /**
    * 지정된 프롬프트 유형으로 교정 결과를 생성합니다.
    * @param {string} articleId - 기사 ID
    * @param {string} text - 원문 텍스트
@@ -167,7 +221,7 @@ class ProofreadingService {
       // 4. 관련 날리지 규칙 검색
       const knowledgeRules = await this._findRelevantKnowledge(text);
 
-      // 5. 향상된 프롬프트 생성
+      // 5. 향상된 프롬프트 생성 (RAG 사용 여부에 따라 다른 방법 사용)
       const fullPrompt = await this._buildCorrectionPrompt(
         text,
         promptTemplate,
@@ -228,11 +282,19 @@ class ProofreadingService {
       logger.warn(
         `프롬프트 템플릿 선택 오류: ${promptError.message}, 기본 템플릿 사용`
       );
-      // 기본 템플릿 생성 (오류 발생 시)
+      // 기본 템플릿 생성 (오류 발생 시) - 구조를 selectPrompt의 반환값과 일치시킴
       return {
-        template: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 ${
-          level === "minimal" ? "최소한으로" : "적극적으로"
-        } 교정해주세요:\n\n{{ORIGINAL_TEXT}}\n\n{{KNOWLEDGE_RULES}}\n\n{{STYLE_GUIDES}}\n\n교정 결과:`,
+        prompt_id: `proofread-${level}`,
+        type: "correction",
+        level: level,
+        template: {
+          prefix: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 ${
+            level === "minimal" ? "최소한으로" : "적극적으로"
+          } 교정해주세요:\n\n{{ORIGINAL_TEXT}}\n\n{{KNOWLEDGE_RULES}}\n\n{{STYLE_GUIDES}}\n\n교정 결과:`,
+          suffix:
+            '\n\n### 출력 형식:\n```json\n{\n  "correctedText": "교정된 텍스트",\n  "corrections": [\n    {\n      "type": "교정 유형",\n      "original": "원본 텍스트",\n      "suggestion": "교정된 텍스트",\n      "explanation": "이유"\n    }\n  ]\n}\n```',
+        },
+        tags: ["grammar", level],
       };
     }
   }
@@ -257,19 +319,55 @@ class ProofreadingService {
   async _buildCorrectionPrompt(text, promptTemplate, options = {}) {
     const { styleGuides = [], knowledgeRules = [] } = options;
     try {
-      return await buildEnhancedPrompt(text, promptTemplate.template, {
-        styleGuides,
-        knowledgeRules,
-        includeKnowledge: true,
-        maxKnowledgeRules: 7,
-      });
+      // promptTemplate이 올바른 구조를 가지고 있는지 확인
+      if (!promptTemplate || !promptTemplate.template) {
+        throw new Error("유효하지 않은 프롬프트 템플릿 구조");
+      }
+
+      if (this.useRag) {
+        // RAG 서비스 사용하여 프롬프트 향상
+        // 1. 우선 기본 프롬프트 생성
+        const basicPrompt = await promptBuilder.buildPrompt(
+          promptTemplate.template,
+          {
+            ORIGINAL_TEXT: text,
+            KNOWLEDGE_RULES:
+              knowledgeService.formatRulesForPrompt(knowledgeRules),
+            STYLE_GUIDES: "{{STYLE_GUIDES_PLACEHOLDER}}", // 나중에 RAG로 대체될 자리 표시자
+          }
+        );
+
+        // 2. RAG 서비스로 스타일 가이드 통합 (기존 자리 표시자 대체)
+        const ragPrompt = await ragService.enhancePromptWithRAG(
+          basicPrompt.replace("{{STYLE_GUIDES_PLACEHOLDER}}", ""),
+          text,
+          {
+            insertPoint: "beforeInstructions",
+            maxTokens: 2000,
+            styleGuides:
+              Array.isArray(styleGuides) && styleGuides.length > 0
+                ? styleGuides
+                : undefined,
+          }
+        );
+
+        return ragPrompt;
+      } else {
+        // 기존 방식: promptBuilder 직접 사용
+        return await promptBuilder.buildPrompt(promptTemplate.template, {
+          ORIGINAL_TEXT: text,
+          KNOWLEDGE_RULES:
+            knowledgeService.formatRulesForPrompt(knowledgeRules),
+          STYLE_GUIDES:
+            styleGuides.length > 0
+              ? promptBuilder.formatStyleGuideList(styleGuides)
+              : "참조할 스타일 가이드가 없습니다.",
+        });
+      }
     } catch (error) {
       logger.error(`프롬프트 생성 오류: ${error.message}`);
       // 오류 시 필수 요소만 포함한 기본 프롬프트 반환
-      return `다음 텍스트를 교정해주세요:\n\n{{ORIGINAL_TEXT}}\n\n교정 결과:`.replace(
-        "{{ORIGINAL_TEXT}}",
-        text
-      );
+      return `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 교정해주세요:\n\n${text}\n\n교정 결과는 JSON 형식으로 반환해주세요.`;
     }
   }
 
@@ -292,7 +390,8 @@ class ProofreadingService {
   _generateCacheKey(articleId, promptType, styleGuides = []) {
     // TODO: 스타일 가이드 변경을 반영하는 더 견고한 캐시 키 생성 방식 필요
     const styleGuidesStr = styleGuides
-      .map((guide) => guide._id.toString())
+      .map((guide) => guide._id?.toString() || guide.ruleId || "")
+      .filter((id) => id)
       .join(",");
     return `correction:${articleId}:${promptType}:${styleGuidesStr}`;
   }
@@ -489,9 +588,15 @@ class ProofreadingService {
       // 기사 조회
       const article = await this.findArticleById(articleId);
 
-      // 관련 스타일 가이드 검색
-      // TODO: 맞춤형 교정 시에는 스타일 가이드 검색 방식을 다르게 할 수 있음
-      const styleGuides = await findRelevantStyleguides(article.originalText);
+      // 관련 스타일 가이드 검색 (RAG 사용)
+      const styleGuides = await this._findRelevantStyleGuides(
+        article.originalText,
+        {
+          useHierarchical: preferences.useHierarchical !== false,
+          docType: preferences.docType || ["guideline", "rule"],
+          limit: 15,
+        }
+      );
 
       // 맞춤형 교정 생성 (프롬프트 유형 3)
       const correction = await this.generateCorrection(
@@ -499,7 +604,6 @@ class ProofreadingService {
         article.originalText,
         3,
         styleGuides
-        // TODO: preferences 정보를 generateCorrection으로 전달하는 방법 고려
       );
 
       // 결과 포맷팅하여 반환
@@ -509,7 +613,7 @@ class ProofreadingService {
         text: correction.correctedText,
         type: "custom",
         changes: correction.changes,
-        preferences: preferences, // 요청된 선호도 포함
+        preferences: preferences,
       };
     } catch (error) {
       logger.error(`맞춤형 교정 생성 오류: ${error.message}`);
@@ -547,7 +651,7 @@ class ProofreadingService {
       // 사용자의 이전 선택 데이터 조회
       const userChoices = await UserChoice.find({
         userId: userId,
-        rating: { $gte: 4 }, // 높은 평가(4점 이상)를 받은 선택만 고려
+        rating: { $gte: 4 },
       }).populate("articleId");
 
       if (!userChoices || userChoices.length === 0) {
@@ -638,7 +742,7 @@ class ProofreadingService {
    */
   getDefaultPreferences() {
     return {
-      preferredStyle: "balanced", // minimal, balanced, enhanced, custom
+      preferredStyle: "balanced",
       formality: "neutral",
       conciseness: "neutral",
       focusAreas: ["spelling", "grammar"],

@@ -249,7 +249,7 @@ async function main() {
     const args = process.argv.slice(2);
     let knowledgeDir = args[0];
 
-    // 기본 경로 설정 (프롬프트 폴더 찾기)
+    // 기본 경로 설정 (프롬프트 폴더 찾기) 프롬프트 날리지 연결 코드
     if (!knowledgeDir) {
       // 프로젝트 루트에서 상대 경로로 프롬프트 폴더 찾기
       const possiblePaths = [

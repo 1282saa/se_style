@@ -6906,3 +6906,1140 @@
 2025-05-05 18:28:35 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 8개 MongoDB 저장, 8개 임베딩 생성 완료. 
 2025-05-05 18:28:35 [INFO] ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json 파일에서 8개 MongoDB 저장, 8개 임베딩 생성 완료 
 2025-05-05 18:28:35 [INFO] 파일 처리 중: ST-GUIDE-WRITING-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-001.json) 
+2025-05-05 19:29:58 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 19:29:58 [INFO] 기사 생성 완료: 68189326c3363dc98ce6fdd7 
+2025-05-05 19:29:58 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 19:29:59 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 19:29:59 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 19:30:00 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 19:30:00 [INFO] 키워드 검색 결과: 1개 
+2025-05-05 19:30:00 [INFO] 벡터 검색 결과: 1개 
+2025-05-05 19:30:00 [INFO] 관련 스타일가이드 1개 검색 완료 
+2025-05-05 19:30:01 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 19:30:01 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 19:30:01 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 19:30:01 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 19:30:01 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 19:30:01 [INFO] 5개의 관련 날리지 규칙 찾음 
+2025-05-05 19:30:03 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 19:30:03 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 19:30:03 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 19:30:04 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 19:30:04 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 19:30:04 [INFO] 5개의 관련 날리지 규칙 찾음 
+2025-05-05 19:30:20 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 19:30:20 [ERROR] 교정 결과 저장 오류: Correction validation failed: changes.0.type: `spacing` is not a valid enum value for path `type`. 
+2025-05-05 19:30:20 [ERROR] 교정 생성 오류 (ID: 68189326c3363dc98ce6fdd7, 유형: 1): 교정 결과를 저장하는 중 오류 발생: Correction validation failed: changes.0.type: `spacing` is not a valid enum value for path `type`. {"stack":"Error: 교정 결과를 저장하는 중 오류 발생: Correction validation failed: changes.0.type: `spacing` is not a valid enum value for path `type`.\n    at ProofreadingService._saveCorrection (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:358:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async ProofreadingService.generateCorrection (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:191:14)\n    at async Promise.all (index 0)\n    at async ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:45:35)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:37:18"}
+2025-05-05 19:30:20 [WARN] 대체 교정 결과 생성 (ID: 68189326c3363dc98ce6fdd7, 유형: 1) 
+2025-05-05 19:30:34 [ERROR] Claude API 호출 오류: 교정 요청 시간이 초과되었습니다. {"stack":"Error: 교정 요청 시간이 초과되었습니다.\n    at AnthropicService.proofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/llm/anthropicService.js:103:15)\n    at async ProofreadingService._callClaudeAPI (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:304:22)\n    at async ProofreadingService.generateCorrection (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:188:22)\n    at async Promise.all (index 1)\n    at async ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:45:35)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:37:18","code":"PROOFREAD_TIMEOUT"}
+2025-05-05 19:30:34 [ERROR] 교정 생성 오류 (ID: 68189326c3363dc98ce6fdd7, 유형: 2): 교정 요청 시간이 초과되었습니다. {"stack":"Error: 교정 요청 시간이 초과되었습니다.\n    at AnthropicService.proofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/llm/anthropicService.js:103:15)\n    at async ProofreadingService._callClaudeAPI (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:304:22)\n    at async ProofreadingService.generateCorrection (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:188:22)\n    at async Promise.all (index 1)\n    at async ProofreadingService.quickProofread (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/services/proofreadingService.js:45:35)\n    at async /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/src/controllers/api.controller.js:37:18"}
+2025-05-05 19:30:34 [WARN] 대체 교정 결과 생성 (ID: 68189326c3363dc98ce6fdd7, 유형: 2) 
+2025-05-05 19:30:34 [INFO] [2437b762-215b-43c4-b235-74ba6006e116] ::1 POST /api/proofread 200 36011ms 
+2025-05-05 20:01:24 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 20:05:27 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 20:05:27 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 20:05:27 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 20:05:27 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 20:05:27 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 20:05:27 [INFO] PromptService 초기화 완료 
+2025-05-05 20:05:27 [INFO] MongoDB 연결 완료 
+2025-05-05 20:05:27 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 20:05:52 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 20:05:52 [INFO] 기사 생성 완료: 68189b9017ceeffa9c97b62a 
+2025-05-05 20:05:52 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 20:05:54 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 20:05:54 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 20:05:55 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 20:05:55 [INFO] 키워드 검색 결과: 1개 
+2025-05-05 20:05:55 [INFO] 벡터 검색 결과: 1개 
+2025-05-05 20:05:55 [INFO] 관련 스타일가이드 1개 검색 완료 
+2025-05-05 20:05:56 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 20:05:56 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 20:05:56 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 20:05:56 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 20:05:56 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 20:05:56 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 20:05:56 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 20:05:56 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 20:05:56 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 20:05:56 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 20:06:19 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 20:06:19 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 20:06:19 [INFO] 교정 결과 저장 완료 (ID: 68189bab17ceeffa9c97b660) 
+2025-05-05 20:06:20 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 20:06:20 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 20:06:20 [INFO] 교정 결과 저장 완료 (ID: 68189bac17ceeffa9c97b662) 
+2025-05-05 20:06:20 [INFO] [0bf683bd-8c13-4427-a109-185c8c1f3fe0] ::1 POST /api/proofread 200 27970ms 
+2025-05-05 21:12:25 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 21:12:25 [INFO] 기사 생성 완료: 6818ab2917ceeffa9c97b664 
+2025-05-05 21:12:25 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 21:12:26 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 21:12:26 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 21:12:28 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 21:12:28 [INFO] 키워드 검색 결과: 1개 
+2025-05-05 21:12:28 [INFO] 벡터 검색 결과: 1개 
+2025-05-05 21:12:28 [INFO] 관련 스타일가이드 1개 검색 완료 
+2025-05-05 21:12:28 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:12:28 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:12:29 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:12:29 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:12:29 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:12:29 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:12:29 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:12:29 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:12:29 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:12:29 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:12:48 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:12:48 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:12:48 [INFO] 교정 결과 저장 완료 (ID: 6818ab4017ceeffa9c97b69a) 
+2025-05-05 21:12:50 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:12:50 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:12:50 [INFO] 교정 결과 저장 완료 (ID: 6818ab4217ceeffa9c97b69c) 
+2025-05-05 21:12:50 [INFO] [3cf39965-224c-474f-a34e-13b34f0f180a] ::1 POST /api/proofread 200 25263ms 
+2025-05-05 21:30:58 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 21:30:58 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 21:30:58 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 21:30:58 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 21:30:58 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 21:30:59 [INFO] PromptService 초기화 완료 
+2025-05-05 21:30:59 [INFO] MongoDB 연결 완료 
+2025-05-05 21:31:46 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 21:32:02 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 21:32:02 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 21:32:02 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 21:32:02 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 21:32:02 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 21:32:02 [INFO] PromptService 초기화 완료 
+2025-05-05 21:32:02 [INFO] MongoDB 연결 완료 
+2025-05-05 21:32:02 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 21:32:23 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 21:32:23 [INFO] 기사 생성 완료: 6818afd732fdf3e7504d6fb2 
+2025-05-05 21:32:23 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 21:32:23 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 21:32:23 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 21:32:24 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 21:32:24 [INFO] 키워드 검색 결과: 1개 
+2025-05-05 21:32:24 [INFO] 벡터 검색 결과: 1개 
+2025-05-05 21:32:24 [INFO] 관련 스타일가이드 1개 검색 완료 
+2025-05-05 21:32:24 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:32:24 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:32:24 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:32:24 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:32:24 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:32:25 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:32:25 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:32:25 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:32:25 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:32:25 [ERROR] 프롬프트 생성 오류: Cannot read properties of undefined (reading 'getPromptTemplate') 
+2025-05-05 21:32:46 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:32:46 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:32:46 [INFO] 교정 결과 저장 완료 (ID: 6818afee32fdf3e7504d6fe8) 
+2025-05-05 21:32:47 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:32:47 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:32:47 [INFO] 교정 결과 저장 완료 (ID: 6818afef32fdf3e7504d6fea) 
+2025-05-05 21:32:47 [INFO] [ed2bd243-2bc8-46fe-88c5-6e0251ceaedf] ::1 POST /api/proofread 200 24104ms 
+2025-05-05 21:38:13 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 21:40:04 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 21:40:04 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 21:40:04 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 21:40:04 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 21:40:04 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 21:40:04 [INFO] PromptService 초기화 완료 
+2025-05-05 21:40:04 [INFO] MongoDB 연결 완료 
+2025-05-05 21:40:04 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 21:40:18 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 21:40:18 [INFO] 기사 생성 완료: 6818b1b2561ae4bb125a244d 
+2025-05-05 21:40:18 [INFO] 벡터 검색 사용하여 스타일 가이드 검색 
+2025-05-05 21:40:19 [WARN] 벡터 검색 오류: $vectorSearch stage is only allowed on MongoDB Atlas 
+2025-05-05 21:40:19 [INFO] 메모리 내 코사인 유사도 계산 사용 
+2025-05-05 21:40:21 [WARN] 벡터가 있는 스타일 가이드가 없습니다. 키워드 검색으로 전환합니다. 
+2025-05-05 21:40:21 [INFO] 키워드 검색 결과: 1개 
+2025-05-05 21:40:21 [INFO] 벡터 검색 결과: 1개 
+2025-05-05 21:40:21 [INFO] 관련 스타일가이드 1개 검색 완료 
+2025-05-05 21:40:21 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:40:21 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:40:21 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 21:40:21 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:40:22 [INFO] 서울경제 교열 규칙 파싱 완료 
+2025-05-05 21:40:22 [INFO] 서울경제 교열 규칙 로드 완료 
+2025-05-05 21:40:22 [ERROR] 프롬프트 생성 오류: prompt.replace is not a function 
+2025-05-05 21:40:22 [ERROR] 프롬프트 생성 오류: prompt.replace is not a function 
+2025-05-05 21:40:22 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 21:40:22 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 21:40:22 [ERROR] 프롬프트 생성 오류: prompt.replace is not a function 
+2025-05-05 21:40:22 [ERROR] 프롬프트 생성 오류: prompt.replace is not a function 
+2025-05-05 21:40:41 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:40:41 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:40:41 [INFO] 교정 결과 저장 완료 (ID: 6818b1c9561ae4bb125a2483) 
+2025-05-05 21:40:42 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 21:40:42 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 21:40:42 [INFO] 교정 결과 저장 완료 (ID: 6818b1ca561ae4bb125a2485) 
+2025-05-05 21:40:42 [INFO] [31cefd83-318c-485d-8809-418ae05d00b4] ::1 POST /api/proofread 200 24031ms 
+2025-05-05 22:39:59 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 22:39:59 [INFO] 스타일북 가져오기 시작: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 22:39:59 [INFO] 스타일북 디렉토리 검색 중 (하위 포함): /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 22:39:59 [INFO] 총 42개의 JSON 파일을 발견했습니다. 
+2025-05-05 22:39:59 [INFO] MongoDB 연결 완료 
+2025-05-05 22:39:59 [INFO] Chroma DB 영속성 디렉토리: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/db/chromadb 
+2025-05-05 22:39:59 [INFO] Chroma DB 초기화 시도 완료 (컬렉션: styleguides) 
+2025-05-05 22:39:59 [INFO] Chroma DB 초기화 성공 
+2025-05-05 22:39:59 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json) 
+2025-05-05 22:39:59 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:10 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:10 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:40:10 [INFO] ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:40:10 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json) 
+2025-05-05 22:40:10 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:19 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:19 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:40:19 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:40:19 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json) 
+2025-05-05 22:40:19 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:29 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:29 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 22:40:29 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 22:40:29 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json) 
+2025-05-05 22:40:29 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:33 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:33 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:40:33 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:40:33 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json) 
+2025-05-05 22:40:33 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:35 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:35 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:40:35 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:40:35 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json) 
+2025-05-05 22:40:35 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:50 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:50 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:40:50 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:40:50 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json) 
+2025-05-05 22:40:50 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:40:55 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:40:55 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 완료. 
+2025-05-05 22:40:55 [INFO] ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json 파일에서 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 
+2025-05-05 22:40:55 [INFO] 파일 처리 중: ST-GUIDE-WRITING-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-001.json) 
+2025-05-05 22:40:55 [INFO] [ST-GUIDE-WRITING-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:00 [WARN] [ST-GUIDE-WRITING-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:00 [INFO] [ST-GUIDE-WRITING-001.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 22:41:00 [INFO] ST-GUIDE-WRITING-001.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 22:41:00 [INFO] 파일 처리 중: ST-GUIDE-WRITING-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-002.json) 
+2025-05-05 22:41:00 [INFO] [ST-GUIDE-WRITING-002.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:05 [WARN] [ST-GUIDE-WRITING-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:05 [INFO] [ST-GUIDE-WRITING-002.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:41:05 [INFO] ST-GUIDE-WRITING-002.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:41:05 [INFO] 파일 처리 중: ST-GUIDE-NEWSVALUE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/뉴스가치 판단/ST-GUIDE-NEWSVALUE-001.json) 
+2025-05-05 22:41:05 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:06 [WARN] [ST-GUIDE-NEWSVALUE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:06 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:41:06 [INFO] ST-GUIDE-NEWSVALUE-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:41:06 [INFO] 파일 처리 중: ST-GUIDE-AMBIGUOUS-USAGES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-AMBIGUOUS-USAGES-001.json) 
+2025-05-05 22:41:06 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:41:08 [WARN] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:08 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:41:08 [INFO] ST-GUIDE-AMBIGUOUS-USAGES-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:41:08 [INFO] 파일 처리 중: ST-GUIDE-COMMON-MISTAKES-TABLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-COMMON-MISTAKES-TABLE-001.json) 
+2025-05-05 22:41:08 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:10 [WARN] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:10 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:41:10 [INFO] ST-GUIDE-COMMON-MISTAKES-TABLE-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:41:10 [INFO] 파일 처리 중: ST-GUIDE-CONFUSING-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-CONFUSING-EXPRESSIONS-001.json) 
+2025-05-05 22:41:10 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:16 [WARN] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:16 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 22:41:16 [INFO] ST-GUIDE-CONFUSING-EXPRESSIONS-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 22:41:16 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-COMPANIES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-COMPANIES-001.json) 
+2025-05-05 22:41:16 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:20 [WARN] [ST-GUIDE-FOREIGN-COMPANIES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:20 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:41:20 [INFO] ST-GUIDE-FOREIGN-COMPANIES-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:41:20 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json) 
+2025-05-05 22:41:20 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:27 [WARN] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:27 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 완료. 
+2025-05-05 22:41:27 [INFO] ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json 파일에서 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 
+2025-05-05 22:41:27 [INFO] 파일 처리 중: ST-GUIDE-GRAMMAR-RULES-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-GRAMMAR-RULES-002.json) 
+2025-05-05 22:41:27 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:31 [WARN] [ST-GUIDE-GRAMMAR-RULES-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:31 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 완료. 
+2025-05-05 22:41:31 [INFO] ST-GUIDE-GRAMMAR-RULES-002.json 파일에서 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 
+2025-05-05 22:41:31 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json) 
+2025-05-05 22:41:31 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:34 [WARN] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:34 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:41:34 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:41:34 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json) 
+2025-05-05 22:41:34 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:36 [WARN] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:36 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:41:36 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:41:36 [INFO] 파일 처리 중: ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json) 
+2025-05-05 22:41:36 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:40 [WARN] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:40 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:41:40 [INFO] ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:41:40 [INFO] 파일 처리 중: ST-GUIDE-SPACING-RULES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-SPACING-RULES-001.json) 
+2025-05-05 22:41:40 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:48 [WARN] [ST-GUIDE-SPACING-RULES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:48 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 22:41:48 [INFO] ST-GUIDE-SPACING-RULES-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 22:41:48 [INFO] 파일 처리 중: ST-GUIDE-WRITING-CORRECTION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-WRITING-CORRECTION-001.json) 
+2025-05-05 22:41:48 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:55 [WARN] [ST-GUIDE-WRITING-CORRECTION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:55 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 22:41:55 [INFO] ST-GUIDE-WRITING-CORRECTION-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 22:41:55 [INFO] 파일 처리 중: GRAMMAR-AFFIXES-005.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-AFFIXES-005.json) 
+2025-05-05 22:41:55 [INFO] [GRAMMAR-AFFIXES-005.json] 추론된 문서 유형: guideline 
+2025-05-05 22:41:57 [WARN] [GRAMMAR-AFFIXES-005.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:41:57 [INFO] [GRAMMAR-AFFIXES-005.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:41:57 [INFO] GRAMMAR-AFFIXES-005.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:41:57 [INFO] 파일 처리 중: GRAMMAR-CONFUSING-EXPRESSIONS-012.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CONFUSING-EXPRESSIONS-012.json) 
+2025-05-05 22:41:57 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:03 [WARN] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:03 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 22:42:03 [INFO] GRAMMAR-CONFUSING-EXPRESSIONS-012.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 22:42:03 [INFO] 파일 처리 중: GRAMMAR-CORRECT-WORD-USAGE-013.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CORRECT-WORD-USAGE-013.json) 
+2025-05-05 22:42:03 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:05 [WARN] [GRAMMAR-CORRECT-WORD-USAGE-013.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:05 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:42:05 [INFO] GRAMMAR-CORRECT-WORD-USAGE-013.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:42:05 [INFO] 파일 처리 중: GRAMMAR-ENGLISH-EXPRESSIONS-017.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-ENGLISH-EXPRESSIONS-017.json) 
+2025-05-05 22:42:05 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:11 [WARN] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:11 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:42:11 [INFO] GRAMMAR-ENGLISH-EXPRESSIONS-017.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:42:11 [INFO] 파일 처리 중: GRAMMAR-EXPRESSIONS-004.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-EXPRESSIONS-004.json) 
+2025-05-05 22:42:11 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:12 [WARN] [GRAMMAR-EXPRESSIONS-004.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:12 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:42:12 [INFO] GRAMMAR-EXPRESSIONS-004.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:42:12 [INFO] 파일 처리 중: GRAMMAR-INCORRECT-HADA-VERBS-016.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-INCORRECT-HADA-VERBS-016.json) 
+2025-05-05 22:42:12 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:13 [WARN] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:13 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:13 [INFO] GRAMMAR-INCORRECT-HADA-VERBS-016.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:13 [INFO] 파일 처리 중: GRAMMAR-MIDDLE-DOT-006.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MIDDLE-DOT-006.json) 
+2025-05-05 22:42:13 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:15 [WARN] [GRAMMAR-MIDDLE-DOT-006.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:15 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:42:15 [INFO] GRAMMAR-MIDDLE-DOT-006.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:42:15 [INFO] 파일 처리 중: GRAMMAR-MONETARY-EXPRESSIONS-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MONETARY-EXPRESSIONS-002.json) 
+2025-05-05 22:42:15 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:16 [WARN] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:16 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:16 [INFO] GRAMMAR-MONETARY-EXPRESSIONS-002.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:16 [INFO] 파일 처리 중: GRAMMAR-NOUN-PLURALS-011.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-NOUN-PLURALS-011.json) 
+2025-05-05 22:42:16 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:16 [WARN] [GRAMMAR-NOUN-PLURALS-011.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:16 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:16 [INFO] GRAMMAR-NOUN-PLURALS-011.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:16 [INFO] 파일 처리 중: GRAMMAR-PARTS-OF-SPEECH-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PARTS-OF-SPEECH-001.json) 
+2025-05-05 22:42:16 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:17 [WARN] [GRAMMAR-PARTS-OF-SPEECH-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:17 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:17 [INFO] GRAMMAR-PARTS-OF-SPEECH-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:17 [INFO] 파일 처리 중: GRAMMAR-PASSIVE-EXPRESSIONS-009.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PASSIVE-EXPRESSIONS-009.json) 
+2025-05-05 22:42:17 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:18 [WARN] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:18 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:18 [INFO] GRAMMAR-PASSIVE-EXPRESSIONS-009.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:18 [INFO] 파일 처리 중: GRAMMAR-REDUNDANCY-015.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-REDUNDANCY-015.json) 
+2025-05-05 22:42:18 [INFO] [GRAMMAR-REDUNDANCY-015.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:18 [WARN] [GRAMMAR-REDUNDANCY-015.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:18 [INFO] [GRAMMAR-REDUNDANCY-015.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:18 [INFO] GRAMMAR-REDUNDANCY-015.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:18 [INFO] 파일 처리 중: GRAMMAR-SAISIOT-007.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SAISIOT-007.json) 
+2025-05-05 22:42:18 [INFO] [GRAMMAR-SAISIOT-007.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:19 [WARN] [GRAMMAR-SAISIOT-007.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:19 [INFO] [GRAMMAR-SAISIOT-007.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:19 [INFO] GRAMMAR-SAISIOT-007.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:19 [INFO] 파일 처리 중: GRAMMAR-SUFFIXES-VERBS-008.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SUFFIXES-VERBS-008.json) 
+2025-05-05 22:42:19 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:20 [WARN] [GRAMMAR-SUFFIXES-VERBS-008.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:20 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:20 [INFO] GRAMMAR-SUFFIXES-VERBS-008.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:20 [INFO] 파일 처리 중: GRAMMAR-TERMINOLOGY-003.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TERMINOLOGY-003.json) 
+2025-05-05 22:42:20 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:22 [WARN] [GRAMMAR-TERMINOLOGY-003.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:22 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:22 [INFO] GRAMMAR-TERMINOLOGY-003.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:22 [INFO] 파일 처리 중: GRAMMAR-TRANSLATED-EXPRESSIONS-014.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TRANSLATED-EXPRESSIONS-014.json) 
+2025-05-05 22:42:22 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:22 [WARN] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:22 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:22 [INFO] GRAMMAR-TRANSLATED-EXPRESSIONS-014.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:22 [INFO] 파일 처리 중: GRAMMAR-VERB-CONJUGATION-010.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-VERB-CONJUGATION-010.json) 
+2025-05-05 22:42:22 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:23 [WARN] [GRAMMAR-VERB-CONJUGATION-010.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:23 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:42:23 [INFO] GRAMMAR-VERB-CONJUGATION-010.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:42:23 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_레이아웃 요령/ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json) 
+2025-05-05 22:42:23 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:27 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:27 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 완료. 
+2025-05-05 22:42:27 [INFO] ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json 파일에서 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 
+2025-05-05 22:42:27 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json) 
+2025-05-05 22:42:27 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:34 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:34 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:42:34 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:42:34 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json) 
+2025-05-05 22:42:34 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:41 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:41 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 완료. 
+2025-05-05 22:42:41 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json 파일에서 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 
+2025-05-05 22:42:41 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json) 
+2025-05-05 22:42:41 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:42:47 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Please install chromadb as a dependency with, e.g. `npm install -S chromadb` 
+2025-05-05 22:42:47 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:42:47 [INFO] ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:42:47 [INFO] 모든 파일 처리 완료: 총 224개 MongoDB 저장, 224개 임베딩 생성, 0개 Chroma 저장, 224개 청크 생성 
+2025-05-05 22:42:47 [INFO] MongoDB 연결 종료 
+2025-05-05 22:53:58 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 22:53:58 [INFO] 스타일북 가져오기 시작: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 22:53:58 [INFO] 스타일북 디렉토리 검색 중 (하위 포함): /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 22:53:58 [INFO] 총 42개의 JSON 파일을 발견했습니다. 
+2025-05-05 22:53:58 [INFO] MongoDB 연결 완료 
+2025-05-05 22:53:58 [INFO] Chroma DB 영속성 디렉토리: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/dual-proofreading-service/backend/db/chromadb 
+2025-05-05 22:53:58 [INFO] Chroma DB 초기화 시도 완료 (컬렉션: styleguides) 
+2025-05-05 22:53:58 [INFO] Chroma DB 초기화 성공 
+2025-05-05 22:53:58 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json) 
+2025-05-05 22:53:58 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:05 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:05 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:54:05 [INFO] ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:54:05 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json) 
+2025-05-05 22:54:05 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:14 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:14 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:54:14 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:54:14 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json) 
+2025-05-05 22:54:14 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:23 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:23 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 22:54:23 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 22:54:23 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json) 
+2025-05-05 22:54:23 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:28 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:28 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:54:28 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:54:28 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json) 
+2025-05-05 22:54:28 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:31 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:31 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:54:31 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:54:31 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json) 
+2025-05-05 22:54:31 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:45 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:45 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 22:54:45 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 22:54:45 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json) 
+2025-05-05 22:54:45 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:54:50 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:50 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 완료. 
+2025-05-05 22:54:50 [INFO] ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json 파일에서 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 
+2025-05-05 22:54:50 [INFO] 파일 처리 중: ST-GUIDE-WRITING-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-001.json) 
+2025-05-05 22:54:50 [INFO] [ST-GUIDE-WRITING-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:54:53 [WARN] [ST-GUIDE-WRITING-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:53 [INFO] [ST-GUIDE-WRITING-001.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 22:54:53 [INFO] ST-GUIDE-WRITING-001.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 22:54:53 [INFO] 파일 처리 중: ST-GUIDE-WRITING-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-002.json) 
+2025-05-05 22:54:53 [INFO] [ST-GUIDE-WRITING-002.json] 추론된 문서 유형: guideline 
+2025-05-05 22:54:58 [WARN] [ST-GUIDE-WRITING-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:58 [INFO] [ST-GUIDE-WRITING-002.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:54:58 [INFO] ST-GUIDE-WRITING-002.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:54:58 [INFO] 파일 처리 중: ST-GUIDE-NEWSVALUE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/뉴스가치 판단/ST-GUIDE-NEWSVALUE-001.json) 
+2025-05-05 22:54:58 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:54:59 [WARN] [ST-GUIDE-NEWSVALUE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:54:59 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:54:59 [INFO] ST-GUIDE-NEWSVALUE-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:54:59 [INFO] 파일 처리 중: ST-GUIDE-AMBIGUOUS-USAGES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-AMBIGUOUS-USAGES-001.json) 
+2025-05-05 22:54:59 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:55:00 [WARN] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:00 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:55:00 [INFO] ST-GUIDE-AMBIGUOUS-USAGES-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:55:00 [INFO] 파일 처리 중: ST-GUIDE-COMMON-MISTAKES-TABLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-COMMON-MISTAKES-TABLE-001.json) 
+2025-05-05 22:55:00 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:01 [WARN] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:01 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:55:01 [INFO] ST-GUIDE-COMMON-MISTAKES-TABLE-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:55:01 [INFO] 파일 처리 중: ST-GUIDE-CONFUSING-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-CONFUSING-EXPRESSIONS-001.json) 
+2025-05-05 22:55:02 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:08 [WARN] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:08 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 22:55:08 [INFO] ST-GUIDE-CONFUSING-EXPRESSIONS-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 22:55:08 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-COMPANIES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-COMPANIES-001.json) 
+2025-05-05 22:55:08 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:10 [WARN] [ST-GUIDE-FOREIGN-COMPANIES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:10 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:55:10 [INFO] ST-GUIDE-FOREIGN-COMPANIES-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:55:10 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json) 
+2025-05-05 22:55:10 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:20 [WARN] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:20 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 완료. 
+2025-05-05 22:55:20 [INFO] ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json 파일에서 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 
+2025-05-05 22:55:20 [INFO] 파일 처리 중: ST-GUIDE-GRAMMAR-RULES-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-GRAMMAR-RULES-002.json) 
+2025-05-05 22:55:20 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:25 [WARN] [ST-GUIDE-GRAMMAR-RULES-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:25 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 완료. 
+2025-05-05 22:55:25 [INFO] ST-GUIDE-GRAMMAR-RULES-002.json 파일에서 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 
+2025-05-05 22:55:25 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json) 
+2025-05-05 22:55:25 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:28 [WARN] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:28 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:55:28 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:55:28 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json) 
+2025-05-05 22:55:28 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:29 [WARN] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:29 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:55:29 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:55:29 [INFO] 파일 처리 중: ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json) 
+2025-05-05 22:55:29 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:32 [WARN] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:32 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:55:32 [INFO] ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:55:32 [INFO] 파일 처리 중: ST-GUIDE-SPACING-RULES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-SPACING-RULES-001.json) 
+2025-05-05 22:55:32 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:42 [WARN] [ST-GUIDE-SPACING-RULES-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:42 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 22:55:42 [INFO] ST-GUIDE-SPACING-RULES-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 22:55:42 [INFO] 파일 처리 중: ST-GUIDE-WRITING-CORRECTION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-WRITING-CORRECTION-001.json) 
+2025-05-05 22:55:42 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:47 [WARN] [ST-GUIDE-WRITING-CORRECTION-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:47 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 22:55:47 [INFO] ST-GUIDE-WRITING-CORRECTION-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 22:55:47 [INFO] 파일 처리 중: GRAMMAR-AFFIXES-005.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-AFFIXES-005.json) 
+2025-05-05 22:55:47 [INFO] [GRAMMAR-AFFIXES-005.json] 추론된 문서 유형: guideline 
+2025-05-05 22:55:48 [WARN] [GRAMMAR-AFFIXES-005.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:48 [INFO] [GRAMMAR-AFFIXES-005.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:55:48 [INFO] GRAMMAR-AFFIXES-005.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:55:48 [INFO] 파일 처리 중: GRAMMAR-CONFUSING-EXPRESSIONS-012.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CONFUSING-EXPRESSIONS-012.json) 
+2025-05-05 22:55:48 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 추론된 문서 유형: rule 
+2025-05-05 22:55:53 [WARN] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:53 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 22:55:53 [INFO] GRAMMAR-CONFUSING-EXPRESSIONS-012.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 22:55:53 [INFO] 파일 처리 중: GRAMMAR-CORRECT-WORD-USAGE-013.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CORRECT-WORD-USAGE-013.json) 
+2025-05-05 22:55:53 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 추론된 문서 유형: rule 
+2025-05-05 22:55:56 [WARN] [GRAMMAR-CORRECT-WORD-USAGE-013.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:56 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:55:56 [INFO] GRAMMAR-CORRECT-WORD-USAGE-013.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:55:56 [INFO] 파일 처리 중: GRAMMAR-ENGLISH-EXPRESSIONS-017.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-ENGLISH-EXPRESSIONS-017.json) 
+2025-05-05 22:55:56 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 추론된 문서 유형: rule 
+2025-05-05 22:55:59 [WARN] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:55:59 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 22:55:59 [INFO] GRAMMAR-ENGLISH-EXPRESSIONS-017.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 22:55:59 [INFO] 파일 처리 중: GRAMMAR-EXPRESSIONS-004.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-EXPRESSIONS-004.json) 
+2025-05-05 22:55:59 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:01 [WARN] [GRAMMAR-EXPRESSIONS-004.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:01 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:56:01 [INFO] GRAMMAR-EXPRESSIONS-004.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:56:01 [INFO] 파일 처리 중: GRAMMAR-INCORRECT-HADA-VERBS-016.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-INCORRECT-HADA-VERBS-016.json) 
+2025-05-05 22:56:01 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:02 [WARN] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:02 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:02 [INFO] GRAMMAR-INCORRECT-HADA-VERBS-016.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:02 [INFO] 파일 처리 중: GRAMMAR-MIDDLE-DOT-006.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MIDDLE-DOT-006.json) 
+2025-05-05 22:56:02 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:03 [WARN] [GRAMMAR-MIDDLE-DOT-006.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:03 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 22:56:03 [INFO] GRAMMAR-MIDDLE-DOT-006.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 22:56:03 [INFO] 파일 처리 중: GRAMMAR-MONETARY-EXPRESSIONS-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MONETARY-EXPRESSIONS-002.json) 
+2025-05-05 22:56:03 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:05 [WARN] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:05 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:05 [INFO] GRAMMAR-MONETARY-EXPRESSIONS-002.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:05 [INFO] 파일 처리 중: GRAMMAR-NOUN-PLURALS-011.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-NOUN-PLURALS-011.json) 
+2025-05-05 22:56:05 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:06 [WARN] [GRAMMAR-NOUN-PLURALS-011.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:06 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:06 [INFO] GRAMMAR-NOUN-PLURALS-011.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:06 [INFO] 파일 처리 중: GRAMMAR-PARTS-OF-SPEECH-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PARTS-OF-SPEECH-001.json) 
+2025-05-05 22:56:06 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:07 [WARN] [GRAMMAR-PARTS-OF-SPEECH-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:07 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:07 [INFO] GRAMMAR-PARTS-OF-SPEECH-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:07 [INFO] 파일 처리 중: GRAMMAR-PASSIVE-EXPRESSIONS-009.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PASSIVE-EXPRESSIONS-009.json) 
+2025-05-05 22:56:07 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:08 [WARN] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:08 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:08 [INFO] GRAMMAR-PASSIVE-EXPRESSIONS-009.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:08 [INFO] 파일 처리 중: GRAMMAR-REDUNDANCY-015.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-REDUNDANCY-015.json) 
+2025-05-05 22:56:08 [INFO] [GRAMMAR-REDUNDANCY-015.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:09 [WARN] [GRAMMAR-REDUNDANCY-015.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:09 [INFO] [GRAMMAR-REDUNDANCY-015.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:09 [INFO] GRAMMAR-REDUNDANCY-015.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:09 [INFO] 파일 처리 중: GRAMMAR-SAISIOT-007.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SAISIOT-007.json) 
+2025-05-05 22:56:09 [INFO] [GRAMMAR-SAISIOT-007.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:10 [WARN] [GRAMMAR-SAISIOT-007.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:10 [INFO] [GRAMMAR-SAISIOT-007.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:10 [INFO] GRAMMAR-SAISIOT-007.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:10 [INFO] 파일 처리 중: GRAMMAR-SUFFIXES-VERBS-008.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SUFFIXES-VERBS-008.json) 
+2025-05-05 22:56:10 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:10 [WARN] [GRAMMAR-SUFFIXES-VERBS-008.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:10 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:10 [INFO] GRAMMAR-SUFFIXES-VERBS-008.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:10 [INFO] 파일 처리 중: GRAMMAR-TERMINOLOGY-003.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TERMINOLOGY-003.json) 
+2025-05-05 22:56:10 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:11 [WARN] [GRAMMAR-TERMINOLOGY-003.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:11 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:11 [INFO] GRAMMAR-TERMINOLOGY-003.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:11 [INFO] 파일 처리 중: GRAMMAR-TRANSLATED-EXPRESSIONS-014.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TRANSLATED-EXPRESSIONS-014.json) 
+2025-05-05 22:56:11 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:12 [WARN] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:12 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:12 [INFO] GRAMMAR-TRANSLATED-EXPRESSIONS-014.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:12 [INFO] 파일 처리 중: GRAMMAR-VERB-CONJUGATION-010.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-VERB-CONJUGATION-010.json) 
+2025-05-05 22:56:12 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:13 [WARN] [GRAMMAR-VERB-CONJUGATION-010.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:13 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 22:56:13 [INFO] GRAMMAR-VERB-CONJUGATION-010.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 22:56:13 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_레이아웃 요령/ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json) 
+2025-05-05 22:56:13 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:17 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:17 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 완료. 
+2025-05-05 22:56:17 [INFO] ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json 파일에서 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 
+2025-05-05 22:56:17 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json) 
+2025-05-05 22:56:17 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:21 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:21 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 22:56:21 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 22:56:21 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json) 
+2025-05-05 22:56:21 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:27 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 22:56:27 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 완료. 
+2025-05-05 22:56:27 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json 파일에서 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 
+2025-05-05 22:56:27 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json) 
+2025-05-05 22:56:27 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json] 추론된 문서 유형: rule 
+2025-05-05 22:56:35 [WARN] [ST-JUDGE-WRITINGPRINCIPLE-TITLE-001.json] Chroma 문서 추가 중 오류 발생 (무시하고 계속 진행): Chroma getOrCreateCollection error: ChromaConnectionError: Failed to connect to chromadb. Make sure your server is running and try again. If you are running from a browser, make sure that your chromadb instance is configured to allow requests from the current origin using the CHROMA_SERVER_CORS_ALLOW_ORIGINS environment variable. 
+2025-05-05 23:13:47 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:13:47 [INFO] 스타일북 가져오기 시작: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 23:13:47 [INFO] 스타일북 디렉토리 검색 중 (하위 포함): /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 23:13:47 [INFO] 총 42개의 JSON 파일을 발견했습니다. 
+2025-05-05 23:13:47 [INFO] MongoDB 연결 완료 
+2025-05-05 23:13:47 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json) 
+2025-05-05 23:13:47 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:13:56 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 23:13:56 [INFO] ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 23:13:56 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json) 
+2025-05-05 23:13:56 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:05 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 23:14:05 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 23:14:05 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json) 
+2025-05-05 23:14:05 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:13 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 23:14:13 [INFO] ST-JUDGE-WRITINGPRINCIPLE-NUMBER-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 23:14:13 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json) 
+2025-05-05 23:14:13 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:16 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 23:14:16 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ORGANIZATION-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 23:14:16 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json) 
+2025-05-05 23:14:16 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:19 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 23:14:19 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PLACE-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 23:14:19 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json) 
+2025-05-05 23:14:19 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:25 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 23:14:25 [INFO] ST-JUDGE-WRITINGPRINCIPLE-PUNCTUATION-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 23:14:25 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json) 
+2025-05-05 23:14:25 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:31 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json] 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 완료. 
+2025-05-05 23:14:31 [INFO] ST-JUDGE-WRITINGPRINCIPLE-TIMEDATE-001.json 파일에서 8개 MongoDB 저장, 8개 임베딩 생성, 0개 Chroma 저장, 8개 청크 생성 
+2025-05-05 23:14:31 [INFO] 파일 처리 중: ST-GUIDE-WRITING-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-001.json) 
+2025-05-05 23:14:31 [INFO] [ST-GUIDE-WRITING-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:34 [INFO] [ST-GUIDE-WRITING-001.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 23:14:34 [INFO] ST-GUIDE-WRITING-001.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 23:14:34 [INFO] 파일 처리 중: ST-GUIDE-WRITING-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사작성 요령/ST-GUIDE-WRITING-002.json) 
+2025-05-05 23:14:34 [INFO] [ST-GUIDE-WRITING-002.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:37 [INFO] [ST-GUIDE-WRITING-002.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 23:14:37 [INFO] ST-GUIDE-WRITING-002.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 23:14:37 [INFO] 파일 처리 중: ST-GUIDE-NEWSVALUE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/뉴스가치 판단/ST-GUIDE-NEWSVALUE-001.json) 
+2025-05-05 23:14:37 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:38 [INFO] [ST-GUIDE-NEWSVALUE-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 23:14:38 [INFO] ST-GUIDE-NEWSVALUE-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 23:14:38 [INFO] 파일 처리 중: ST-GUIDE-AMBIGUOUS-USAGES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-AMBIGUOUS-USAGES-001.json) 
+2025-05-05 23:14:38 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:14:38 [INFO] [ST-GUIDE-AMBIGUOUS-USAGES-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:14:38 [INFO] ST-GUIDE-AMBIGUOUS-USAGES-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:14:38 [INFO] 파일 처리 중: ST-GUIDE-COMMON-MISTAKES-TABLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-COMMON-MISTAKES-TABLE-001.json) 
+2025-05-05 23:14:38 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:39 [INFO] [ST-GUIDE-COMMON-MISTAKES-TABLE-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:14:39 [INFO] ST-GUIDE-COMMON-MISTAKES-TABLE-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:14:39 [INFO] 파일 처리 중: ST-GUIDE-CONFUSING-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-CONFUSING-EXPRESSIONS-001.json) 
+2025-05-05 23:14:39 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:44 [INFO] [ST-GUIDE-CONFUSING-EXPRESSIONS-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 23:14:44 [INFO] ST-GUIDE-CONFUSING-EXPRESSIONS-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 23:14:44 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-COMPANIES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-COMPANIES-001.json) 
+2025-05-05 23:14:44 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:46 [INFO] [ST-GUIDE-FOREIGN-COMPANIES-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 23:14:46 [INFO] ST-GUIDE-FOREIGN-COMPANIES-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 23:14:46 [INFO] 파일 처리 중: ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json) 
+2025-05-05 23:14:46 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:54 [INFO] [ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json] 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 완료. 
+2025-05-05 23:14:54 [INFO] ST-GUIDE-FOREIGN-WORDS-DETAILED-001.json 파일에서 15개 MongoDB 저장, 15개 임베딩 생성, 0개 Chroma 저장, 15개 청크 생성 
+2025-05-05 23:14:54 [INFO] 파일 처리 중: ST-GUIDE-GRAMMAR-RULES-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-GRAMMAR-RULES-002.json) 
+2025-05-05 23:14:54 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:58 [INFO] [ST-GUIDE-GRAMMAR-RULES-002.json] 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 완료. 
+2025-05-05 23:14:58 [INFO] ST-GUIDE-GRAMMAR-RULES-002.json 파일에서 7개 MongoDB 저장, 7개 임베딩 생성, 0개 Chroma 저장, 7개 청크 생성 
+2025-05-05 23:14:58 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json) 
+2025-05-05 23:14:58 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:14:59 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 23:14:59 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-001.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 23:14:59 [INFO] 파일 처리 중: ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json) 
+2025-05-05 23:14:59 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:15:00 [INFO] [ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 23:15:00 [INFO] ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 23:15:00 [INFO] 파일 처리 중: ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json) 
+2025-05-05 23:15:00 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:15:03 [INFO] [ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 23:15:03 [INFO] ST-GUIDE-NEUTRAL-EXPRESSIONS-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 23:15:03 [INFO] 파일 처리 중: ST-GUIDE-SPACING-RULES-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-SPACING-RULES-001.json) 
+2025-05-05 23:15:03 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:15:12 [INFO] [ST-GUIDE-SPACING-RULES-001.json] 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 완료. 
+2025-05-05 23:15:12 [INFO] ST-GUIDE-SPACING-RULES-001.json 파일에서 14개 MongoDB 저장, 14개 임베딩 생성, 0개 Chroma 저장, 14개 청크 생성 
+2025-05-05 23:15:12 [INFO] 파일 처리 중: ST-GUIDE-WRITING-CORRECTION-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/ST-GUIDE-WRITING-CORRECTION-001.json) 
+2025-05-05 23:15:12 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 추론된 문서 유형: guideline 
+2025-05-05 23:15:17 [INFO] [ST-GUIDE-WRITING-CORRECTION-001.json] 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 완료. 
+2025-05-05 23:15:17 [INFO] ST-GUIDE-WRITING-CORRECTION-001.json 파일에서 10개 MongoDB 저장, 10개 임베딩 생성, 0개 Chroma 저장, 10개 청크 생성 
+2025-05-05 23:15:17 [INFO] 파일 처리 중: GRAMMAR-AFFIXES-005.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-AFFIXES-005.json) 
+2025-05-05 23:15:17 [INFO] [GRAMMAR-AFFIXES-005.json] 추론된 문서 유형: guideline 
+2025-05-05 23:15:18 [INFO] [GRAMMAR-AFFIXES-005.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:18 [INFO] GRAMMAR-AFFIXES-005.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:18 [INFO] 파일 처리 중: GRAMMAR-CONFUSING-EXPRESSIONS-012.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CONFUSING-EXPRESSIONS-012.json) 
+2025-05-05 23:15:18 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:20 [INFO] [GRAMMAR-CONFUSING-EXPRESSIONS-012.json] 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 완료. 
+2025-05-05 23:15:20 [INFO] GRAMMAR-CONFUSING-EXPRESSIONS-012.json 파일에서 5개 MongoDB 저장, 5개 임베딩 생성, 0개 Chroma 저장, 5개 청크 생성 
+2025-05-05 23:15:20 [INFO] 파일 처리 중: GRAMMAR-CORRECT-WORD-USAGE-013.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-CORRECT-WORD-USAGE-013.json) 
+2025-05-05 23:15:20 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:22 [INFO] [GRAMMAR-CORRECT-WORD-USAGE-013.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 23:15:22 [INFO] GRAMMAR-CORRECT-WORD-USAGE-013.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 23:15:22 [INFO] 파일 처리 중: GRAMMAR-ENGLISH-EXPRESSIONS-017.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-ENGLISH-EXPRESSIONS-017.json) 
+2025-05-05 23:15:22 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:23 [INFO] [GRAMMAR-ENGLISH-EXPRESSIONS-017.json] 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 완료. 
+2025-05-05 23:15:23 [INFO] GRAMMAR-ENGLISH-EXPRESSIONS-017.json 파일에서 4개 MongoDB 저장, 4개 임베딩 생성, 0개 Chroma 저장, 4개 청크 생성 
+2025-05-05 23:15:23 [INFO] 파일 처리 중: GRAMMAR-EXPRESSIONS-004.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-EXPRESSIONS-004.json) 
+2025-05-05 23:15:23 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:26 [INFO] [GRAMMAR-EXPRESSIONS-004.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 23:15:26 [INFO] GRAMMAR-EXPRESSIONS-004.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 23:15:26 [INFO] 파일 처리 중: GRAMMAR-INCORRECT-HADA-VERBS-016.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-INCORRECT-HADA-VERBS-016.json) 
+2025-05-05 23:15:26 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:26 [INFO] [GRAMMAR-INCORRECT-HADA-VERBS-016.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:26 [INFO] GRAMMAR-INCORRECT-HADA-VERBS-016.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:26 [INFO] 파일 처리 중: GRAMMAR-MIDDLE-DOT-006.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MIDDLE-DOT-006.json) 
+2025-05-05 23:15:26 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:27 [INFO] [GRAMMAR-MIDDLE-DOT-006.json] 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 완료. 
+2025-05-05 23:15:27 [INFO] GRAMMAR-MIDDLE-DOT-006.json 파일에서 2개 MongoDB 저장, 2개 임베딩 생성, 0개 Chroma 저장, 2개 청크 생성 
+2025-05-05 23:15:27 [INFO] 파일 처리 중: GRAMMAR-MONETARY-EXPRESSIONS-002.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-MONETARY-EXPRESSIONS-002.json) 
+2025-05-05 23:15:27 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:27 [INFO] [GRAMMAR-MONETARY-EXPRESSIONS-002.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:27 [INFO] GRAMMAR-MONETARY-EXPRESSIONS-002.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:27 [INFO] 파일 처리 중: GRAMMAR-NOUN-PLURALS-011.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-NOUN-PLURALS-011.json) 
+2025-05-05 23:15:27 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:28 [INFO] [GRAMMAR-NOUN-PLURALS-011.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:28 [INFO] GRAMMAR-NOUN-PLURALS-011.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:28 [INFO] 파일 처리 중: GRAMMAR-PARTS-OF-SPEECH-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PARTS-OF-SPEECH-001.json) 
+2025-05-05 23:15:28 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:28 [INFO] [GRAMMAR-PARTS-OF-SPEECH-001.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:28 [INFO] GRAMMAR-PARTS-OF-SPEECH-001.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:28 [INFO] 파일 처리 중: GRAMMAR-PASSIVE-EXPRESSIONS-009.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-PASSIVE-EXPRESSIONS-009.json) 
+2025-05-05 23:15:28 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:29 [INFO] [GRAMMAR-PASSIVE-EXPRESSIONS-009.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:29 [INFO] GRAMMAR-PASSIVE-EXPRESSIONS-009.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:29 [INFO] 파일 처리 중: GRAMMAR-REDUNDANCY-015.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-REDUNDANCY-015.json) 
+2025-05-05 23:15:29 [INFO] [GRAMMAR-REDUNDANCY-015.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:29 [INFO] [GRAMMAR-REDUNDANCY-015.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:29 [INFO] GRAMMAR-REDUNDANCY-015.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:29 [INFO] 파일 처리 중: GRAMMAR-SAISIOT-007.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SAISIOT-007.json) 
+2025-05-05 23:15:29 [INFO] [GRAMMAR-SAISIOT-007.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-SAISIOT-007.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:30 [INFO] GRAMMAR-SAISIOT-007.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:30 [INFO] 파일 처리 중: GRAMMAR-SUFFIXES-VERBS-008.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-SUFFIXES-VERBS-008.json) 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-SUFFIXES-VERBS-008.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:30 [INFO] GRAMMAR-SUFFIXES-VERBS-008.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:30 [INFO] 파일 처리 중: GRAMMAR-TERMINOLOGY-003.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TERMINOLOGY-003.json) 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-TERMINOLOGY-003.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:30 [INFO] GRAMMAR-TERMINOLOGY-003.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:30 [INFO] 파일 처리 중: GRAMMAR-TRANSLATED-EXPRESSIONS-014.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-TRANSLATED-EXPRESSIONS-014.json) 
+2025-05-05 23:15:30 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:31 [INFO] [GRAMMAR-TRANSLATED-EXPRESSIONS-014.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:31 [INFO] GRAMMAR-TRANSLATED-EXPRESSIONS-014.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:31 [INFO] 파일 처리 중: GRAMMAR-VERB-CONJUGATION-010.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/자주 틀리는 말/문법/GRAMMAR-VERB-CONJUGATION-010.json) 
+2025-05-05 23:15:31 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:32 [INFO] [GRAMMAR-VERB-CONJUGATION-010.json] 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 완료. 
+2025-05-05 23:15:32 [INFO] GRAMMAR-VERB-CONJUGATION-010.json 파일에서 1개 MongoDB 저장, 1개 임베딩 생성, 0개 Chroma 저장, 1개 청크 생성 
+2025-05-05 23:15:32 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_레이아웃 요령/ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json) 
+2025-05-05 23:15:32 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:36 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json] 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 완료. 
+2025-05-05 23:15:36 [INFO] ST-JUDGE-WRITINGPRINCIPLE-LAYOUT-001.json 파일에서 9개 MongoDB 저장, 9개 임베딩 생성, 0개 Chroma 저장, 9개 청크 생성 
+2025-05-05 23:15:36 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json) 
+2025-05-05 23:15:36 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:15:43 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json] 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 완료. 
+2025-05-05 23:15:43 [INFO] ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE-001.json 파일에서 6개 MongoDB 저장, 6개 임베딩 생성, 0개 Chroma 저장, 6개 청크 생성 
+2025-05-05 23:15:43 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/제목과 레이아웃_제목달기/ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json) 
+2025-05-05 23:15:43 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-ARTICELTYPE_TITLE_EXAM-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:17:43 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:17:43 [INFO] 스타일북 가져오기 시작: /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 23:17:43 [INFO] 스타일북 디렉토리 검색 중 (하위 포함): /Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북 
+2025-05-05 23:17:43 [INFO] 총 42개의 JSON 파일을 발견했습니다. 
+2025-05-05 23:17:43 [INFO] MongoDB 연결 완료 
+2025-05-05 23:17:43 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json) 
+2025-05-05 23:17:43 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:17:50 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json] 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 완료. 
+2025-05-05 23:17:50 [INFO] ST-JUDGE-WRITINGPRINCIPLE-MISCELLANEOUS-001.json 파일에서 13개 MongoDB 저장, 13개 임베딩 생성, 0개 Chroma 저장, 13개 청크 생성 
+2025-05-05 23:17:50 [INFO] 파일 처리 중: ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json (/Users/yeong-gwang/Desktop/work/서울경제신문/개발작업/맞춤형교열시스템개발/스타일북/기사 작성 준칙/ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json) 
+2025-05-05 23:17:50 [INFO] [ST-JUDGE-WRITINGPRINCIPLE-NAME-001.json] 추론된 문서 유형: rule 
+2025-05-05 23:18:00 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 23:18:00 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:18:00 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 23:18:00 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 23:18:00 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 23:18:00 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-05 23:18:00 [INFO] PromptService 초기화 완료 
+2025-05-05 23:18:00 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-05 23:18:01 [INFO] MongoDB 연결 완료 
+2025-05-05 23:18:12 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 23:18:28 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 23:18:29 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:18:29 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 23:18:29 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 23:18:29 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 23:18:29 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-05 23:18:29 [INFO] PromptService 초기화 완료 
+2025-05-05 23:18:29 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-05 23:18:29 [INFO] MongoDB 연결 완료 
+2025-05-05 23:18:29 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 23:18:59 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 23:18:59 [INFO] 기사 생성 완료: 6818c8d33f0f20b325113c5c 
+2025-05-05 23:19:00 [ERROR] RAG 가이드 검색 오류: vectorSearch.findHierarchical is not a function 
+2025-05-05 23:19:00 [INFO] 키워드 검색 결과: 0개 
+2025-05-05 23:19:00 [INFO] 대체 키워드 검색 완료: 0개 결과 
+2025-05-05 23:19:00 [INFO] 관련 스타일가이드 검색 완료 (RAG 사용 여부: true) 
+2025-05-05 23:19:00 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:19:00 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 23:19:00 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 23:19:00 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:19:00 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 23:19:00 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 23:19:01 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:19:01 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:19:01 [ERROR] 통합 검색 오류: vectorSearch.findHierarchical is not a function 
+2025-05-05 23:19:01 [INFO] RAG 검색 완료 (전략: combined) 
+2025-05-05 23:19:01 [INFO] 관련 가이드가 없어 기본 프롬프트 사용 
+2025-05-05 23:19:01 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:19:01 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:19:01 [ERROR] 통합 검색 오류: vectorSearch.findHierarchical is not a function 
+2025-05-05 23:19:01 [INFO] RAG 검색 완료 (전략: combined) 
+2025-05-05 23:19:01 [INFO] 관련 가이드가 없어 기본 프롬프트 사용 
+2025-05-05 23:19:17 [WARN] 모든 JSON 파싱 방법 실패 
+2025-05-05 23:19:17 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 23:19:17 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 23:19:17 [INFO] 교정 결과 저장 완료 (ID: 6818c8e53f0f20b325113c91) 
+2025-05-05 23:19:38 [WARN] 모든 JSON 파싱 방법 실패 
+2025-05-05 23:19:38 [WARN] 구조화된 JSON 응답을 찾을 수 없음, 텍스트 전체를 교정 결과로 사용 
+2025-05-05 23:19:38 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 23:19:38 [INFO] 교정 결과 저장 완료 (ID: 6818c8fa3f0f20b325113c93) 
+2025-05-05 23:19:38 [INFO] [663951f5-ce8c-4493-9150-53c8c8cc2b05] ::1 POST /api/proofread 200 39085ms 
+2025-05-05 23:33:27 [INFO] ⏼  종료 시그널 수신, 서버 정리 중… 
+2025-05-05 23:33:29 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:33:29 [INFO] 스타일가이드 임베딩 생성 스크립트 시작 
+2025-05-05 23:33:30 [INFO] MongoDB 연결 성공: mongodb://localhost:27017/proofreading-service 
+2025-05-05 23:33:30 [INFO] 임베딩이 없는 문서 수: 199 
+2025-05-05 23:33:30 [INFO] 배치 처리 중: 1~20/199 
+2025-05-05 23:33:30 [INFO] 문서 ID 68187e3f9d3f7f152edb0a61: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:30 [INFO] 문서 ID 68187e3e9d3f7f152edb0a52: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:31 [INFO] 문서 ID 68187e409d3f7f152edb0a66: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:31 [INFO] 문서 ID 68187e409d3f7f152edb0a6b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:31 [INFO] 문서 ID 68187e409d3f7f152edb0a70: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:32 [INFO] 문서 ID 68187e419d3f7f152edb0a75: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:32 [INFO] 문서 ID 68187e419d3f7f152edb0a7a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:32 [INFO] 문서 ID 68187e429d3f7f152edb0a7f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:33 [INFO] 문서 ID 68187e429d3f7f152edb0a84: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:33 [INFO] 문서 ID 68187e439d3f7f152edb0a8a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:33 [INFO] 문서 ID 68187e439d3f7f152edb0a8f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:34 [INFO] 문서 ID 68187e449d3f7f152edb0a99: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:34 [INFO] 문서 ID 68187e449d3f7f152edb0a9e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:34 [INFO] 문서 ID 68187e439d3f7f152edb0a94: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:35 [INFO] 문서 ID 68187e459d3f7f152edb0aa8: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:35 [INFO] 문서 ID 68187e469d3f7f152edb0aad: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:35 [INFO] 문서 ID 68187e459d3f7f152edb0aa3: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:36 [INFO] 문서 ID 68187e479d3f7f152edb0ab2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:36 [INFO] 문서 ID 68187e479d3f7f152edb0ab7: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:37 [INFO] 문서 ID 68187e489d3f7f152edb0abc: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:37 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:33:37 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:33:38 [INFO] 배치 처리 중: 21~40/199 
+2025-05-05 23:33:38 [INFO] 문서 ID 68187e499d3f7f152edb0ac6: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:38 [INFO] 문서 ID 68187e499d3f7f152edb0ac1: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:40 [INFO] 문서 ID 68187e4a9d3f7f152edb0ad0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:40 [INFO] 문서 ID 68187e4a9d3f7f152edb0acb: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:40 [INFO] 문서 ID 68187e4b9d3f7f152edb0ad5: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:40 [INFO] 문서 ID 68187e4b9d3f7f152edb0ada: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:41 [INFO] 문서 ID 68187e4c9d3f7f152edb0ae4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:41 [INFO] 문서 ID 68187e4d9d3f7f152edb0ae9: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:41 [INFO] 문서 ID 68187e4c9d3f7f152edb0adf: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:42 [INFO] 문서 ID 68187e4d9d3f7f152edb0aee: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:42 [INFO] 문서 ID 68187e4d9d3f7f152edb0af3: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:42 [INFO] 문서 ID 68187e4e9d3f7f152edb0af8: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:42 [INFO] 문서 ID 68187e4e9d3f7f152edb0afd: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:43 [INFO] 문서 ID 68187e4f9d3f7f152edb0b07: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:43 [INFO] 문서 ID 68187e4f9d3f7f152edb0b02: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:43 [INFO] 문서 ID 68187e519d3f7f152edb0b0c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:43 [INFO] 문서 ID 68187e519d3f7f152edb0b11: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:44 [INFO] 문서 ID 68187e529d3f7f152edb0b16: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:44 [INFO] 문서 ID 68187e549d3f7f152edb0b25: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:45 [INFO] 문서 ID 68187e539d3f7f152edb0b1b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:45 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:33:45 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:33:46 [INFO] 배치 처리 중: 41~60/199 
+2025-05-05 23:33:46 [INFO] 문서 ID 68187e559d3f7f152edb0b2f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:47 [INFO] 문서 ID 68187e559d3f7f152edb0b2a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:47 [INFO] 문서 ID 68187e569d3f7f152edb0b34: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:47 [INFO] 문서 ID 68187e569d3f7f152edb0b39: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:47 [INFO] 문서 ID 68187e569d3f7f152edb0b3e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:47 [INFO] 문서 ID 68187e579d3f7f152edb0b43: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:48 [INFO] 문서 ID 68187e579d3f7f152edb0b48: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:48 [INFO] 문서 ID 68187e589d3f7f152edb0b52: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:48 [INFO] 문서 ID 68187e589d3f7f152edb0b4d: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:48 [INFO] 문서 ID 68187e599d3f7f152edb0b57: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:49 [INFO] 문서 ID 68187e599d3f7f152edb0b5c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:49 [INFO] 문서 ID 68187e5a9d3f7f152edb0b61: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:49 [INFO] 문서 ID 68187e5b9d3f7f152edb0b6b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:50 [INFO] 문서 ID 68187e5b9d3f7f152edb0b70: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:50 [INFO] 문서 ID 68187e5c9d3f7f152edb0b75: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:50 [INFO] 문서 ID 68187e5b9d3f7f152edb0b66: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:51 [INFO] 문서 ID 68187e5c9d3f7f152edb0b7a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:51 [INFO] 문서 ID 68187e5d9d3f7f152edb0b84: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:51 [INFO] 문서 ID 68187e5e9d3f7f152edb0b89: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:52 [INFO] 문서 ID 68187e5d9d3f7f152edb0b7f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:52 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:33:52 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:33:53 [INFO] 배치 처리 중: 61~80/199 
+2025-05-05 23:33:53 [INFO] 문서 ID 68187e5f9d3f7f152edb0b8e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:54 [INFO] 문서 ID 68187e5f9d3f7f152edb0b93: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:54 [INFO] 문서 ID 68187e619d3f7f152edb0b9d: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:54 [INFO] 문서 ID 68187e619d3f7f152edb0ba7: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:54 [INFO] 문서 ID 68187e629d3f7f152edb0bac: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:55 [INFO] 문서 ID 68187e619d3f7f152edb0ba2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:55 [INFO] 문서 ID 68187e639d3f7f152edb0bbb: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:55 [INFO] 문서 ID 68187e629d3f7f152edb0bb1: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:56 [INFO] 문서 ID 68187e649d3f7f152edb0bc0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:56 [INFO] 문서 ID 68187e649d3f7f152edb0bc4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:56 [INFO] 문서 ID 68187e659d3f7f152edb0bc8: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:56 [INFO] 문서 ID 68187e659d3f7f152edb0bcc: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:57 [INFO] 문서 ID 68187e669d3f7f152edb0bd0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:57 [INFO] 문서 ID 68187e669d3f7f152edb0bd4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:57 [INFO] 문서 ID 68187e679d3f7f152edb0bde: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:57 [INFO] 문서 ID 68187e679d3f7f152edb0bd9: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:58 [INFO] 문서 ID 68187e689d3f7f152edb0be8: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:58 [INFO] 문서 ID 68187e689d3f7f152edb0be3: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:58 [INFO] 문서 ID 68187e6a9d3f7f152edb0bed: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:58 [INFO] 문서 ID 68187e6b9d3f7f152edb0bf2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:33:58 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:33:58 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:33:59 [INFO] 배치 처리 중: 81~100/199 
+2025-05-05 23:34:00 [INFO] 문서 ID 68187e6b9d3f7f152edb0bf6: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:00 [INFO] 문서 ID 68187e6c9d3f7f152edb0bff: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:00 [INFO] 문서 ID 68187e6c9d3f7f152edb0bfa: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e6d9d3f7f152edb0c21: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e6d9d3f7f152edb0c1c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e6e9d3f7f152edb0c26: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e6e9d3f7f152edb0c2b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e709d3f7f152edb0c35: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:01 [INFO] 문서 ID 68187e6f9d3f7f152edb0c30: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:02 [INFO] 문서 ID 68187e709d3f7f152edb0c42: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:02 [INFO] 문서 ID 68187e709d3f7f152edb0c3a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:02 [INFO] 문서 ID 68187e719d3f7f152edb0c4e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:03 [INFO] 문서 ID 68187e719d3f7f152edb0c47: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:03 [INFO] 문서 ID 68187e739d3f7f152edb0c5b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:03 [INFO] 문서 ID 68187e729d3f7f152edb0c56: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:03 [INFO] 문서 ID 68187e739d3f7f152edb0c60: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:03 [INFO] 문서 ID 68187e739d3f7f152edb0c65: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:04 [INFO] 문서 ID 68187e749d3f7f152edb0c6f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:04 [INFO] 문서 ID 68187e749d3f7f152edb0c75: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:04 [INFO] 문서 ID 68187e759d3f7f152edb0c7b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:04 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:34:04 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:34:05 [INFO] 배치 처리 중: 101~120/199 
+2025-05-05 23:34:06 [INFO] 문서 ID 68187e759d3f7f152edb0c80: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:06 [INFO] 문서 ID 68187e769d3f7f152edb0c85: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:07 [INFO] 문서 ID 68187e779d3f7f152edb0c8a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:07 [INFO] 문서 ID 68187e789d3f7f152edb0c97: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:07 [INFO] 문서 ID 68187e789d3f7f152edb0c9c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:08 [INFO] 문서 ID 68187e799d3f7f152edb0ca1: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:08 [INFO] 문서 ID 68187e799d3f7f152edb0ca6: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:09 [INFO] 문서 ID 68187e7a9d3f7f152edb0cab: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:09 [INFO] 문서 ID 68187e7a9d3f7f152edb0cb0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:09 [INFO] 문서 ID 68187e7b9d3f7f152edb0cb5: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:11 [INFO] 문서 ID 68187e779d3f7f152edb0c8f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:11 [INFO] 문서 ID 68187e7e9d3f7f152edb0cbf: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:11 [INFO] 문서 ID 68187e7b9d3f7f152edb0cba: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:11 [INFO] 문서 ID 68187e819d3f7f152edb0cca: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:12 [INFO] 문서 ID 68187e819d3f7f152edb0cd0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:12 [INFO] 문서 ID 68187e809d3f7f152edb0cc4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:12 [INFO] 문서 ID 68187e829d3f7f152edb0cd5: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:13 [INFO] 문서 ID 68187e839d3f7f152edb0cdf: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:13 [INFO] 문서 ID 68187e829d3f7f152edb0cda: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:13 [INFO] 문서 ID 68187e839d3f7f152edb0ce4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:13 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:34:13 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:34:14 [INFO] 배치 처리 중: 121~140/199 
+2025-05-05 23:34:15 [INFO] 문서 ID 68187e849d3f7f152edb0ceb: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:15 [INFO] 문서 ID 68187e859d3f7f152edb0cf2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:15 [INFO] 문서 ID 68187e859d3f7f152edb0cfa: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:15 [INFO] 문서 ID 68187e869d3f7f152edb0d06: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:16 [INFO] 문서 ID 68187e869d3f7f152edb0d0d: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:16 [INFO] 문서 ID 68187e869d3f7f152edb0d14: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:16 [INFO] 문서 ID 68187e879d3f7f152edb0d1e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:16 [INFO] 문서 ID 68187e879d3f7f152edb0d19: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:17 [INFO] 문서 ID 68187e879d3f7f152edb0d23: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:17 [INFO] 문서 ID 68187e889d3f7f152edb0d2a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:17 [INFO] 문서 ID 68187e899d3f7f152edb0d3b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:17 [INFO] 문서 ID 68187e899d3f7f152edb0d31: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:18 [INFO] 문서 ID 68187e8a9d3f7f152edb0d47: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:18 [INFO] 문서 ID 68187e8a9d3f7f152edb0d40: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:18 [INFO] 문서 ID 68187e8b9d3f7f152edb0d4c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:18 [INFO] 문서 ID 68187e8b9d3f7f152edb0d51: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:19 [INFO] 문서 ID 68187e8c9d3f7f152edb0d56: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:19 [INFO] 문서 ID 68187e8c9d3f7f152edb0d5c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:19 [INFO] 문서 ID 68187e8d9d3f7f152edb0d62: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:19 [INFO] 문서 ID 68187e8d9d3f7f152edb0d67: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:19 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:34:19 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:34:20 [INFO] 배치 처리 중: 141~160/199 
+2025-05-05 23:34:21 [INFO] 문서 ID 68187e8e9d3f7f152edb0d72: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:21 [INFO] 문서 ID 68187e8d9d3f7f152edb0d6c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:21 [INFO] 문서 ID 68187e8e9d3f7f152edb0d79: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:21 [INFO] 문서 ID 68187e8f9d3f7f152edb0d83: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e8f9d3f7f152edb0d7e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e909d3f7f152edb0d8a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e909d3f7f152edb0d8f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e919d3f7f152edb0d94: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e929d3f7f152edb0d9e: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:22 [INFO] 문서 ID 68187e919d3f7f152edb0d99: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:23 [INFO] 문서 ID 68187e929d3f7f152edb0da3: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:23 [INFO] 문서 ID 68187e939d3f7f152edb0da8: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:23 [INFO] 문서 ID 68187e939d3f7f152edb0dad: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:23 [INFO] 문서 ID 68187e949d3f7f152edb0db7: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:24 [INFO] 문서 ID 68187e969d3f7f152edb0dbc: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:24 [INFO] 문서 ID 68187e969d3f7f152edb0dc4: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:25 [INFO] 문서 ID 68187e969d3f7f152edb0dca: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:25 [INFO] 문서 ID 68187e949d3f7f152edb0db2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:26 [INFO] 문서 ID 68187e989d3f7f152edb0dd6: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:26 [INFO] 문서 ID 68187e979d3f7f152edb0dd0: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:26 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:34:26 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:34:27 [INFO] 배치 처리 중: 161~180/199 
+2025-05-05 23:34:27 [INFO] 문서 ID 68187e989d3f7f152edb0ddc: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:27 [INFO] 문서 ID 68187e999d3f7f152edb0de2: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:27 [INFO] 문서 ID 68187e999d3f7f152edb0de7: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:28 [INFO] 문서 ID 68187e9e9d3f7f152edb0df1: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:28 [INFO] 문서 ID 68187e9f9d3f7f152edb0df6: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:29 [INFO] 문서 ID 68187e9d9d3f7f152edb0dec: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:29 [INFO] 문서 ID 68187e9f9d3f7f152edb0dfc: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:29 [INFO] 문서 ID 68187ea09d3f7f152edb0e0b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:29 [INFO] 문서 ID 68187ea09d3f7f152edb0e05: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:29 [INFO] 문서 ID 68187ea19d3f7f152edb0e15: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:30 [INFO] 문서 ID 68187ea29d3f7f152edb0e1b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:30 [INFO] 문서 ID 68187ea19d3f7f152edb0e10: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:31 [INFO] 문서 ID 68187ea39d3f7f152edb0e29: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:31 [INFO] 문서 ID 68187ea29d3f7f152edb0e24: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:31 [INFO] 문서 ID 68187ea49d3f7f152edb0e34: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:31 [INFO] 문서 ID 68187ea39d3f7f152edb0e2f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:32 [INFO] 문서 ID 68187ea49d3f7f152edb0e39: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:32 [INFO] 문서 ID 68187ea49d3f7f152edb0e40: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:32 [INFO] 문서 ID 68187ea59d3f7f152edb0e4c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:32 [INFO] 문서 ID 68187ea59d3f7f152edb0e45: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:32 [INFO] 배치 결과: 성공 20, 실패 0 
+2025-05-05 23:34:32 [INFO] API 속도 제한 방지를 위해 1000ms 대기... 
+2025-05-05 23:34:33 [INFO] 배치 처리 중: 181~199/199 
+2025-05-05 23:34:34 [INFO] 문서 ID 68187ea69d3f7f152edb0e53: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:34 [INFO] 문서 ID 68187ea69d3f7f152edb0e59: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:34 [INFO] 문서 ID 68187ea89d3f7f152edb0e6c: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:34 [INFO] 문서 ID 68187ea69d3f7f152edb0e61: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:35 [INFO] 문서 ID 68187ea99d3f7f152edb0e76: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:35 [INFO] 문서 ID 68187ea89d3f7f152edb0e71: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:35 [INFO] 문서 ID 68187eaa9d3f7f152edb0e7b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:35 [INFO] 문서 ID 68187eaa9d3f7f152edb0e80: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:35 [INFO] 문서 ID 68187eab9d3f7f152edb0e85: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:36 [INFO] 문서 ID 68187eab9d3f7f152edb0e8a: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:36 [INFO] 문서 ID 68187eab9d3f7f152edb0e8f: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:36 [INFO] 문서 ID 68187eac9d3f7f152edb0e94: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:37 [INFO] 문서 ID 68187eb39d3f7f152edb0eda: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:37 [INFO] 문서 ID 68187eb29d3f7f152edb0ed5: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:37 [INFO] 문서 ID 68187eb89d3f7f152edb0f11: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:37 [INFO] 문서 ID 68187eb39d3f7f152edb0edf: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:38 [INFO] 문서 ID 68187eb89d3f7f152edb0f16: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:38 [INFO] 문서 ID 68187eb99d3f7f152edb0f1b: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:38 [INFO] 문서 ID 68187eb99d3f7f152edb0f20: 임베딩 생성 및 저장 완료 (차원: 1536) 
+2025-05-05 23:34:38 [INFO] 배치 결과: 성공 19, 실패 0 
+2025-05-05 23:34:38 [INFO] 임베딩 생성 작업 완료: 총 199개 중 199개 성공, 0개 실패 
+2025-05-05 23:34:38 [INFO] 현재 임베딩이 있는 문서 수: 0 
+2025-05-05 23:45:07 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 23:45:07 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:45:07 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 23:45:07 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 23:45:07 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 23:45:07 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-05 23:45:07 [INFO] PromptService 초기화 완료 
+2025-05-05 23:45:07 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-05 23:45:08 [INFO] MongoDB 연결 완료 
+2025-05-05 23:45:08 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 23:49:08 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 23:49:08 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:49:08 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 23:49:08 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 23:49:08 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 23:49:08 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-05 23:49:08 [INFO] PromptService 초기화 완료 
+2025-05-05 23:49:08 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-05 23:49:08 [INFO] MongoDB 연결 완료 
+2025-05-05 23:52:38 [WARN] [Redis] REDIS_URL 미설정 – 인메모리 캐시로 대체 
+2025-05-05 23:52:38 [INFO] OpenAI Embeddings 초기화 완료 (모델: text-embedding-3-small) 
+2025-05-05 23:52:38 [INFO] ANTHROPIC_API_KEY 확인: 
+2025-05-05 23:52:38 [INFO] AnthropicService 초기화 (model=claude-3-opus-20240229, maxTokens=4000) 
+2025-05-05 23:52:38 [INFO] 날리지 서비스 초기화 완료 
+2025-05-05 23:52:38 [INFO] MongoDB 벡터 검색 어댑터를 사용합니다. 
+2025-05-05 23:52:38 [INFO] PromptService 초기화 완료 
+2025-05-05 23:52:38 [INFO] 교정 서비스 초기화: RAG 사용 
+2025-05-05 23:52:38 [INFO] MongoDB 연결 완료 
+2025-05-05 23:52:38 [INFO] 🚀 Server @ http://localhost:3003 (development) 
+2025-05-05 23:53:20 [INFO] 빠른 교정 요청: 텍스트 길이 410자, 사용자 user123 
+2025-05-05 23:53:20 [INFO] 기사 생성 완료: 6818d0e098c3b5c4bf17fe59 
+2025-05-05 23:53:21 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:21 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:53:21 [WARN] 계층적 검색: 상위 문서를 찾을 수 없습니다 
+2025-05-05 23:53:21 [INFO] 계층적 검색 완료: 0개 문서, 0개 청크 
+2025-05-05 23:53:21 [INFO] RAG 검색 완료 (전략: hierarchical) 
+2025-05-05 23:53:21 [INFO] 관련 스타일가이드 검색 완료 (RAG 사용 여부: true) 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 23:53:22 [INFO] 메모리 내 유사도 계산 결과: 0개 
+2025-05-05 23:53:22 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 23:53:22 [INFO] 텍스트 관련 날리지 규칙 5개 검색됨 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:53:22 [INFO] 메모리 내 벡터 유사도 계산 사용 
+2025-05-05 23:53:22 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:53:22 [WARN] 계층적 검색: 상위 문서를 찾을 수 없습니다 
+2025-05-05 23:53:22 [INFO] 계층적 검색 완료: 0개 문서, 0개 청크 
+2025-05-05 23:53:22 [INFO] 통합 검색 완료: 0개 결과 
+2025-05-05 23:53:22 [INFO] RAG 검색 완료 (전략: combined) 
+2025-05-05 23:53:22 [INFO] 관련 가이드가 없어 기본 프롬프트 사용 
+2025-05-05 23:53:22 [WARN] 벡터 필드가 있는 문서가 없습니다: Styleguide 
+2025-05-05 23:53:22 [WARN] 계층적 검색: 상위 문서를 찾을 수 없습니다 
+2025-05-05 23:53:22 [INFO] 계층적 검색 완료: 0개 문서, 0개 청크 
+2025-05-05 23:53:22 [INFO] 통합 검색 완료: 0개 결과 
+2025-05-05 23:53:22 [INFO] RAG 검색 완료 (전략: combined) 
+2025-05-05 23:53:22 [INFO] 관련 가이드가 없어 기본 프롬프트 사용 
+2025-05-05 23:53:38 [INFO] Claude API 응답 JSON 파싱 성공 
+2025-05-05 23:53:38 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 23:53:38 [INFO] 교정 결과 저장 완료 (ID: 6818d0f298c3b5c4bf17fe90) 
+2025-05-05 23:53:59 [INFO] Claude API 응답 JSON 파싱 성공 
+2025-05-05 23:53:59 [INFO] proofread 완료 (tokens=0) 
+2025-05-05 23:53:59 [INFO] 교정 결과 저장 완료 (ID: 6818d10798c3b5c4bf17fe92) 
+2025-05-05 23:53:59 [INFO] [e3e973cf-c800-458a-b1df-a7c0a21b01d1] ::1 POST /api/proofread 200 39028ms 

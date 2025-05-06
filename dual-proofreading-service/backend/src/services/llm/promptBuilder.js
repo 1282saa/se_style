@@ -385,10 +385,368 @@ async function buildEnhancedPrompt(originalText, template, options = {}) {
   }
 }
 
+/**
+ * 프롬프트 빌더 클래스
+ * - 교열 프롬프트 생성 및 관리
+ * - 스타일 가이드 포맷팅
+ * - 사용자 선호도 반영
+ */
+class PromptBuilder {
+  constructor() {
+    // 기본 프롬프트 템플릿
+    this.templates = {
+      minimal: {
+        prefix: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 최소한의 필수적인 수정만 가하여 교정해 주세요.
+기본 맞춤법, 띄어쓰기, 문법 오류만 수정하고, 원문의 스타일과 어휘 선택은 최대한 유지하세요.
+{{STYLE_GUIDES}}
+### 원문:
+{{ORIGINAL_TEXT}}`,
+        suffix: `
+### 출력 형식:
+\`\`\`json
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "original": "원본 텍스트",
+      "suggestion": "교정된 텍스트",
+      "explanation": "교정 이유 설명",
+      "priority": 3
+    }
+  ]
+}
+\`\`\``,
+      },
+      enhanced: {
+        prefix: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 포괄적으로 개선해 주세요.
+기본적인 맞춤법, 띄어쓰기, 문법 오류 수정은 물론, 더 명확하고 세련된 표현으로 개선하세요.
+문장 구조를 더 읽기 쉽게 재구성하고, 적절한 어휘로 대체하며, 논리적 흐름을 개선하세요.
+불필요한 반복은 제거하고, 전문적이고 세련된 문체로 변환해 주세요.
+{{STYLE_GUIDES}}
+### 원문:
+{{ORIGINAL_TEXT}}`,
+        suffix: `
+### 출력 형식:
+\`\`\`json
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "original": "원본 텍스트",
+      "suggestion": "교정된 텍스트",
+      "explanation": "교정 이유 설명",
+      "priority": 3
+    }
+  ]
+}
+\`\`\``,
+      },
+      custom: {
+        prefix: `당신은 전문 한국어 교정 편집자입니다. 다음 텍스트를 교정해 주세요.
+{{USER_PREFERENCES}}
+{{STYLE_GUIDES}}
+### 원문:
+{{ORIGINAL_TEXT}}`,
+        suffix: `
+### 출력 형식:
+\`\`\`json
+{
+  "correctedText": "교정된 텍스트",
+  "corrections": [
+    {
+      "type": "교정 유형(spelling, grammar, style, punctuation, flow, foreign, other 중 하나)",
+      "original": "원본 텍스트",
+      "suggestion": "교정된 텍스트",
+      "explanation": "교정 이유 설명",
+      "priority": 3
+    }
+  ]
+}
+\`\`\``,
+      },
+    };
+  }
+
+  /**
+   * 서울경제 교열 규칙 요약 텍스트를 가져옵니다.
+   * @returns {Promise<string>} - 교열 규칙 요약
+   */
+  async getSeoulEconomicRulesSummary() {
+    try {
+      return await knowledgeService.generateRulesSummaryForPrompt();
+    } catch (error) {
+      logger.error(`교열 규칙 요약 생성 오류: ${error.message}`);
+      return "";
+    }
+  }
+
+  /**
+   * 프롬프트 템플릿을 가져옵니다.
+   * @param {string} promptType - 프롬프트 유형 (minimal, enhanced, custom)
+   * @returns {Object} - 프롬프트 템플릿 객체
+   */
+  getPromptTemplate(promptType) {
+    // 프롬프트 유형에 따라 템플릿 반환
+    if (promptType === "minimal" || promptType === 1) {
+      return this.templates.minimal;
+    } else if (promptType === "enhanced" || promptType === 2) {
+      return this.templates.enhanced;
+    } else if (promptType === "custom" || promptType === 3) {
+      return this.templates.custom;
+    }
+
+    // 기본값 반환
+    logger.warn(`유효하지 않은 프롬프트 유형: ${promptType}, 기본 템플릿 사용`);
+    return this.templates.minimal;
+  }
+
+  /**
+   * 고급 프롬프트 구성
+   * @param {string} text - 원문 텍스트
+   * @param {string} promptType - 프롬프트 유형 (minimal, enhanced, custom)
+   * @param {object} options - 추가 옵션
+   * @returns {Promise<string>} - 구성된 프롬프트
+   */
+  async buildEnhancedPrompt(text, promptType, options = {}) {
+    const {
+      styleGuides = [],
+      userPreferences = null,
+      expertLevel = "default",
+      includeKnowledge = true,
+    } = options;
+
+    try {
+      // 프롬프트 템플릿 선택
+      const template = this.getPromptTemplate(promptType);
+      if (!template) {
+        throw new Error(
+          `프롬프트 템플릿 '${promptType}'을(를) 찾을 수 없습니다`
+        );
+      }
+
+      // 스타일 가이드 텍스트 생성
+      const styleGuideText = this.formatStyleGuideList(styleGuides);
+
+      // 사용자 선호도 텍스트 생성
+      const preferencesText = await this.generatePreferencesText(
+        userPreferences
+      );
+
+      // 서울경제 교열 규칙 요약 가져오기 (새로 추가됨)
+      const seoulEconomicRules = includeKnowledge
+        ? await this.getSeoulEconomicRulesSummary()
+        : "";
+
+      // 변수 맵 생성
+      const variables = {
+        ORIGINAL_TEXT: text,
+        STYLE_GUIDES: styleGuideText,
+        USER_PREFERENCES: preferencesText,
+        EXPERT_LEVEL: this.getExpertLevelText(expertLevel),
+        SEOUL_ECONOMIC_RULES: seoulEconomicRules, // 새로운 변수
+      };
+
+      // 프롬프트 생성 (prefix 처리)
+      let prefix = template.prefix || "";
+      for (const [key, value] of Object.entries(variables)) {
+        const pattern = new RegExp(`\\{\\{${key}\\}\\}`, "g");
+        prefix = prefix.replace(pattern, value || "");
+      }
+
+      // suffix 처리
+      let suffix = template.suffix || "";
+      for (const [key, value] of Object.entries(variables)) {
+        const pattern = new RegExp(`\\{\\{${key}\\}\\}`, "g");
+        suffix = suffix.replace(pattern, value || "");
+      }
+
+      // 최종 프롬프트 구성
+      let prompt = prefix + suffix;
+
+      // 토큰 제한 처리
+      const tokenLimit = parseInt(process.env.TOKEN_LIMIT) || 100000;
+
+      // 프롬프트 길이 예상 (영어 기준 대략 4글자당 1토큰, 한글은 글자당 약 1.5-2토큰)
+      const estimatedTokens = Math.ceil(prompt.length / 2.5);
+
+      if (estimatedTokens > tokenLimit) {
+        logger.warn(
+          `프롬프트 길이가 제한을 초과합니다: ${estimatedTokens} > ${tokenLimit}`
+        );
+        prompt = this.truncatePrompt(prompt, tokenLimit);
+      }
+
+      return prompt;
+    } catch (error) {
+      logger.error(`프롬프트 생성 오류: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * 전문가 수준 텍스트 생성
+   * @param {string} level - 전문가 수준
+   * @returns {string} - 전문가 수준 설명 텍스트
+   */
+  getExpertLevelText(level) {
+    const levels = {
+      beginner: "초보 수준의 교정을 제공하세요.",
+      intermediate: "중급 수준의 교정을 제공하세요.",
+      advanced: "고급 수준의 교정을 제공하세요.",
+      professional: "전문가 수준의 교정을 제공하세요.",
+      default: "표준 수준의 교정을 제공하세요.",
+    };
+
+    return levels[level] || levels.default;
+  }
+
+  /**
+   * 프롬프트 길이 제한
+   * @param {string} prompt - 원본 프롬프트
+   * @param {number} tokenLimit - 토큰 제한
+   * @returns {string} - 길이 제한된 프롬프트
+   */
+  truncatePrompt(prompt, tokenLimit) {
+    // 토큰 길이 예상 (근사값)
+    const estimatedTokens = Math.ceil(prompt.length / 2.5);
+
+    if (estimatedTokens <= tokenLimit) {
+      return prompt;
+    }
+
+    // 길이 제한 필요시
+    const truncateRatio = tokenLimit / estimatedTokens;
+    const newLength = Math.floor(prompt.length * truncateRatio * 0.95); // 안전 마진
+
+    return (
+      prompt.substring(0, newLength) + "\n\n[내용이 너무 길어 일부 생략됨]\n"
+    );
+  }
+
+  /**
+   * 스타일 가이드 목록 포맷팅
+   * @param {Array} styleGuides - 스타일 가이드 배열
+   * @returns {string} - 포맷팅된 스타일 가이드 텍스트
+   */
+  formatStyleGuideList(styleGuides) {
+    if (!styleGuides || styleGuides.length === 0) {
+      return "### 스타일 가이드: 참조할 스타일 가이드가 없습니다.";
+    }
+
+    try {
+      let formattedGuides = "### 스타일 가이드 규칙:\n\n";
+
+      // 우선순위별 정렬
+      const sortedGuides = [...styleGuides].sort((a, b) => {
+        return (b.priority || 3) - (a.priority || 3);
+      });
+
+      // 최대 10개로 제한
+      const limitedGuides = sortedGuides.slice(0, 10);
+
+      // 우선순위 레이블
+      const priorityLabels = {
+        1: "[참고]",
+        2: "[권장]",
+        3: "[중요]",
+        4: "[권고]",
+        5: "[필수]",
+      };
+
+      // 스타일 가이드 포맷팅
+      limitedGuides.forEach((guide, index) => {
+        const priority = guide.priority || 3;
+        const priorityLabel = priorityLabels[priority] || "[중요]";
+
+        formattedGuides += `${index + 1}. ${priorityLabel} `;
+
+        if (guide.title || guide.section) {
+          formattedGuides += `**${guide.title || guide.section}**`;
+        }
+
+        if (guide.category) {
+          formattedGuides += ` (${guide.category})`;
+        }
+
+        formattedGuides += "\n";
+
+        if (guide.content) {
+          formattedGuides += `   ${guide.content}\n`;
+        }
+
+        // 태그 추가
+        if (guide.tags && Array.isArray(guide.tags) && guide.tags.length > 0) {
+          formattedGuides += `   태그: ${guide.tags.join(", ")}\n`;
+        }
+
+        formattedGuides += "\n";
+      });
+
+      return formattedGuides;
+    } catch (error) {
+      logger.error(`스타일 가이드 포맷팅 오류: ${error.message}`);
+      return "### 스타일 가이드: 스타일 가이드 처리 중 오류가 발생했습니다.";
+    }
+  }
+
+  /**
+   * 사용자 선호도 텍스트 생성
+   * @param {Object} userPreferences - 사용자 선호도 객체
+   * @returns {Promise<string>} - 선호도 텍스트
+   */
+  async generatePreferencesText(userPreferences) {
+    if (!userPreferences) return "";
+
+    try {
+      const preferences = [];
+
+      // 교정 수준 관련 텍스트
+      if (userPreferences.correctionLevel) {
+        switch (userPreferences.correctionLevel) {
+          case "minimal":
+            preferences.push("최소한의 필수적인 교정만 수행하세요.");
+            break;
+          case "balanced":
+            preferences.push("균형 잡힌 수준으로 교정하세요.");
+            break;
+          case "enhanced":
+            preferences.push("적극적으로 문체와 표현을 개선하세요.");
+            break;
+        }
+      }
+
+      // 포맷된 텍스트 반환
+      return preferences.join(" ");
+    } catch (error) {
+      logger.error(`사용자 선호도 텍스트 생성 오류: ${error.message}`);
+      return "";
+    }
+  }
+}
+
+// 클래스 인스턴스와 함수를 모두 내보내도록 수정
+const promptBuilderInstance = new PromptBuilder();
 module.exports = {
+  // 클래스 인스턴스의 메서드
+  buildEnhancedPrompt: promptBuilderInstance.buildEnhancedPrompt.bind(
+    promptBuilderInstance
+  ),
+  getPromptTemplate: promptBuilderInstance.getPromptTemplate.bind(
+    promptBuilderInstance
+  ),
+  formatStyleGuideList: promptBuilderInstance.formatStyleGuideList.bind(
+    promptBuilderInstance
+  ),
+  generatePreferencesText: promptBuilderInstance.generatePreferencesText.bind(
+    promptBuilderInstance
+  ),
+
+  // 모듈 수준 함수
   buildPrompt,
-  formatStyleGuideList,
-  generatePreferencesText,
   formatStyleGuides,
-  buildEnhancedPrompt,
+
+  // 인스턴스 자체도 내보내기
+  instance: promptBuilderInstance,
 };
