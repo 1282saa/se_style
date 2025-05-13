@@ -1,0 +1,24 @@
+{
+  "file_id": "GRAMMAR-VERB-CONJUGATION-010",
+  "title": "활용 형태",
+  "description": "준말이 있는 단어도 올바른 활용 형태를 사용해야 합니다.",
+  "category_path": ["작성원칙", "문법규칙", "활용형태"],
+  "tags": ["문법", "활용", "준말"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-VERB-CONJUGATION-010-01",
+      "title": "준말 활용 원칙",
+      "content": "일부 준말은 활용 시 원형으로 되돌아갑니다.",
+      "explanation": "일부 준말은 활용할 때 원형으로 돌아가 활용해야 합니다.",
+      "examples": [
+        {
+          "incorrect": "내딛어, 내딛었다",
+          "correct": "내디더, 내디덨다",
+          "description": "'내딛다'는 '내디디다'의 준말이지만 준말로 활용되지 않음"
+        }
+      ],
+      "priority": 2,
+      "tags": ["활용", "준말", "내딛다", "내디디다"]
+    }
+  ]
+}

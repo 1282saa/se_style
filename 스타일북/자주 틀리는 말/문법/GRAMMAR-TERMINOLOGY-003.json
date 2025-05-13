@@ -1,0 +1,39 @@
+{
+  "file_id": "GRAMMAR-TERMINOLOGY-003",
+  "title": "용어 바꿔쓰기",
+  "description": "적절한 용어 선택으로 문장의 현대성과 가독성을 높입니다.",
+  "category_path": ["작성원칙", "문법규칙", "용어바꿔쓰기"],
+  "tags": ["문법", "용어", "표현", "시간표현"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-TERMINOLOGY-003-01",
+      "title": "시간 표현 현대화",
+      "content": "문어체나 구식 표현은 현대적 표현으로 바꿔 씁니다.",
+      "explanation": "시간을 나타내는 용어는 현대적이고 일상적인 표현을 사용해야 합니다.",
+      "examples": [
+        {
+          "incorrect": "작년",
+          "correct": "지난해",
+          "description": "시간 표현의 현대화"
+        },
+        {
+          "incorrect": "금년",
+          "correct": "올해",
+          "description": "시간 표현의 현대화"
+        },
+        {
+          "incorrect": "내달",
+          "correct": "다음달",
+          "description": "시간 표현의 현대화"
+        },
+        {
+          "incorrect": "내주",
+          "correct": "다음주",
+          "description": "시간 표현의 현대화"
+        }
+      ],
+      "priority": 2,
+      "tags": ["용어", "시간표현", "바꿔쓰기", "순화"]
+    }
+  ]
+}

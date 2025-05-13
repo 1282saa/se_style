@@ -1,0 +1,139 @@
+{
+  "file_id": "ST-GUIDE-MULTIPLE-STANDARD-WORDS-001",
+  "title": "복수 표준어",
+  "description": "국립국어원에서 인정한 복수 표준어에 관한 지침입니다.",
+  "category_path": ["작성원칙", "올바른표현"],
+  "tags": ["복수표준어", "표준어", "국어원", "표기법"],
+  "rules": [
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-BOTH-NOTATIONS-001",
+      "title": "두 가지 표기를 모두 표준어로 인정한 것",
+      "content": "태껴/택견, 품세/품새, 자장면/짜장면 등 두 가지 표기를 모두 표준어로 인정한 단어들입니다.",
+      "explanation": "두 표기 모두 사용할 수 있으나, 한 기사 내에서는 일관된 표기를 유지하는 것이 좋습니다.",
+      "examples": [
+        {
+          "incorrect": "태껴가 아니라 택견입니다",
+          "correct": "태껴와 택견 모두 표준어입니다",
+          "description": ""
+        },
+        {
+          "incorrect": "품세가 아니라 품새입니다",
+          "correct": "품세와 품새 모두 표준어입니다",
+          "description": ""
+        },
+        {
+          "incorrect": "자장면이 아니라 짜장면입니다",
+          "correct": "자장면과 짜장면 모두 표준어입니다",
+          "description": ""
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-NEWLY-RECOGNIZED-002",
+      "title": "복수 표준어로 인정",
+      "content": "삐지다, 눈두덩이, 구안와사, 초장초, 굽신거리다, 놀잇감, 개기다, 사그라들다, 속앓이, 허접하다, 딴지, 섬찟, 꼬시다, 이쁘다, 찰지다, 마실, 보고프다 등이 복수 표준어로 인정되었습니다.",
+      "explanation": "기존 표준어와 함께 추가로 인정된 표준어입니다.",
+      "examples": [
+        {
+          "incorrect": "삐지다는 표준어가 아닙니다",
+          "correct": "삐지다는 복수 표준어로 인정됩니다",
+          "description": ""
+        },
+        {
+          "incorrect": "눈두덩이는 표준어가 아닙니다",
+          "correct": "눈두덩이는 복수 표준어로 인정됩니다",
+          "description": ""
+        },
+        {
+          "incorrect": "허접하다는 표준어가 아닙니다",
+          "correct": "허접하다는 복수 표준어로 인정됩니다",
+          "description": ""
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-SAME-MEANING-003",
+      "title": "현재 표준어와 같은 뜻으로 추가로 표준어로 인정한 것",
+      "content": "간질이다/간지럽히다, 남우세스럽다/남사스럽다, 목물/등물, 만날/맨날, 묏자리/묫자리, 복사뼈/복숭아뼈, 세간/세간, 쌉싸래하다/쌉싸름하다, 고운대/토란대, 허섭스레기/허접쓰레기, 토담/흙담 등이 있습니다.",
+      "explanation": "현재 표준어와 같은 뜻으로 추가로 인정된 표준어입니다.",
+      "examples": [
+        {
+          "incorrect": "간질이다",
+          "correct": "간질이다/간지럽히다",
+          "description": "같은 뜻으로 두 표현 모두 표준어로 인정"
+        },
+        {
+          "incorrect": "남우세스럽다",
+          "correct": "남우세스럽다/남사스럽다",
+          "description": "같은 뜻으로 두 표현 모두 표준어로 인정"
+        },
+        {
+          "incorrect": "묏자리",
+          "correct": "묏자리/묫자리",
+          "description": "같은 뜻으로 두 표현 모두 표준어로 인정"
+        },
+        {
+          "incorrect": "복사뼈",
+          "correct": "복사뼈/복숭아뼈",
+          "description": "같은 뜻으로 두 표현 모두 표준어로 인정"
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-SEPARATE-MEANING-004",
+      "title": "현재 표준어와 별도의 표준어로 추가 인정한 것",
+      "content": "~기에/~길래, 괴발개발/개발새발, 날개/나래, 냄새/내음, 눈초리/눈꼬리, 떨어뜨리다/떨구다, 뜰/뜨락, 먹을거리/먹거리, 메우다/메꾸다, 손자/손주, 어수룩하다/어리숙하다, 연방/연신, 힁허케/휭하니, 거치적거리다/걸리적거리다, 끼적거리다/끄적거리다, 맨송맨송/맨숭맨숭/맹숭맹숭, 바동바동/바둥바둥, 새치롬하다/새초롬하다, 아옹다옹/아웅다웅, 야멱치다/야멸차다, 오순도순/오손도손, 찌뿌듯하다/찌뿌등하다, 치근거리다/추근거리다 등이 있습니다.",
+      "explanation": "현재 표준어와 별도의 의미로 추가로 인정된 표준어입니다.",
+      "examples": [
+        {
+          "incorrect": "~기에",
+          "correct": "~기에/~길래",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "날개",
+          "correct": "날개/나래",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "냄새",
+          "correct": "냄새/내음",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "눈초리",
+          "correct": "눈초리/눈꼬리",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "떨어뜨리다",
+          "correct": "떨어뜨리다/떨구다",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "먹을거리",
+          "correct": "먹을거리/먹거리",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "손자",
+          "correct": "손자/손주",
+          "description": "별도 표준어로 추가 인정"
+        },
+        {
+          "incorrect": "어수룩하다",
+          "correct": "어수룩하다/어리숙하다",
+          "description": "별도 표준어로 추가 인정"
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    }
+  ]
+}

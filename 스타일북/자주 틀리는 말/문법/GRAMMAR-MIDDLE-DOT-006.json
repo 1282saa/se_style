@@ -1,0 +1,44 @@
+{
+  "file_id": "GRAMMAR-MIDDLE-DOT-006",
+  "title": "가운뎃점 사용",
+  "description": "분기를 나타낼 때나 명사의 단순 나열일 경우 가운뎃점을 사용합니다.",
+  "category_path": ["작성원칙", "문법규칙", "가운뎃점사용"],
+  "tags": ["문법", "부호", "표기", "가운뎃점", "중간점", "나열", "분기"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-MIDDLE-DOT-006-01",
+      "title": "분기 표기에서의 가운뎃점 사용",
+      "content": "분기를 나타낼 때는 가운뎃점(·)을 사용합니다.",
+      "explanation": "분기를 나타낼 때 가운뎃점을 사용하면 더 명확하게 표현할 수 있습니다.",
+      "examples": [
+        {
+          "incorrect": "1/4분기, 2/4분기",
+          "correct": "1·4분기, 2·4분기",
+          "description": "분기 표기에 가운뎃점 사용"
+        }
+      ],
+      "priority": 1,
+      "tags": []
+    },
+    {
+      "rule_id": "GRAMMAR-MIDDLE-DOT-006-02",
+      "title": "명사 나열에서의 가운뎃점 사용",
+      "content": "명사의 단순 나열일 경우 가운뎃점(·)을 사용합니다.",
+      "explanation": "명사를 나열할 때 가운뎃점을 사용하면 더 간결하고 명확하게 표현할 수 있습니다.",
+      "examples": [
+        {
+          "incorrect": "세탁기, 에어컨, 전자레인지",
+          "correct": "세탁기·에어컨·전자레인지",
+          "description": "명사 나열에 가운뎃점 사용"
+        },
+        {
+          "incorrect": "한국, 중국, 미국",
+          "correct": "한국·중국·미국",
+          "description": "국가명 나열에 가운뎃점 사용"
+        }
+      ],
+      "priority": 1,
+      "tags": []
+    }
+  ]
+}

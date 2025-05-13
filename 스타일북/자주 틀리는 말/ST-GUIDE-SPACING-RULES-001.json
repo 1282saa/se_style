@@ -1,0 +1,274 @@
+{
+  "file_id": "ST-GUIDE-SPACING-RULES-001",
+  "title": "띄어쓰기 상세 규칙",
+  "description": "기사 작성 시 적용해야 할 상세한 띄어쓰기 규칙에 관한 지침입니다.",
+  "category_path": ["작성원칙", "올바른표현"],
+  "tags": [
+    "띄어쓰기",
+    "날짜",
+    "단위",
+    "명칭",
+    "고유명사",
+    "접두사",
+    "접미사",
+    "복합어",
+    "의존명사"
+  ],
+  "rules": [
+    {
+      "rule_id": "SPACING-DETAILED-YEAR-DATE-001",
+      "title": "연도와 날짜",
+      "content": "연도와 달은 띄어 쓰고 달과 날은 붙여 씁니다.",
+      "explanation": "특수한 상황을 제외하고 연도와 달은 띄어 쓰고 달과 날은 붙여 쓴다.",
+      "examples": [
+        {
+          "incorrect": "99년5월14일",
+          "correct": "99년 5월14일",
+          "description": "연도와 달 띄어쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["날짜", "연도", "띄어쓰기"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-UNITS-002",
+      "title": "단위 띄어쓰기",
+      "content": "단위는 기본적으로 띄어 쓰되, 순서나 아라비아 숫자와 함께 쓰일 때는 붙여 쓸 수 있습니다.",
+      "explanation": "단위는 띄어쓰기를 원칙으로 한다. 다만 순서를 나타내는 경우나 아라비아숫자와 어울릴 때는 붙여 쓸 수 있다.",
+      "examples": [
+        {
+          "incorrect": "나무한그루, 소두마리",
+          "correct": "나무 한 그루, 소 두 마리",
+          "description": "단위 기본 띄어쓰기"
+        },
+        {
+          "incorrect": "제 1 장, 제 2 회",
+          "correct": "제1장, 제2회",
+          "description": "순서 표현 붙여쓰기"
+        },
+        {
+          "incorrect": "1,000만 원, 5만 명",
+          "correct": "1,000만원, 5만명",
+          "description": "아라비아 숫자와 단위 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["단위", "순서", "아라비아숫자"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-CONNECTING-WORDS-003",
+      "title": "이어주는 말",
+      "content": "이어주는 말은 앞뒤로 띄어 씁니다.",
+      "explanation": "두 말을 이어주거나 열거할 때 쓰이는 말은 띄어 쓴다.",
+      "examples": [
+        {
+          "incorrect": "부국장겸부장, 한국대일본",
+          "correct": "부국장 겸 부장, 한국 대 일본",
+          "description": "이어주는 말 띄어쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["이어주는말", "접속어"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-NAMES-TITLES-004",
+      "title": "성과 이름, 호칭",
+      "content": "성과 이름은 붙여 쓰고, 호칭이나 관직명은 띄어 씁니다.",
+      "explanation": "성과 이름, 성과 호 등은 붙여 쓰고 이에 덧붙는 호칭어 · 관직명은 띄어 쓴다.",
+      "examples": [
+        {
+          "incorrect": "서 화담, 최 치원 선생",
+          "correct": "서화담, 최치원 선생",
+          "description": "성과 이름 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["이름", "성", "호칭", "관직명"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-PROPER-NOUNS-005",
+      "title": "고유명사 띄어쓰기",
+      "content": "성명 외의 고유명사는 단어별로 띄어 쓰는 것이 원칙이지만, 단위별로 띄어 쓸 수도 있습니다.",
+      "explanation": "성명 이외의 고유명사는 단어별로 띄어 씀을 원칙으로 하되 단위별로 띄어 쓸 수 있다.",
+      "examples": [
+        {
+          "incorrect": "서울대학교인문대학국어국문학과",
+          "correct": "서울대학교 인문대학 국어국문학과",
+          "description": "고유명사 단위별 띄어쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["고유명사", "단위", "띄어쓰기"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-ADJECTIVE-FIRST-006",
+      "title": "'첫'의 띄어쓰기",
+      "content": "'첫'은 접두사가 아닌 관형사이므로 띄어 쓰되, 사전에 등재된 단어는 붙여 씁니다.",
+      "explanation": "'첫'은 접두사가 아닌 관형사로 띄어 쓰다. 첫해 · 첫날 등 사전에서 인정하는 단어는 붙여 쓴다.",
+      "examples": [
+        {
+          "incorrect": "첫시험, 첫월급",
+          "correct": "첫 시험, 첫 월급",
+          "description": "관형사 '첫' 띄어쓰기"
+        },
+        {
+          "incorrect": "첫 해, 첫 날",
+          "correct": "첫해, 첫날",
+          "description": "사전 등재 복합어 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["첫", "관형사", "접두사", "복합어"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-SUFFIX-VALUE-007",
+      "title": "값 표시 접미사",
+      "content": "값을 나타내는 '대'와 '당'은 접미사이므로 붙여 씁니다.",
+      "explanation": "값을 나타내는 '대', 마다를 나타내는 '당'은 접미사로 붙여 쓴다.",
+      "examples": [
+        {
+          "incorrect": "10억원 대에 이른다",
+          "correct": "10억원대에 이른다",
+          "description": "값 표시 '대' 붙여쓰기"
+        },
+        {
+          "incorrect": "1인 당 국민소득은",
+          "correct": "1인당 국민소득은",
+          "description": "마다 표시 '당' 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["접미사", "대", "당", "값"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-COMPOUND-WORDS-008",
+      "title": "복합어와 동사 결합",
+      "content": "사전에 등재된 복합어는 붙여 쓰고, 그 외 동사 결합은 띄어 씁니다.",
+      "explanation": "사전에서 인정한 복합어는 붙여 쓰고 그 외에 두 동사가 합쳐진 형태는 띄어 쓴다.",
+      "examples": [
+        {
+          "incorrect": "먹고 살다, 못 지않다",
+          "correct": "먹고살다, 못지않다",
+          "description": "복합어 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["복합어", "동사결합", "사전등재"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-ORGANIZATION-NAMES-009",
+      "title": "학명과 단체명",
+      "content": "학명이나 단체명은 붙여 쓰고, 전문용어는 단어별로 띄어 쓰는 것이 원칙이나 붙여 쓰는 것도 허용됩니다.",
+      "explanation": "학명이나 단체명은 붙여 쓴다. 전문용어는 단어별로 띄어 쓰는 것을 원칙으로 하지만 붙여 쓰는 것도 허용한다.",
+      "examples": [
+        {
+          "incorrect": "서울 경제 신문, 교원 단체 연합회",
+          "correct": "서울경제신문, 교원단체연합회",
+          "description": "단체명 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["학명", "단체명", "전문용어"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-ENGLISH-KOREAN-010",
+      "title": "영문과 한글 표기",
+      "content": "영문 한글 표기와 한자어/한글이 결합할 때는 띄어 쓰되, 영문+영문 한글 표기는 붙여 쓸 수도 있습니다.",
+      "explanation": "영문 한글 표기+한자어, 영문 한글 표기+ 한글일 때 상품명이 아닌 보통명사의 경우 띄어 쓴다. 단 영문+영문 한글 표기의 경우 띄어 쓰는 것이 원칙이나 붙여 써도 무방하다.",
+      "examples": [
+        {
+          "incorrect": "한글지원시스템, 드링크제품",
+          "correct": "한글지원 시스템, 드링크 제품",
+          "description": "영문 한글 표기와 한자어/한글 띄어쓰기"
+        },
+        {
+          "incorrect": "뉴 욕(New York), 로스 앤젤레스(Los Angeles)",
+          "correct": "뉴욕(New York), 로스앤젤레스(Los Angeles)",
+          "description": "영문+영문 한글 표기 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["영문", "한글표기", "한자어"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-AUXILIARY-VERBS-011",
+      "title": "보조용언 띄어쓰기",
+      "content": "보조용언은 원칙적으로 띄어 쓰되, 일부 경우 붙여 쓸 수 있습니다.",
+      "explanation": "보조용언은 띄어쓰기를 원칙으로 하되 붙여 쓰는 것도 허용한다. 우리는 공간상의 문제로 붙여 쓴다. 앞말에 조사가 붙거나 앞말이 합성동사인 경우, 중간에 조사가 들어갈 때는 보조용언을 띄어 쓴다. '있다'는 보조동사나 보조형용사이나 보조적 연결어미 '고' 아래에 쓰여 그 동작이 계속됨을 의미하거나 보조적 연결어미 '아(어) 아랭 쓰여 본용언의 상태가 계속됨을 의미하므로 띄어 쓴다.",
+      "examples": [
+        {
+          "incorrect": "죽여 버리다, 죽어 간다",
+          "correct": "죽여버리다, 죽어간다",
+          "description": "보조용언 붙여쓰기"
+        },
+        {
+          "incorrect": "책을읽어도보고, 잘난체를한다",
+          "correct": "책을 읽어도 보고, 잘난 체를 한다",
+          "description": "조사 포함 시 띄어쓰기"
+        },
+        {
+          "incorrect": "비관적인 전망이 나오고있다. 앉아있다.",
+          "correct": "비관적인 전망이 나오고 있다. 앉아 있다.",
+          "description": "'있다' 보조용언 띄어쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["보조용언", "보조동사", "보조형용사", "있다"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-JUNG-012",
+      "title": "'중(中)'의 띄어쓰기",
+      "content": "합성어로 등재된 '중'은 붙여 쓰고, 그렇지 않은 경우는 띄어 씁니다.",
+      "explanation": "부재중 · 무의식중 · 은연중 · 한밤중 등의 '중'은 선행어와 붙여 쓴다. 합성어로 등재되지 않은 경우에는 띄어 써야 한다. 합성어로 등재된 단어는 다음과 같다.",
+      "examples": [
+        {
+          "incorrect": "그 중, 총망 중",
+          "correct": "그중, 총망중",
+          "description": "합성어로 등재된 '중' 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["중", "합성어", "띄어쓰기"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-DEPENDENT-NOUNS-013",
+      "title": "의존명사 띄어쓰기",
+      "content": "의존명사는 띄어 씁니다. 의존명사는 그 앞에 수식어가 오는 것이 특징입니다.",
+      "explanation": "의존명사는 띄어 쓴다. 일부 의존명사는 조사 · 어미 · 접미사와 형태가 같아서 구별해 써야 한다. 구별하는 요령은 의존명사는 그 앞에 수식어가 온다는 점을 염두에 두면 된다. 의존명사=뿐 · 대로 · 만큼 · 만 · 지 · 차 · 판 · 들 · 데 · 듯 · 중",
+      "examples": [
+        {
+          "incorrect": "웃을뿐이다, 약속한대로 하겠다",
+          "correct": "웃을 뿐이다, 약속한 대로 하겠다",
+          "description": "의존명사 띄어쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["의존명사", "수식어", "띄어쓰기"]
+    },
+    {
+      "rule_id": "SPACING-DETAILED-COMPOUND-NOUNS-014",
+      "title": "합성어로 인정된 명사",
+      "content": "특정 명사와 결합하여 합성어로 인정받은 경우는 붙여 씁니다.",
+      "explanation": "윗말과 굳어져 합성어로 인정받는 명사는 붙여 쓴다.",
+      "examples": [
+        {
+          "incorrect": "이 것, 저 것, 날 것",
+          "correct": "이것, 저것, 날것",
+          "description": "'것'의 합성어 붙여쓰기"
+        },
+        {
+          "incorrect": "이 번, 요 번, 한 번",
+          "correct": "이번, 요번, 한번",
+          "description": "'번'의 합성어 붙여쓰기"
+        },
+        {
+          "incorrect": "이 가, 저 이, 그 이",
+          "correct": "이가, 저이, 그이",
+          "description": "'이'의 합성어 붙여쓰기"
+        }
+      ],
+      "priority": 1,
+      "tags": ["합성어", "명사", "붙여쓰기"]
+    }
+  ]
+}

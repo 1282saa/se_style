@@ -1,0 +1,59 @@
+{
+  "file_id": "ST-GUIDE-MULTIPLE-STANDARD-WORDS-SUMMARY-001",
+  "title": "자주 틀리는 말 - 복수표준어",
+  "description": "국립국어원에서 인정한 복수 표준어에 관한 지침으로, 두 가지 표기를 모두 표준어로 인정한 것과 복수표준어로 인정된 단어들을 정리합니다.",
+  "category_path": ["작성원칙", "올바른표현"],
+  "tags": ["복수표준어", "표준어", "국어원", "표기법"],
+  "rules": [
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-SUMMARY-BOTH-001",
+      "title": "두 가지 표기를 모두 표준어로 인정한 것",
+      "content": "태껴/택견, 품세/품새, 자장면/짜장면 등 두 가지 표기를 모두 표준어로 인정한 단어들입니다.",
+      "explanation": "두 표기 모두 사용할 수 있으나, 한 기사 내에서는 일관된 표기를 유지하는 것이 좋습니다.",
+      "examples": [
+        {
+          "incorrect": "태껴가 아니라 택견입니다",
+          "correct": "태껴와 택견 모두 표준어입니다",
+          "description": ""
+        },
+        {
+          "incorrect": "품세가 아니라 품새입니다",
+          "correct": "품세와 품새 모두 표준어입니다",
+          "description": ""
+        },
+        {
+          "incorrect": "자장면이 아니라 짜장면입니다",
+          "correct": "자장면과 짜장면 모두 표준어입니다",
+          "description": ""
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "MULTIPLE-STANDARD-WORDS-SUMMARY-RECOGNIZED-002",
+      "title": "복수표준어로 인정된 단어들",
+      "content": "삐지다, 눈두덩이, 구안와사, 초장초, 굽신거리다, 놀잇감, 개기다, 사그라들다, 속앓이, 허접하다, 딴지, 섬찟, 꼬시다, 이쁘다, 찰지다, 마실, 보고프다 등이 복수 표준어로 인정되었습니다.",
+      "explanation": "이 단어들은 기존의 표준어와 함께 복수 표준어로 인정받았습니다.",
+      "examples": [
+        {
+          "incorrect": "삐지다는 표준어가 아닙니다",
+          "correct": "삐지다는 복수 표준어로 인정됩니다",
+          "description": ""
+        },
+        {
+          "incorrect": "눈두덩이는 표준어가 아닙니다",
+          "correct": "눈두덩이는 복수 표준어로 인정됩니다",
+          "description": ""
+        },
+        {
+          "incorrect": "허접하다는 표준어가 아닙니다",
+          "correct": "허접하다는 복수 표준어로 인정됩니다",
+          "description": ""
+        }
+      ],
+      "priority": 3,
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "file_id": "GRAMMAR-CORRECT-WORD-USAGE-013",
+  "title": "올바른 단어 표기",
+  "description": "자주 틀리는 단어의 올바른 표기법을 익혀야 합니다.",
+  "category_path": ["작성원칙", "문법규칙", "올바른단어표기"],
+  "tags": ["문법", "맞춤법", "표기", "어미", "발음", "유추"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-CORRECT-WORD-USAGE-013-01",
+      "title": "할께와 할게",
+      "content": "어미 '-(으)ㄹ게'는 예사소리로 적습니다.",
+      "explanation": "어미 '-(으)ㄹ게, -(으)ㄹ걸, -올시다' 등은 예사소리로 적되, 의문을 나타내는 어미 '-(으)ㄹ까, -(으)ㄹ꼬, -(으)ㄹ쏘냐' 등은 된소리로 적도록 규정함.",
+      "examples": [
+        {
+          "incorrect": "내일 꼭 전화할께.",
+          "correct": "내일 꼭 전화할게.",
+          "description": "어미 '-(으)ㄹ게'는 예사소리로 적음"
+        }
+      ],
+      "priority": 2,
+      "tags": []
+    },
+    {
+      "rule_id": "GRAMMAR-CORRECT-WORD-USAGE-013-02",
+      "title": "떴다방과 떳다방",
+      "content": "'떴다'에서 파생된 말로 '떴다방'이 올바른 표기입니다.",
+      "explanation": "'떴다'에서 파생된 말로 '떳다방'으로 써야 할 이유가 없습니다.",
+      "examples": [
+        {
+          "incorrect": "떳다방이 성행하고 있다.",
+          "correct": "떴다방이 성행하고 있다.",
+          "description": "'떴다'에서 파생된 말"
+        }
+      ],
+      "priority": 2,
+      "tags": []
+    },
+    {
+      "rule_id": "GRAMMAR-CORRECT-WORD-USAGE-013-03",
+      "title": "있음과 있슴",
+      "content": "'있다'의 명사형 표기는 '있음'입니다.",
+      "explanation": "'ㅁ, 음, 기'는 명사를 만드는 종결어미. '있습니다, 없습니다'로 바뀐 것 때문에 잘못 유추된 것. 쌍시옷이나 비읍+시옷 뒤에 오는 음과 '슴'의 발음이 같기 때문에 혼동이 일어남.",
+      "examples": [
+        {
+          "incorrect": "범인이 달아난 흔적이 있슴.",
+          "correct": "범인이 달아난 흔적이 있음.",
+          "description": "'있다'의 명사형 표기"
+        }
+      ],
+      "priority": 2,
+      "tags": []
+    },
+    {
+      "rule_id": "GRAMMAR-CORRECT-WORD-USAGE-013-04",
+      "title": "아닐런지와 아닐는지",
+      "content": "'~이 아닐는지'가 올바른 표현입니다.",
+      "explanation": "'런지'로 쓰는 경우는 '~런가, ~런고'의 어미에서 잘못 유추함. '~ㄹ는지'는 미래 일의 실현 가능성에 대한 의문을 나타내는 것으로 회상의 선어말어미 '더'가 개입된 상황은 아님.",
+      "examples": [
+        {
+          "incorrect": "그가 범인이 아닐런지 모르겠다.",
+          "correct": "그가 범인이 아닐는지 모르겠다.",
+          "description": "미래 일의 실현 가능성에 대한 의문"
+        }
+      ],
+      "priority": 2,
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "file_id": "ST-GUIDE-WRITING-001",
+  "title": "기사 작성 요령",
+  "description": "서울경제신문 기자들이 기사 작성 시 준수해야 할 기본 원칙과 세부 지침",
+  "category_path": [
+    "스타일북",
+    "편집기준",
+    "기사작성 요령"
+  ],
+  "tags": [
+    "기사작성",
+    "편집기준",
+    "스타일북"
+  ],
+  "rules": [
+    {
+      "rule_id": "WG-BASIC-001",
+      "title": "기본 원칙",
+      "content": "기사 작성의 가장 기본적인 세 가지 원칙",
+      "explanation": "기사 작성의 가장 기본적인 세 가지 원칙",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "WG-LEAD-001",
+      "title": "리드 쓰기",
+      "content": "기사의 도입부인 리드 작성법에 관한 지침",
+      "explanation": "기사의 도입부인 리드 작성법에 관한 지침",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "WG-SENT-001",
+      "title": "문장 요건",
+      "content": "효과적인 기사 문장 작성을 위한 9가지 요건",
+      "explanation": "효과적인 기사 문장 작성을 위한 9가지 요건",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "WG-AVOID-001",
+      "title": "피해야 할 표현들",
+      "content": "기사 작성 시 지양해야 할 표현 유형",
+      "explanation": "기사 작성 시 지양해야 할 표현 유형",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "WG-TYPE-001",
+      "title": "기사 유형별 작성 요령",
+      "content": "기사 유형에 따른 작성 방법 지침",
+      "explanation": "기사 유형에 따른 작성 방법 지침",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    }
+  ]
+}

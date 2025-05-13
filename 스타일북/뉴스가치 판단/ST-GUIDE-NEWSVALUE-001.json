@@ -1,0 +1,27 @@
+{
+  "file_id": "ST-GUIDE-NEWSVALUE-001",
+  "title": "뉴스 가치 판단 기준",
+  "description": "기사 작성 시 뉴스 가치를 판단하기 위한 기본 요소와 적용 방법",
+  "category_path": ["기사작성 요령", "뉴스가치"],
+  "tags": ["뉴스가치", "기사작성", "편집기준"],
+  "rules": [
+    {
+      "rule_id": "NV-BASIC-001",
+      "title": "뉴스 가치 기본 요소",
+      "content": "뉴스의 가치를 판단하기 위한 10가지 기본 요소",
+      "explanation": "뉴스의 가치를 판단하기 위한 10가지 기본 요소",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    },
+    {
+      "rule_id": "NV-PRACTICE-001",
+      "title": "뉴스 가치 판단 실전 적용",
+      "content": "뉴스 가치를 실제 판단할 때 고려해야 할 5가지 요소",
+      "explanation": "뉴스 가치를 실제 판단할 때 고려해야 할 5가지 요소",
+      "examples": [],
+      "priority": 3,
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "file_id": "GRAMMAR-MONETARY-EXPRESSIONS-002",
+  "title": "금전 표기",
+  "description": "금전 표기는 명확하고 일관되게 표현해야 합니다.",
+  "category_path": ["작성원칙", "문법규칙", "금전표기"],
+  "tags": ["문법", "표기", "금전", "수량"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-MONETARY-EXPRESSIONS-002-01",
+      "title": "'여'의 표현",
+      "content": "'여'는 한자어로 된 수사 뒤에 붙어 그 이상임을 나타냅니다.",
+      "explanation": "'여'의 표현은 단위 다음에 사용해야 합니다.",
+      "examples": [
+        {
+          "incorrect": "3억 8,000여만원",
+          "correct": "3억 8,000만여원",
+          "description": "'여'는 단위 다음에 사용"
+        }
+      ],
+      "priority": 2,
+      "tags": ["금전", "표기", "여", "단위"]
+    }
+  ]
+}

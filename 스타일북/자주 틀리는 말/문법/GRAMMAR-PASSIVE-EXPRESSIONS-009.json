@@ -1,0 +1,24 @@
+{
+  "file_id": "GRAMMAR-PASSIVE-EXPRESSIONS-009",
+  "title": "피동 표현",
+  "description": "정확한 피동 표현은 문장의 자연스러움을 높입니다.",
+  "category_path": ["작성원칙", "문법규칙", "피동표현"],
+  "tags": ["문법", "피동", "표현"],
+  "rules": [
+    {
+      "rule_id": "GRAMMAR-PASSIVE-EXPRESSIONS-009-01",
+      "title": "피동 표현의 올바른 사용법",
+      "content": "한국어의 피동 표현은 일정한 규칙이 있으며, 중복 피동은 피해야 합니다.",
+      "explanation": "피동 표현은 '이, 히, 리, 기' 접미사나 '~어(아) 지다'를 붙여 만들지만, 중복 피동은 사용하지 않습니다.",
+      "examples": [
+        {
+          "incorrect": "나뉘어지다, 보여집니다, 쓰여집니다",
+          "correct": "나뉘다, 보입니다, 쓰입니다",
+          "description": "중복 피동 표현 금지"
+        }
+      ],
+      "priority": 2,
+      "tags": ["피동", "접미사", "이", "히", "리", "기", "어지다", "중복피동"]
+    }
+  ]
+}
